@@ -149,6 +149,17 @@ _ledger_ids = {r.get("id") for r in _ledger_rows}
 check("Ledger S3: draft ESTABLISHED set reconciles with ledger set",
       len(_draft_est ^ _ledger_ids), 0, 0)
 
+# (Census) live corpus counts, held in lockstep with the front-door prose,
+# the avenue theses in avenues.json, and the baked console verdict. The label
+# CARRIES the numbers, so any change to a count must be made here AND in the
+# manuscript in the same commit (the CLAUDE.md lockstep rule) or CI goes red.
+_EXPECTED_CENSUS = (194, 76, 1)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
+_est_n = sum(1 for r in _ledger_rows if r.get("status") == "ESTABLISHED")
+_open_n = sum(1 for r in _draft_rows if r.get("status") == "OPEN-UNVERIFIED")
+_rep_n = sum(1 for r in _draft_rows if r.get("status") == "REPORTED")
+check("Census: 194 ESTABLISHED / 76 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)",
+      0 if (_est_n, _open_n, _rep_n) == _EXPECTED_CENSUS else 1, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)

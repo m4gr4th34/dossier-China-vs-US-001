@@ -1,125 +1,81 @@
 <!--edition
 eyebrow: An Open Dossier · <b>China-vs-US-001</b>
-title: China vs. US (working title)
+title: The US–China Century Ledger
 byline: Irfan Ali Khan — Independent Researcher
 active: index.html
 -->
 <!--slot:body-->
-<p class="abstract">Working draft — research in progress. This dossier surveys China vs. US: the live avenues, what each rests on, and where the open questions and forward bets sit. Every card in the landscape below carries an honest status label — established findings asserted, open questions and forecasts labeled as such. End it with: <b>Don't trust this paper — run it.</b></p>
+<p class="abstract">This dossier is a two-country <b>achievement ledger</b>: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer (the planned per-year comparative chart) stays gated behind full verification and is <b>not computed here</b>. The honest state today: 271 candidate rows, 194 ESTABLISHED, the rest labeled OPEN-UNVERIFIED or REPORTED and posted as open challenges. <b>Don't trust this paper — run it.</b></p>
 
 <!--mount:howto-->
 
 <!-- ============================================================
-     SURVEY LANDSCAPE — the survey-shaped scaffold's centrepiece.
-     One card per avenue/option in the field. Drive it from the
-     AVENUES array in the script below (single source -> cards).
-     Each card: name + one-line thesis, an honest status label,
-     an optional dated forecast, and its sources. The card's top
-     border is colored by status for at-a-glance scanning.
-     STATUS values: ESTABLISHED / OPEN-UNVERIFIED / FORECAST /
-     REPORTED (others fall back to a neutral chip + border).
+     SURVEY LANDSCAPE — one card per avenue, driven from avenues.json.
      ============================================================ -->
 <!--mount:landscape-->
 
 <!--mount:console-->
 
-<!-- ============================================================
-     AUTHOR INSTRUCTIONS (delete this comment when done):
-     This is the SURVEY-shaped self-explaining edition. The arc:
-       01 the field, and why survey it (problem as a story)
-       02 established foundations (plain prose + citations)
-       03 the avenues, one by one (each labeled in place)
-       04 what would settle the open questions
-       05 synthesis
-     Conventions:
-     - Wrap technical terms:  <button class="term" data-d="3-5 sentence plain explanation">term</button>
-     - Cite with chips:       <button class="cite" data-c="KEY">Venue 'YY</button>  (+ add KEY to CITES below)
-     - ESTABLISHED claims are asserted plainly, with citations. No box.
-     - OPEN-UNVERIFIED claims get an amber .openclaim box at the claim site.
-     - FORECAST claims get a violet .forecast box: state the estimate, the
-       reasoning, and the MANDATORY dated, falsifiable signpost.
-     - REPORTED items get a coral .reported box: name the interested-party
-       source, state plainly it is not independently reproduced, and give
-       the mundane candidate explanation with equal prominence.
-     - A genuine scientific DISPUTE is not a new status: render it as an
-       ESTABLISHED meta-claim ("the field is divided on X") citing both sides.
-     ============================================================ -->
+<div class="kicker teal">THE LEDGER · NARRATIVE</div>
+<h2><span class="num">01</span>THE QUESTION</h2>
 
-<div class="kicker teal">THE CHAPTER · NARRATIVE</div>
-<h2><span class="num">01</span>THE FIELD, AND WHY SURVEY IT</h2>
+<p>Whether American or Chinese <button class="term" data-d="Here 'momentum' means the relative rate at which a country accumulates notable, dateable achievements over time — not GDP, not military power, and not a prediction. In this dossier it is a constructed index computed over the achievement ledger, and it is deliberately not calculated until every row is verified.">momentum</button> is ahead is one of the most argued questions in geopolitics, and it is argued mostly with anecdotes. Serious scholarship splits into two poles: one holds the American lead durable <button class="cite" data-c="beckley">Beckley '18</button>, the other reads the trajectory as a classic rising-power challenge <button class="cite" data-c="allison">Allison '17</button>. That the field is genuinely divided is itself the only safe thing to assert up front — both narratives are cottage industries, and each can curate a list of achievements to "win".</p>
 
-<p>Open with the field as a story: what is the question everyone in this area is
-circling, why is it hard, and why is a map of the whole landscape — rather than one
-more result — the useful thing to publish right now? Introduce your first
-<button class="term" data-d="Replace this with a 3-5 sentence plain-language explanation of the term, written for a smart non-specialist. What is it, why does it matter to this field, and what is the one surprising thing about it?">tappable term</button>
-here, and your first sourced claim
-<button class="cite" data-c="ref1">Journal 'YY</button>.</p>
+<p>This dossier's bet is that the useful thing to publish is not another verdict but the instrument underneath one: a single, auditable ledger of what each country actually did and when, with every entry labeled to say exactly how well-checked it is. Build the ledger honestly first; argue about the scoreboard second — and only with the scoreboard's rubric fully exposed. Nothing on this page tells you who is winning, because the ledger that would earn such a claim is not finished and the index that would compute one is gated shut.</p>
 
-<p class="punch">End the opening with the one line a reader should carry into the rest of the survey.</p>
+<p class="punch">Map the achievements before scoring them — and never let the scoreboard smuggle itself in as a fact.</p>
 
-<h2><span class="num">02</span>ESTABLISHED FOUNDATIONS</h2>
+<h2><span class="num">02</span>WHAT'S ESTABLISHED — THE CORPUS AND ITS DISCIPLINES</h2>
 
-<p>State plainly what the field has actually demonstrated — the bedrock every avenue
-shares. These are ESTABLISHED claims: asserted directly, each with a citation
-<button class="cite" data-c="ref2">Journal 'YY</button>. Being confident here is correct, not
-incautious; documented facts are bedrock, and timidity about them is its own kind of
-dishonesty. Save the hedging for the claims that have earned it.</p>
+<p>The corpus is 271 candidate rows spanning 1926–2026, split between the US and China. Each row is <b>event-anchored</b> — tied to one specific dateable event (a founding, a first flight or launch, a completion, a commercial deployment, a discovery, a milestone) rather than a vague "era". A row becomes ESTABLISHED only when it clears a published promotion standard, held in <span class="mono">notes/verification_ritual.md</span>: a precise falsifiable claim; at least one qualifying independent source (or two independent journalistic/encyclopedic ones); its date confirmed against that specific anchor; and any conflicting US/Chinese figures recorded rather than silently adjudicated. 194 rows have cleared that bar so far.</p>
 
-<details class="deeper"><summary>Go deeper: NAME THE TECHNICAL LAYER</summary>
-<div class="body">Equations and formal detail live here, collapsed by default. The
-narrative above must be complete without opening this.
-<div class="eq" data-tex="E = mc^2"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E = mc^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord mathnormal">m</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></div></div>
+<p>The selection rule, in <span class="mono">notes/selection_criteria.md</span>, is country-neutral by construction: a category is assigned by a claim's primary significance, not by which country produced it, so the same test that files a US firm's founding files a Chinese one. Three disciplines guard the sensitive cases. The <b>event/magnitude split</b>: a reform's occurrence can be ESTABLISHED while its contested output figure is caveated — China's reform-era poverty reduction, for instance, is asserted on the World Bank's independent series <button class="cite" data-c="worldbank">World Bank</button>, with China's own poverty-line count noted alongside rather than blended in. <b>Data-integrity</b>: where US and Chinese figures for one quantity conflict, both are shown. And a <b>trajectory rule</b>: a multi-year cumulative achievement may stand as a single row only under an independently-maintained series, an explicit span written into the claim, and filing at the span's start year — so a mid-span marker can never masquerade as a discrete event.</p>
+
+<p>The shape of the corpus is itself a set of ESTABLISHED facts — but facts <b>about the ledger under this selection rule</b>, not a verdict about the world. Under the rule, US coverage is comparatively steady across the decades and weighted toward invention and commercial-deployment anchors; Chinese coverage is thin in the early decades, rises in the later ones, and is weighted toward completion and milestone anchors. Both patterns are partly real and partly artifacts — of era, of what each category happens to reward, and of English-language source availability during drafting. They describe how the ledger is populated. They are emphatically <b>not</b> a momentum score, and nothing here should be read as one.</p>
+
+<details class="deeper"><summary>Go deeper: the disciplines in one place</summary>
+<div class="body">The promotion standard, the fail outcomes, and the labels all live in versioned notes. When a candidate row fails the standard it does not vanish: it stays OPEN-UNVERIFIED (with the reason logged), or is reclassified <b>REPORTED</b> with the interested party named, or is removed to a logged tombstone in <span class="mono">notes/removed_rows.md</span> — never silently deleted. REPORTED is reserved for an interested-party magnitude claim that independent work has not reproduced; exactly one row carries it today (a 1952 output-recovery figure resting on contested official statistics), and it gets a vote on nothing. The trajectory rule is the newest discipline, applied country-blind: a US wartime-production row and a US shale row were reshaped by the very same rule that reshaped a Chinese poverty row and a Chinese expressway row.</div>
 </details>
 
-<h2><span class="num">03</span>THE AVENUES</h2>
+<h2><span class="num">03</span>THE AVENUES, ONE BY ONE</h2>
 
-<p>The heart of the survey: walk each avenue in turn, and label each exactly as
-strongly as its evidence allows. The four conventions below show every status home.</p>
+<p>The landscape above carries five cards. Two are ESTABLISHED and asserted plainly; three are open and labeled as such, each an invitation with named credit attached.</p>
 
-<h3>Avenue A — a mature, documented direction</h3>
-<p>Describe it in plain language and assert what is established about it, with sources
-<button class="cite" data-c="ref1">Journal 'YY</button>. No callout box — established prose carries itself.</p>
+<h3>The achievement ledger — ESTABLISHED</h3>
+<p>The ledger itself — 271 rows, event-anchored, per-row-verified, 194 ESTABLISHED under the promotion standard — is the dossier's spine and its most finished part. It is asserted directly, because documented, dated, sourced achievements are bedrock, and timidity about them would be its own dishonesty.</p>
 
-<h3>Avenue B — a direction with a central open question</h3>
-<p>Lay out the avenue, then mark the open question honestly, right where it arises:</p>
+<h3>Coverage shape — ESTABLISHED (about the corpus)</h3>
+<p>The decade-density and event-type patterns described in section 02 are established facts about the corpus under the published rule — and only that. They are asserted as description, never re-read as a race.</p>
+
+<h3>The momentum index — OPEN</h3>
+<p>Where the dossier would offer a scoreboard, it instead offers a gated design and an honest label:</p>
 <div class="openclaim">
-<span class="tag">OPEN-UNVERIFIED</span><b>Honest label:</b> DESCRIBE THE UNVERIFIED CLAIM. State that it is claim <span class="mono">CNN</span> in the public ledger and an open challenge: <b>the first person to confirm or refute it gets named credit in the next version.</b>
-</div>
+<span class="tag">OPEN-UNVERIFIED</span><b>The per-year comparative momentum chart is designed and gated, not run.</b> No decade scores are computed while the corpus still holds OPEN-UNVERIFIED rows; the scoring rubric and its sensitivity analysis are committed as design only, in <span class="mono">notes/scoring_rubric_DESIGN.md</span>. When the chart exists it will be labeled <b>OPEN-CAVEATED</b> — a construction over a constructed index, with its rubric fully exposed so a hostile reader can re-weight it and get a different chart. This card is the standing promise that it will never be labeled higher.</div>
 
-<h3>Avenue C — a direction you are making a forward bet on</h3>
-<p>Where you offer a judgment about how an avenue will develop, label it as a forecast —
-never smuggle an estimate in as a fact:</p>
-<div class="forecast">
-<span class="tag">FORECAST</span><b>Labeled estimate:</b> STATE THE ESTIMATE (e.g. ~35%) AND THE REASONING BEHIND IT. <b>Signpost:</b> name the dated, falsifiable event that will later mark this right or wrong (e.g. "by 2030, X is demonstrated at scale Y"). A forecast without a dated signpost is just an opinion with a number on it; the signpost is its verifier.
-</div>
+<h3>Early-century China floor — OPEN</h3>
+<div class="openclaim">
+<span class="tag">OPEN-UNVERIFIED</span><b>1926–1945 Chinese coverage is a floor, not a fact.</b> Part of the thinness is real — war, less formal industrialization, fewer dateable formal achievements — and part is English-language source bias in the drafting. This is posted as an open challenge: a reader who commands the Republican-era Chinese-language literature can raise the floor, and the first to add a well-anchored, well-sourced row gets <b>named credit</b> in the next version.</div>
 
-<h3>Avenue D — a direction sourced only to an interested party</h3>
-<p>Some avenues live mostly on vendor roadmaps, press-release figures, or claims that
-have not been independently reproduced. Record them — but mark the provenance plainly:</p>
-<div class="reported">
-<span class="tag">REPORTED</span><b>Non-independent source:</b> NAME THE INTERESTED-PARTY SOURCE and state plainly it is not independently reproduced. Give the mundane candidate explanation with at least equal prominence (or state that none has been identified). This is recorded for completeness; it is NOT the author's claim, and it gets no vote on any other claim's status.
-</div>
+<h3>Verification in progress — OPEN</h3>
+<div class="openclaim">
+<span class="tag">OPEN-UNVERIFIED</span><b>Live status: 194 ESTABLISHED, 76 OPEN-UNVERIFIED, 1 REPORTED.</b> Verification runs in chronological batches of about twenty-five rows; batches one through eight cover 1926–2003. The rest are not yet promoted — including a few named early stragglers (the Rong-family cotton-textile firms, <span class="mono">CN-1930-1</span>; the wartime relocation of industry and universities, <span class="mono">CN-1940-1</span>; the Chengdu–Chongqing Railway, <span class="mono">CN-1952-1</span>, held for a second independent source) and everything from 2003 onward (Tesla, Facebook, and the rest). The console above shows the current count; it moves as batches land.</div>
 
 <h2><span class="num">04</span>WHAT WOULD SETTLE THE OPEN QUESTIONS</h2>
 
-<p>For each open avenue, spell out the specific result, measurement, or signpost that
-would move it from open to established. This is what turns a survey from a snapshot into
-an instrument: a reader knows exactly what work is worth doing next, and your OPEN claims
-become standing invitations with named credit attached.</p>
+<p>Each open card names its own closing move. The <b>ledger</b> closes the corpus when every remaining row is either promoted to ESTABLISHED or honestly reclassified — it stays OPEN-UNVERIFIED, or becomes REPORTED with the interested party named, or is removed to a logged tombstone. That is a bounded, mechanical amount of verification work, tracked batch by batch in <span class="mono">notes/verification_log.md</span>. Only then does the <b>momentum index</b> unlock: with no OPEN rows left to distort it, the gated chart can be computed and published as OPEN-CAVEATED, rubric exposed. The <b>early-century China floor</b> closes differently — not by internal work but by external expertise: it moves when readers who command the area-studies literature contribute anchored, sourced rows. None of these require anyone to trust the author; each names the exact thing that would move it.</p>
 
-<h2><span class="num">05</span>SYNTHESIS</h2>
+<h2><span class="num">05</span>SYNTHESIS SO FAR</h2>
 
-<p>Pull the landscape together: which avenues are solid, which are live bets, which are
-mostly noise, and what the honest shape of the field is once every claim wears its true
-label. Close on the line you want to leave the reader with.</p>
+<p>The defensible spine is three rungs kept rigorously apart: a documented <b>achievement ledger</b> (mostly ESTABLISHED, and the most finished thing here); a constructed <b>momentum index</b> (designed, gated, unrun — and never to be labeled above OPEN-CAVEATED); and, further out, a speculative <b>projection</b> of the two trajectories at +10, +20, and +30 years (which will be EXPLORATORY-CONJECTURE when it is written, and nothing higher). This front door is honest about which rung each claim sits on. What it deliberately does not contain is a scoreboard — there is no momentum verdict on this page, because the ledger that would earn one is unfinished and the index that would compute one is gated shut.</p>
 
-<p class="punch">End with the line your readers should carry away.</p>
+<p class="punch">Three rungs, three labels, never blurred — and until the ledger is done, no number gets to call the race.</p>
 <!--/slot:body-->
 <!--slot:cites-->
-<!-- cite fields. who: "Author et al. (Year)". what: 1-2 sentence plain-language summary of what it showed + why it matters. src: "Journal Vol, Page (Year), DOI/arXiv". Re-state fresh per chapter; never back-reference. -->
+<!-- cite fields. who: "Author (Year)". what: 1-2 sentence plain-language summary of what it showed + why it matters. src: full identity + resolvable id where one exists. Re-state fresh per chapter; never back-reference. -->
 <script type="application/json" id="cites-data">
-{ "ref1": { "who": "@@CITE-WHO@@", "what": "@@CITE-WHAT@@", "src": "@@CITE-SRC@@" },
-  "ref2": { "who": "@@CITE-WHO@@", "what": "@@CITE-WHAT@@", "src": "@@CITE-SRC@@" } }
+{ "beckley": { "who": "Michael Beckley (2018)", "what": "Argues the United States' lead in economic and military power is larger and more durable than declinist accounts hold — one pole of the momentum debate this dossier maps rather than joins.", "src": "Unrivaled: Why America Will Remain the World's Sole Superpower, Cornell University Press (2018)." },
+  "allison": { "who": "Graham Allison (2017)", "what": "Frames US–China rivalry through the 'Thucydides trap' — a rising power challenging a ruling one — the opposing pole of the same debate.", "src": "Destined for War: Can America and China Escape Thucydides's Trap?, Houghton Mifflin Harcourt (2017)." },
+  "worldbank": { "who": "World Bank", "what": "China's country data record roughly 800 million people lifted out of extreme poverty over 1978–2019 (about three-quarters of global poverty reduction) on the international poverty line — the independent series behind the dossier's reform-era poverty row.", "src": "World Bank, China country overview and poverty-reduction results (accessed 2026)." } }
 </script>
 <!--/slot:cites-->
 <!--slot:foot-->
@@ -133,8 +89,8 @@ label. Close on the line you want to leave the reader with.</p>
 </div>
 
 <footer>
-  <b>About this edition:</b> this page is the complete survey in self-explaining form — the avenue <a href="#landscape">landscape</a> and the consistency console up top, the narrative below. This live edition is the paper. The <a href="dossier.html">audit trail</a> carries the citation audit and the receipts.
-  <br><br><span class="mono">An Open Dossier · CC BY 4.0 · AI-assistance: @@AI-USE NOTE@@ and state your actual review basis · every verification label is true</span>
+  <b>About this edition:</b> this page is the complete front door in self-explaining form — the avenue <a href="#landscape">landscape</a> and the consistency console up top, the narrative below. This live edition is the paper. The <a href="dossier.html">audit trail</a> carries the citation audit and the receipts.
+  <br><br><span class="mono">An Open Dossier · CC BY 4.0 · AI-assistance: drafting, verification searches, and typesetting by an AI agent (Claude); the author reviews by consistency and reality checks on end results, not re-derivation · every verification label is true</span>
 </footer>
 
 <!--/slot:foot-->
