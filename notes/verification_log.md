@@ -535,3 +535,61 @@ check-markdown, check-projection all green; verify_numbers 7/7.
 ### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
 
 None this batch. The 2003–2010 window is densely covered on both sides.
+
+---
+
+## Verification batch 10 — rows 2010–2025, the final chronological batch (2026-07-27)
+
+**Scope:** all 48 remaining unprocessed rows (2010–2025). **Outcome: 48 promoted to
+ESTABLISHED.** The full 1926–2025 chronological corpus is now processed.
+
+**Ledger:** 218 → **266 ESTABLISHED**. Corpus 271 (US 143, China 128): 266
+ESTABLISHED, 4 OPEN-UNVERIFIED, 1 REPORTED. Unprocessed rows: 0.
+
+**Tail disciplines (all exercised):**
+- **Recency (~2020→):** every recent row cleared on ≥1 source genuinely independent
+  of the announcing party's press cycle — peer-reviewed (CRISPR, LIGO, NIF, Transformer),
+  regulatory/official (mRNA-vaccine EUAs, CHIPS/IRA), or measured data (TOP500 for
+  Tianhe-2; UN/JAMA/customs for China's exports; market data for Nvidia). No row was
+  "too recent for independent corroboration" — the latest (DeepSeek, Jan 2025) already
+  carries ~18 months of independent benchmark scrutiny.
+- **AI-era hype:** model/capability rows anchored to datable, externally-measurable
+  events, never to "widely considered a breakthrough." ChatGPT → release date +
+  independently-measured adoption; DeepSeek-R1 → 20 Jan 2025 open-weight release +
+  independent benchmark leaderboards (matched o1 on AIME/MATH-500/SWE-bench) + the
+  late-Jan-2025 market reaction; Transformer → the NeurIPS 2017 paper.
+- **Corporate self-reporting** (unchanged watch-item): CATL/NIO/SenseTime/ByteDance/
+  Xiaomi(-era) anchored to founding; dominance corroborated by independent market data.
+- **The 2026 edge:** today is 2026-07-27 and the window closes end-2026, but that period
+  is not over. No 2026 row exists; the corpus thins across 2025. This incompleteness is
+  now stated plainly in the coverage report — the ledger is complete THROUGH 2025's
+  independently-corroborable events, not through the window's close.
+
+**Careful handlings (all resolved to ESTABLISHED):**
+- **CN-2014-3 (mobile payments):** reshaped under Amendment 4 to a cumulative-range
+  row (span 2014–2018, filed at span-start), independent series (CGAP/World Bank).
+- **CN-2019-4 (HarmonyOS):** claim CORRECTED — the "independent OS" framing was Huawei
+  PR true only of HarmonyOS NEXT (2024); early HarmonyOS was AOSP-based. Reworded to the
+  establishable version (release 2019; full independence 2024).
+- **CN-2020-1 (poverty elimination):** the 2020 declaration is ESTABLISHED as an event
+  (independently reported); the MAGNITUDE carries a data-integrity caveat — China's
+  national line (~$2.30/day) vs World Bank higher lines showing residual poverty; the
+  World Bank (Raiser) acknowledged the achievement but questioned sustainability/cost.
+- **CN-2023-1 (vehicle exports):** conflicting-figures caveat — China led by CAAM/JAMA
+  and in passenger cars; Japanese customs total-vehicle data dispute the total lead.
+- **US-2022-2 (NIF):** target-level net gain established; the ~300 MJ wall-plug caveat noted.
+- **US-2020-3 (mRNA):** noted as a US–German (BioNTech) collaboration.
+
+**No REPORTED reclassifications; no rows held OPEN this batch.** The 4 rows that remain
+OPEN-UNVERIFIED are the persistent early stragglers (CN-1930-1, CN-1940-1, CN-1952-1,
+CN-2003-3) held from earlier batches for a second independent source or a crisp anchor —
+so the momentum-index gate stays honestly shut (the corpus still holds OPEN rows).
+
+**Front-door lockstep:** census updated to 266/4/1 across avenues.json, the source
+prose, and the verify_numbers.py census check; both pipelines re-rendered; all gates green.
+
+### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
+
+None. With the chronological corpus complete, any further additions belong to a
+deliberate coverage-gap pass (e.g. the early-century China floor, or the open 2025-H2/2026
+tail as it becomes corroborable), not to a chronological batch.

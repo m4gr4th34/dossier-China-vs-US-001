@@ -18,9 +18,19 @@ are the drafting agent's independent selection under `notes/selection_criteria.m
 > freeze have moved the live corpus on: additions/conversions in
 > `additions_log.md`, removals in `removed_rows.md`, and promotions to ESTABLISHED
 > in `verification_log.md` + `claim_ledger.csv`. **Live count as of 2026-07-27:
-> 271 rows (US 143, China 128), of which 218 ESTABLISHED (verification batches
-> 1–9, covering 1926–2010), 52 OPEN-UNVERIFIED, and 1 REPORTED (CN-1952-2 —
-> magnitude on contested PRC official statistics).**
+> 271 rows (US 143, China 128), of which 266 ESTABLISHED (verification batches
+> 1–10, covering the full 1926–2025 chronological corpus), 4 OPEN-UNVERIFIED, and
+> 1 REPORTED (CN-1952-2 — magnitude on contested PRC official statistics).**
+>
+> *2026-window note (as of 2026-07-27): the dossier's stated window closes at
+> end-2026, but that period is not over. The corpus currently carries no 2026 row
+> and thins across 2025 — not because nothing happened, but because the final
+> months simply have not occurred yet and independent corroboration for the most
+> recent events does not exist. The ledger is complete THROUGH 2025's verifiable
+> events, not through the window's close; it should be read as such, and the
+> 2025-H2/2026 tail will be filled as events occur and become independently
+> corroborable. The 4 remaining OPEN rows are early stragglers (CN-1930-1,
+> CN-1940-1, CN-1952-1, CN-2003-3), not recency casualties.*
 >
 > *Amendment 4 (trajectory rows, 2026-07-27): CN-1990-4→CN-1978-3, US-1943-2→US-1942-3,
 > and US-2013-1→US-2008-4 refiled at their span-start years; counts unchanged, two ESTABLISHED
