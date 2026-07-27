@@ -4,21 +4,29 @@ Forward-looking design notes for this dossier. Nothing here is built yet; each i
 is a placeholder for future work, recorded so the intent is not lost. (This is the
 dossier's content roadmap; the repo-root `ROADMAP.md` tracks template machinery.)
 
-## Zoomable timeline figure (designed later — no design work yet)
+## Zoomable timeline figure (PARTIALLY DELIVERED)
 
-A single interactive timeline that the reader can zoom continuously from a
-**megatrend view** — the whole 1926–2026 span, US and China side by side at the
-level of broad eras and clusters — down to **per-achievement cards**, where an
-individual row's claim, event anchor, sources, and status label are legible in
-full. The hard requirement is that **labels stay visually first-class at every zoom
-level**: the figure must never degrade into unlabeled dots or decorative density at
-any scale, because a label the reader cannot read is a claim the dossier failed to
-make honestly. The zoomed-out view, if it renders any comparative momentum surface,
-**inherits the scoring gate** exactly as the per-year chart does — it shows no
-momentum scoring while the corpus holds OPEN-UNVERIFIED rows, and when it does it
-carries the OPEN-CAVEATED label with its rubric exposed. It will be authored as a
-`data-figure` spec against the vendored `figures/` runtime (compose the shared
-primitives; seal a JS-off poster) when its turn comes.
+**Delivered (2026-07-27):** the three altitudes of this figure now exist as discrete,
+static, JS-off-complete pieces, all generated deterministically by
+`scoring/compute_index.py` and verifier-locked:
+- **Megatrend / momentum view** — the per-decade OPEN-CAVEATED momentum chart, with a
+  **client-side re-weighting instrument** ("Weigh it yourself") that recomputes the
+  bars live from the same baked JSON the verifier checks (scoring math ported once to
+  `scoring/score.js`, JS/Python agreement asserted).
+- **Mid view** — the **Century Spine**: one block per corpus row at its year, US up /
+  China down, colour = category, texture = verification label, each block a deep link.
+- **Per-achievement cards** — the **Year Dossiers** on the audit-trail edition, one
+  card per ESTABLISHED row under a per-year `#y-YYYY` anchor the spine links into.
+- Inline-SVG figures are now click-to-expand via the skin's lightbox.
+
+**Remaining ambition (future pass):** fuse these three into ONE figure with **smooth,
+continuous zoom** and **mid-altitude transitions** — a single canvas the reader drags
+from the megatrend view down to a single card, rather than three linked static
+surfaces. Labels must stay visually first-class at every zoom level (never degrade to
+unlabeled dots). The zoomed-out momentum surface keeps inheriting the OPEN-CAVEATED
+scoring frame. The likely vehicle is a `data-figure` spec against the vendored
+`figures/` runtime (compose the shared primitives; seal a JS-off poster) so the smooth
+version still degrades to the static pieces already shipped.
 
 ## Offline re-source: the Chengyu Railway open challenge (CN-1952-1)
 

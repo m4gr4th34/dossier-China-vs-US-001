@@ -1,29 +1,36 @@
 #!/usr/bin/env python3
 """
-compute_index.py — the momentum-scoring layer (OPEN-CAVEATED).
+compute_index.py — the presentation + scoring layer (OPEN-CAVEATED).
 
-Turns the verified achievement ledger into a per-decade, per-country COMPARATIVE
-index. It is a real computation over real (ESTABLISHED) data, but the *rubric*
-(which categories/event-types count how much, how decades are normalized) is an
-authorial construction — so the whole layer, and every number it emits, is
-OPEN-CAVEATED. See notes/scoring_rubric_DESIGN.md (RUBRIC v1).
+Deterministic generator over the verified achievement corpus. Emits
+scoring/index_output.json and injects the generated artefacts into the source
+editions between markers (byte-faithfully, so nothing on the page can drift from
+the data):
 
-Reads:  claim_ledger.csv (ESTABLISHED rows -> the score) + data/achievements_draft.csv
-        (to identify the excluded non-ESTABLISHED rows named in the caption) +
-        scoring/weights.json (the published weight tables).
-Emits:  scoring/index_output.json  (per-decade per-country: primary score, exclusion
-        bounds, sensitivity min/max, contributing row ids) + a generated caption and
-        a generated static SVG chart.
-Also (as __main__): injects the generated <figure> into editions/index.source.html
-        between the <!--chart:start--> / <!--chart:end--> markers, byte-faithfully,
-        so the front-door chart cannot drift from the data.
+  * MOMENTUM INDEX (OPEN-CAVEATED): per-decade comparative index, primary bars +
+    W0-W3 sensitivity bands + 1946-1955 exclusion whiskers. -> index.source.html
+    <!--chart:start/end-->. Rubric: notes/scoring_rubric_DESIGN.md, scoring/weights.json.
+  * CENTURY SPINE: mirrored unit chart, one block per corpus row at its year
+    (US up, China down), colour = category, texture = verification label, each block
+    a link to dossier.html#y-YYYY. -> index.source.html <!--spine:start/end-->.
+  * WEIGH IT YOURSELF: the per-decade per-category/-event ESTABLISHED counts the
+    client-side instrument re-scores, embedded as #index-counts JSON. -> index.source.html
+    <!--weigh:start/end-->. The scoring math is scoring/score.js (used by both the
+    page and the JS/Python agreement test); the JS never re-implements it.
+  * YEAR DOSSIERS: per-decade <details>, per-year anchored headings (id="y-YYYY"),
+    per-achievement cards (one per ESTABLISHED ledger row). -> dossier.source.html
+    <!--dossiers:start/end-->.
 
-Deterministic. No hand-entered numbers. Gate (RUBRIC v1, Option C): all decades
-score on ESTABLISHED rows only; non-ESTABLISHED rows are excluded from the primary
-series and NAMED in the caption with the exclusion's direction of bias.
+verify_numbers.py recomputes all of this from the ledger/draft and asserts the
+committed JSON + injected bytes match exactly. No hand-entered numbers anywhere.
+
+Gate (RUBRIC v1, Option C): decades score on ESTABLISHED rows only; non-ESTABLISHED
+rows are excluded from the momentum series and NAMED in the caption (but they DO
+appear in the spine, textured by status). No projections (EXPLORATORY-CONJECTURE).
 """
 import csv
 import json
+import math
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -33,11 +40,26 @@ DRAFT = os.path.join(ROOT, "data", "achievements_draft.csv")
 WEIGHTS = os.path.join(HERE, "weights.json")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
+DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
 
 COUNTRIES = ("US", "China")
-# 1926-anchored decades (the dossier window opens in 1926). Ten 10-year bins;
-# 2026 has no rows and opens no new bin, so the last scored decade is 2016-2025.
+YEAR_LO, YEAR_HI = 1926, 2026
 DECADES = [(y, y + 9) for y in range(1926, 2016 + 1, 10)]
+CATEGORIES = ["innovation", "science", "infrastructure", "industrial", "social", "governmental_economic"]
+# Canonical category palette — the single source for category colour, reused by the
+# spine legend (and available to any future category-coloured view).
+CATEGORY_COLORS = {
+    "innovation": "#2b6cb0", "science": "#6b46c1", "infrastructure": "#2f855a",
+    "industrial": "#c05621", "social": "#b83280", "governmental_economic": "#4a5568",
+}
+CATEGORY_SHORT = {
+    "innovation": "innovation", "science": "science", "infrastructure": "infrastructure",
+    "industrial": "industrial", "social": "social", "governmental_economic": "gov/econ",
+}
+# Momentum-chart plot geometry (MUST match build_svg: W=900 H=380 padT=34 padB=54).
+# Shared with the "Weigh it yourself" instrument so JS moves the primary bars using
+# the exact same yf() the Python renderer used.
+MOM_PADT, MOM_PLOTH, MOM_Y0 = 34, 292, 326
 
 
 def decade_label(lo, hi):
@@ -57,16 +79,25 @@ def _read_csv(path):
 
 
 def _round(x):
-    return round(float(x), 4)
+    # round-half-up, identical to JS Math.round(x*1e4)/1e4 so the client-side
+    # instrument (scoring/score.js) and this Python agree exactly.
+    return math.floor(float(x) * 10000 + 0.5) / 10000
 
 
+def _esc(s):
+    return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;"))
+
+
+# ============================================================
+# MOMENTUM INDEX
+# ============================================================
 def _weight_of(row, weighting, is_event):
     key = row["event_type"] if is_event else row["category"]
     return float(weighting.get(key, 1.0))
 
 
 def _raw(rows, weighting, is_event):
-    """{decade_label: {country: summed weight}} over the given rows."""
     out = {decade_label(lo, hi): {c: 0.0 for c in COUNTRIES} for lo, hi in DECADES}
     for r in rows:
         d = decade_of(int(r["year"]))
@@ -77,8 +108,6 @@ def _raw(rows, weighting, is_event):
 
 
 def _shares(raw):
-    """Within-decade share (N0): score(c,D) / sum over both countries. 0 if the
-    decade is empty."""
     out = {}
     for d, cc in raw.items():
         total = cc["US"] + cc["China"]
@@ -86,15 +115,29 @@ def _shares(raw):
     return out
 
 
+def _interactive_counts(est):
+    """Per-decade per-country ESTABLISHED counts by category AND by event_type —
+    the raw material scoring/score.js re-scores under any weighting."""
+    out = {}
+    for lo, hi in DECADES:
+        d = decade_label(lo, hi)
+        out[d] = {c: {"by_category": {}, "by_event": {}} for c in COUNTRIES}
+    for r in est:
+        d = decade_of(int(r["year"]))
+        if d is None or r["country"] not in COUNTRIES:
+            continue
+        bc = out[d][r["country"]]["by_category"]
+        be = out[d][r["country"]]["by_event"]
+        bc[r["category"]] = bc.get(r["category"], 0) + 1
+        be[r["event_type"]] = be.get(r["event_type"], 0) + 1
+    return out
+
+
 def compute(ledger_rows, draft_rows, weights):
-    """The single source of every number. Deterministic dict; the verifier calls
-    this and asserts equality with the committed index_output.json."""
     est = [r for r in ledger_rows if r.get("status") == "ESTABLISHED"]
     excluded_rows = [r for r in draft_rows if r.get("status") != "ESTABLISHED"]
-
     cat_w = weights["category_weightings"]
     evt_w = weights["event_weightings"]
-    # order matters for determinism / for the sensitivity min/max set
     weighting_keys = ["W0", "W1", "W2", "W3"]
 
     def shares_for(key):
@@ -103,10 +146,8 @@ def compute(ledger_rows, draft_rows, weights):
         return _shares(_raw(est, evt_w[key], is_event=True))
 
     shares_by_w = {k: shares_for(k) for k in weighting_keys}
-    primary = shares_by_w["W0"]  # primary = baseline W0 + within-decade share N0
+    primary = shares_by_w["W0"]
 
-    # --- exclusion bounds: for each decade holding excluded rows, W0-share WITH the
-    #     excluded rows counted (weighted like any row) vs WITHOUT (the primary). ---
     excl_by_decade = {}
     for r in excluded_rows:
         d = decade_of(int(r["year"]))
@@ -114,19 +155,12 @@ def compute(ledger_rows, draft_rows, weights):
             excl_by_decade.setdefault(d, []).append(r)
     exclusion = {}
     for d, rows in excl_by_decade.items():
-        with_rows = est + rows  # count the excluded rows at their W0 category weight
-        with_share = _shares(_raw(with_rows, cat_w["W0"], is_event=False))[d]
+        with_share = _shares(_raw(est + rows, cat_w["W0"], is_event=False))[d]
         gainers = sorted({r["country"] for r in rows})
-        # bias direction: excluding these rows lowers the gaining country's share
-        bias = "understates " + (" and ".join(gainers))
-        exclusion[d] = {
-            "without": primary[d],
-            "with": with_share,
-            "excluded_ids": sorted(r["id"] for r in rows),
-            "bias": bias,
-        }
+        exclusion[d] = {"without": primary[d], "with": with_share,
+                        "excluded_ids": sorted(r["id"] for r in rows),
+                        "bias": "understates " + (" and ".join(gainers))}
 
-    # --- assemble per-decade per-country series ---
     series = {}
     est_ids = {}
     for r in est:
@@ -139,154 +173,297 @@ def compute(ledger_rows, draft_rows, weights):
         for c in COUNTRIES:
             vals = [shares_by_w[k][d][c] for k in weighting_keys]
             series[d][c] = {
-                "primary": primary[d][c],
-                "sensitivity_min": _round(min(vals)),
+                "primary": primary[d][c], "sensitivity_min": _round(min(vals)),
                 "sensitivity_max": _round(max(vals)),
                 "by_weighting": {k: shares_by_w[k][d][c] for k in weighting_keys},
                 "contributing_ids": sorted(est_ids.get((d, c), [])),
             }
         series[d]["exclusion"] = exclusion.get(d)
 
-    # --- findings: decades where China's sensitivity band straddles 0.5, i.e.
-    #     defensible weightings disagree on who leads (equivalently the two bands
-    #     overlap, since shares sum to 1). These are findings, not embarrassments. ---
-    disagreement = []
-    for lo, hi in DECADES:
-        d = decade_label(lo, hi)
-        cmin = series[d]["China"]["sensitivity_min"]
-        cmax = series[d]["China"]["sensitivity_max"]
-        if cmin < 0.5 < cmax:
-            disagreement.append(d)
+    disagreement = [decade_label(lo, hi) for lo, hi in DECADES
+                    if series[decade_label(lo, hi)]["China"]["sensitivity_min"] < 0.5
+                    < series[decade_label(lo, hi)]["China"]["sensitivity_max"]]
 
-    excluded_summary = [
-        {"id": r["id"], "country": r["country"], "status": r["status"],
-         "decade": decade_of(int(r["year"]))}
-        for r in sorted(excluded_rows, key=lambda x: x["id"])
-    ]
+    excluded_summary = [{"id": r["id"], "country": r["country"], "status": r["status"],
+                         "decade": decade_of(int(r["year"]))}
+                        for r in sorted(excluded_rows, key=lambda x: x["id"])]
+
+    # --- spine (all corpus rows) + year dossiers (ESTABLISHED rows) ---
+    spine_counts = _spine_counts(draft_rows)
+    dossiers_html, dossier_card_ids = build_year_dossiers(est)
 
     result = {
         "meta": {
-            "status": "OPEN-CAVEATED",
-            "rubric": "RUBRIC v1 (notes/scoring_rubric_DESIGN.md)",
-            "weights_version": weights.get("version"),
-            "primary_weighting": "W0",
+            "status": "OPEN-CAVEATED", "rubric": "RUBRIC v1 (notes/scoring_rubric_DESIGN.md)",
+            "weights_version": weights.get("version"), "primary_weighting": "W0",
             "normalization": "N0 within-decade share",
             "gate": "Option C: all decades scored on ESTABLISHED rows only; non-ESTABLISHED rows excluded and named.",
             "decades": [decade_label(lo, hi) for lo, hi in DECADES],
             "weighting_labels": weights.get("labels", {}),
+            "category_colors": CATEGORY_COLORS,
         },
         "excluded_rows": excluded_summary,
         "disagreement_decades": disagreement,
         "series": series,
+        "counts": _interactive_counts(est),
+        "spine_counts": spine_counts,
+        "dossier_card_ids": dossier_card_ids,
     }
     result["caption"] = build_caption(result)
     result["svg"] = build_svg(result)
+    result["spine_caption"] = build_spine_caption(draft_rows, spine_counts)
+    result["spine_svg"] = build_spine_svg(draft_rows)
+    result["dossiers_html"] = dossiers_html
+    result["weigh_figure"] = build_weigh_figure(result)
     return result
 
 
 def build_caption(result):
     ex = result["excluded_rows"]
     ex_txt = "; ".join("%s (%s, %s)" % (e["id"], e["status"], e["decade"]) for e in ex)
-    # direction of bias from the single affected decade(s)
-    bias_bits = []
-    for d, s in result["series"].items():
-        if s.get("exclusion"):
-            bias_bits.append("%s in %s" % (s["exclusion"]["bias"], d))
-    bias_txt = "; ".join(sorted(set(bias_bits)))
+    bias_bits = sorted({"%s in %s" % (s["exclusion"]["bias"], d)
+                        for d, s in result["series"].items() if s.get("exclusion")})
     dis = result["disagreement_decades"]
-    dis_txt = (", ".join(dis) if dis else "none")
-    return (
-        "Constructed momentum index (OPEN-CAVEATED) - NOT a measured fact. Primary series: "
-        "baseline equal weighting W0, within-decade share N0, ESTABLISHED rows only. "
-        "EXCLUDED and not scored: " + ex_txt + " - " + bias_txt +
-        " (the whiskers on that decade show the corrected range if those rows were established). "
-        "Coloured bands span all four published weightings W0-W3; where a country's band crosses "
-        "the halfway line, defensible weightings disagree on who leads that decade - those decades "
-        "(" + dis_txt + ") are findings, not results. The final 2016-2025 bar is the last full "
-        "decade; the 2026 window is not yet closed. Re-weight it yourself: the rubric is published "
-        "and versioned in notes/scoring_rubric_DESIGN.md and scoring/weights.json."
-    )
+    return ("Constructed momentum index (OPEN-CAVEATED) - NOT a measured fact. Primary series: "
+            "baseline equal weighting W0, within-decade share N0, ESTABLISHED rows only. "
+            "EXCLUDED and not scored: " + ex_txt + " - " + "; ".join(bias_bits) +
+            " (the whiskers on that decade show the corrected range if those rows were established). "
+            "Coloured bands span all four published weightings W0-W3; where a country's band crosses "
+            "the halfway line, defensible weightings disagree on who leads that decade - those decades "
+            "(" + (", ".join(dis) if dis else "none") + ") are findings, not results. The final 2016-2025 "
+            "bar is the last full decade; the 2026 window is not yet closed. Re-weight it yourself: the "
+            "rubric is published and versioned in notes/scoring_rubric_DESIGN.md and scoring/weights.json.")
 
 
 def build_svg(result):
-    """Deterministic grouped-bar SVG: primary bars, sensitivity bands (min-max),
-    and exclusion whiskers on the affected decade. All geometry derives from the
-    rounded shares in `result` - no hand-entered coordinates that could drift."""
     decades = result["meta"]["decades"]
     W, H = 900, 380
     padL, padR, padT, padB = 48, 16, 34, 54
-    plotW = W - padL - padR
-    plotH = H - padT - padB
+    plotW, plotH = W - padL - padR, H - padT - padB
     n = len(decades)
     group_w = plotW / n
     bar_w = group_w * 0.30
     gap = group_w * 0.06
-    y0 = padT + plotH  # baseline (share 0)
+    y0 = padT + plotH
 
     def yf(share):
         return padT + plotH * (1.0 - share)
 
     COL = {"US": "#2b6cb0", "China": "#c53030"}
     BAND = {"US": "#93c5ec", "China": "#eaa0a0"}
-    parts = []
-    parts.append('<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg" '
-                 'role="img" aria-label="Constructed momentum index: per-decade within-decade share, US vs China, with sensitivity bands and 1946-1955 exclusion whiskers.">' % (W, H))
-    parts.append('<style>.ax{stroke:#9aa5b1;stroke-width:1}.gl{stroke:#e2e8f0;stroke-width:1}'
-                 '.lbl{font:11px sans-serif;fill:#4a5568}.tk{font:10px sans-serif;fill:#718096}'
-                 '.ti{font:13px sans-serif;fill:#2d3748}</style>')
-    parts.append('<text class="ti" x="%d" y="16">Momentum index (OPEN-CAVEATED): within-decade share of ESTABLISHED achievements</text>' % padL)
-    # gridlines + y ticks at 0, .5, 1 (0.5 = the leadership line)
+    p = ['<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg" role="img" '
+         'aria-label="Constructed momentum index: per-decade within-decade share, US vs China, '
+         'with sensitivity bands and 1946-1955 exclusion whiskers.">' % (W, H)]
+    p.append('<style>.ax{stroke:#9aa5b1;stroke-width:1}.gl{stroke:#e2e8f0;stroke-width:1}'
+             '.lbl{font:11px sans-serif;fill:#4a5568}.tk{font:10px sans-serif;fill:#718096}'
+             '.ti{font:13px sans-serif;fill:#2d3748}</style>')
+    p.append('<text class="ti" x="%d" y="16">Momentum index (OPEN-CAVEATED): within-decade share of ESTABLISHED achievements</text>' % padL)
     for gy in (0.0, 0.5, 1.0):
         yy = yf(gy)
-        parts.append('<line class="%s" x1="%d" y1="%.1f" x2="%d" y2="%.1f"/>' %
-                     ("ax" if gy == 0.5 else "gl", padL, yy, W - padR, yy))
-        parts.append('<text class="tk" x="%d" y="%.1f" text-anchor="end">%d%%</text>' %
-                     (padL - 4, yy + 3, int(gy * 100)))
-    # bars
+        p.append('<line class="%s" x1="%d" y1="%.1f" x2="%d" y2="%.1f"/>' %
+                 ("ax" if gy == 0.5 else "gl", padL, yy, W - padR, yy))
+        p.append('<text class="tk" x="%d" y="%.1f" text-anchor="end">%d%%</text>' % (padL - 4, yy + 3, int(gy * 100)))
     for i, d in enumerate(decades):
         gx = padL + i * group_w
-        cx_center = gx + group_w / 2.0
-        parts.append('<text class="tk" x="%.1f" y="%d" text-anchor="middle">%s</text>' %
-                     (cx_center, H - padB + 16, d.replace("-", "–")))
+        cxc = gx + group_w / 2.0
+        p.append('<text class="tk" x="%.1f" y="%d" text-anchor="middle">%s</text>' % (cxc, H - padB + 16, d.replace("-", "–")))
         offs = {"US": -(bar_w + gap) / 2.0, "China": (bar_w + gap) / 2.0}
         for c in COUNTRIES:
             s = result["series"][d][c]
-            bx = cx_center + offs[c] - bar_w / 2.0
-            # sensitivity band (min..max) behind the bar
-            ytop_band = yf(s["sensitivity_max"])
-            ybot_band = yf(s["sensitivity_min"])
+            bx = cxc + offs[c] - bar_w / 2.0
+            yt, yb = yf(s["sensitivity_max"]), yf(s["sensitivity_min"])
             if s["sensitivity_max"] > s["sensitivity_min"]:
-                parts.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" opacity="0.85"/>' %
-                             (bx, ytop_band, bar_w, max(0.0, ybot_band - ytop_band), BAND[c]))
-            # primary bar
+                p.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" opacity="0.85"/>' %
+                         (bx, yt, bar_w, max(0.0, yb - yt), BAND[c]))
             yp = yf(s["primary"])
-            parts.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' %
-                         (bx, yp, bar_w, max(0.0, y0 - yp), COL[c]))
-            # exclusion whisker (if this decade/country is affected and the "with" differs)
+            p.append('<rect class="pbar" data-decade="%s" data-country="%s" x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' %
+                     (d, c, bx, yp, bar_w, max(0.0, y0 - yp), COL[c]))
             exc = result["series"][d].get("exclusion")
             if exc and exc["with"][c] != exc["without"][c]:
-                y_with = yf(exc["with"][c])
-                y_wo = yf(exc["without"][c])
+                yw, ywo = yf(exc["with"][c]), yf(exc["without"][c])
                 wx = bx + bar_w / 2.0
-                parts.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1a202c" stroke-width="1.3"/>' %
-                             (wx, min(y_with, y_wo), wx, max(y_with, y_wo)))
-                for yy in (y_with, y_wo):
-                    parts.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1a202c" stroke-width="1.3"/>' %
-                                 (wx - 3, yy, wx + 3, yy))
+                p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1a202c" stroke-width="1.3"/>' % (wx, min(yw, ywo), wx, max(yw, ywo)))
+                for yy in (yw, ywo):
+                    p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1a202c" stroke-width="1.3"/>' % (wx - 3, yy, wx + 3, yy))
+    lx, ly = padL, H - 6
+    p.append('<rect x="%d" y="%d" width="10" height="10" fill="%s"/><text class="lbl" x="%d" y="%d">US</text>' % (lx, ly - 9, COL["US"], lx + 14, ly))
+    p.append('<rect x="%d" y="%d" width="10" height="10" fill="%s"/><text class="lbl" x="%d" y="%d">China</text>' % (lx + 60, ly - 9, COL["China"], lx + 74, ly))
+    p.append('<text class="lbl" x="%d" y="%d">band = W0-W3 sensitivity; whisker = 1946-1955 exclusion; 50%% line = leadership</text>' % (lx + 140, ly))
+    p.append('</svg>')
+    return "".join(p)
+
+
+# ============================================================
+# CENTURY SPINE (mirrored unit chart; one block per corpus row)
+# ============================================================
+def _spine_counts(draft_rows):
+    out = {}
+    for r in draft_rows:
+        y = r["year"]
+        if r["country"] not in COUNTRIES:
+            continue
+        out.setdefault(y, {"US": 0, "China": 0})
+        out[y][r["country"]] += 1
+    return out
+
+
+def build_spine_caption(draft_rows, spine_counts):
+    n = len(draft_rows)
+    est = sum(1 for r in draft_rows if r["status"] == "ESTABLISHED")
+    opn = sum(1 for r in draft_rows if r["status"] == "OPEN-UNVERIFIED")
+    rep = sum(1 for r in draft_rows if r["status"] == "REPORTED")
+    us = sum(1 for r in draft_rows if r["country"] == "US")
+    cn = sum(1 for r in draft_rows if r["country"] == "China")
+    return ("The Century Spine - one block per corpus row at its anchor year, US stacking up from the "
+            "centreline and China down (1926-2026). RAW COUNTS under the published selection rule "
+            "(notes/selection_criteria.md) and its density target - a fact ABOUT THE CORPUS, not a "
+            "momentum score: %d rows (US %d, China %d), of which %d ESTABLISHED (solid), %d OPEN-UNVERIFIED "
+            "(outlined) and %d REPORTED (hatched). Colour = category (shared legend below). Amendment-4 "
+            "trajectory rows sit at their span-start year with a small forward tick. Each block links to "
+            "its year dossier (dossier.html#y-YYYY)." % (n, us, cn, est, opn, rep))
+
+
+def build_spine_svg(draft_rows):
+    W, H = 1120, 320
+    padL, padR = 44, 14
+    cy = H / 2.0
+    plotW = W - padL - padR
+    span = (YEAR_HI - YEAR_LO)
+    bh, gap = 5.0, 1.2
+    bw = 6.5
+
+    def xf(year):
+        return padL + (year - YEAR_LO) / span * plotW
+
+    rows = sorted(draft_rows, key=lambda r: (int(r["year"]), 0 if r["country"] == "US" else 1, r["id"]))
+    # stacking index per (year, country)
+    stack = {}
+    p = ['<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg" role="img" '
+         'aria-label="The Century Spine: one block per corpus achievement 1926-2026, US above the '
+         'centreline and China below, coloured by category and textured by verification label.">' % (W, H)]
+    p.append('<defs><pattern id="rep-hatch" width="4" height="4" patternTransform="rotate(45)" '
+             'patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="4" stroke="#ffffff" '
+             'stroke-width="1.4" opacity="0.9"/></pattern></defs>')
+    p.append('<style>.ax{stroke:#9aa5b1;stroke-width:1}.tk{font:9px sans-serif;fill:#718096}'
+             '.ti{font:13px sans-serif;fill:#2d3748}.cl{font:10px sans-serif;fill:#4a5568}</style>')
+    p.append('<text class="ti" x="%d" y="15">The Century Spine — one block per achievement, US above / China below</text>' % padL)
+    # centreline + decade ticks
+    p.append('<line class="ax" x1="%d" y1="%.1f" x2="%d" y2="%.1f"/>' % (padL, cy, W - padR, cy))
+    for yr in range(1930, 2027, 10):
+        xx = xf(yr)
+        p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#e2e8f0"/>' % (xx, 24, xx, H - 40))
+        p.append('<text class="tk" x="%.1f" y="%.1f" text-anchor="middle">%d</text>' % (xx, H - 28, yr))
+    p.append('<text class="tk" x="%.1f" y="%.1f">US &#8593;</text>' % (padL, 30))
+    p.append('<text class="tk" x="%.1f" y="%.1f">China &#8595;</text>' % (padL, H - 46))
+    for r in rows:
+        yr = int(r["year"])
+        c = r["country"]
+        cat = r["category"]
+        col = CATEGORY_COLORS.get(cat, "#888")
+        k = stack.get((yr, c), 0)
+        stack[(yr, c)] = k + 1
+        x = xf(yr) - bw / 2.0
+        if c == "US":
+            y = cy - (k + 1) * bh - k * gap - 1
+        else:
+            y = cy + k * (bh + gap) + 1
+        st = r["status"]
+        if st == "ESTABLISHED":
+            rect = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (x, y, bw, bh, col)
+        elif st == "REPORTED":
+            rect = ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>'
+                    '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#rep-hatch)"/>' %
+                    (x, y, bw, bh, col, x, y, bw, bh))
+        else:  # OPEN-UNVERIFIED
+            rect = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="none" stroke="%s" stroke-width="1.1"/>' % (x, y, bw, bh, col)
+        tick = ""
+        if r.get("year_precision") == "range":
+            tick = '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="0.8" opacity="0.8"/>' % (x + bw, y + bh / 2.0, x + bw + 5, y + bh / 2.0, col)
+        title = _esc("%s %d %s/%s [%s]" % (r["id"], yr, cat, r["event_type"], st))
+        p.append('<a href="dossier.html#y-%d"><title>%s</title>%s%s</a>' % (yr, title, rect, tick))
     # legend
     lx = padL
-    ly = H - 6
-    parts.append('<rect x="%d" y="%d" width="10" height="10" fill="%s"/><text class="lbl" x="%d" y="%d">US</text>' % (lx, ly - 9, COL["US"], lx + 14, ly))
-    parts.append('<rect x="%d" y="%d" width="10" height="10" fill="%s"/><text class="lbl" x="%d" y="%d">China</text>' % (lx + 60, ly - 9, COL["China"], lx + 74, ly))
-    parts.append('<text class="lbl" x="%d" y="%d">band = W0-W3 sensitivity; whisker = 1946-1955 exclusion; 50%% line = leadership</text>' % (lx + 140, ly))
-    parts.append('</svg>')
-    return "".join(parts)
+    ly = H - 12
+    for i, cat in enumerate(CATEGORIES):
+        cxx = lx + i * 118
+        p.append('<rect x="%.1f" y="%.1f" width="9" height="9" fill="%s"/><text class="cl" x="%.1f" y="%.1f">%s</text>' %
+                 (cxx, ly - 8, CATEGORY_COLORS[cat], cxx + 12, ly, CATEGORY_SHORT[cat]))
+    p.append('<text class="cl" x="%.1f" y="%.1f">solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · tick = trajectory (span-start)</text>' % (lx, ly + 14))
+    p.append('</svg>')
+    return "".join(p)
 
 
-def build_figure_block(result):
-    """The exact <figure> to inline in the source (between the chart markers)."""
-    return ('<figure class="chart">\n' + result["svg"] +
-            '\n<figcaption class="lf-caption">' + result["caption"] + '</figcaption>\n</figure>')
+# ============================================================
+# YEAR DOSSIERS (per-decade <details>, per-year anchors, per-row cards)
+# ============================================================
+def build_year_dossiers(est_rows):
+    by_year = {}
+    for r in est_rows:
+        by_year.setdefault(int(r["year"]), []).append(r)
+    card_ids = sorted(r["id"] for r in est_rows)
+    out = ['<div class="year-dossiers">']
+    out.append('<p class="yd-intro">One card per ESTABLISHED ledger row, grouped by decade and year. '
+               'Deep-linkable: every year heading is an anchor (<span class="mono">#y-YYYY</span>) that the '
+               'Century Spine links into. This mirrors <span class="mono">claim_ledger.csv</span> exactly.</p>')
+    for lo, hi in DECADES:
+        years = sorted(y for y in by_year if lo <= y <= hi)
+        if not years:
+            continue
+        ndec = sum(len(by_year[y]) for y in years)
+        out.append('<details class="yd-decade"><summary>%d–%d <span class="yd-n">%d</span></summary>' % (lo, hi, ndec))
+        for y in years:
+            out.append('<h4 class="yd-year" id="y-%d">%d</h4>' % (y, y))
+            for r in sorted(by_year[y], key=lambda x: x["id"]):
+                out.append(
+                    '<div class="yd-card" data-row="%s" id="card-%s">'
+                    '<div class="yd-head"><span class="yd-id mono">%s</span>'
+                    '<span class="yd-chip yd-est">ESTABLISHED</span>'
+                    '<span class="yd-country">%s</span></div>'
+                    '<p class="yd-claim">%s</p>'
+                    '<div class="yd-meta mono">%s · %s · source: %s</div>'
+                    '</div>' % (
+                        _esc(r["id"]), _esc(r["id"]), _esc(r["id"]), _esc(r["country"]),
+                        _esc(r.get("claim", r.get("claim_text", ""))),
+                        _esc(r["category"]), _esc(r["event_type"]), _esc(r.get("source_class", "")),
+                    ))
+        out.append('</details>')
+    out.append('</div>')
+    return "\n".join(out), card_ids
+
+
+# ============================================================
+# I/O + injection
+# ============================================================
+# ============================================================
+# WEIGH IT YOURSELF (client-side instrument; scoring math = scoring/score.js)
+# ============================================================
+def build_weigh_figure(result):
+    payload = {
+        "decades": result["meta"]["decades"],
+        "counts": result["counts"],
+        "weights": _load_weights_public(),
+        "categories": CATEGORIES,
+        "geometry": {"padT": MOM_PADT, "plotH": MOM_PLOTH, "y0": MOM_Y0},
+    }
+    sliders = "".join(
+        '<label class="wy-row"><span class="wy-cat" style="color:%s">%s</span>'
+        '<input type="range" class="wy-slider" data-cat="%s" min="0.5" max="2" step="0.1" value="1" '
+        'aria-label="weight for %s"/><output class="wy-val" data-cat="%s">1.0</output></label>'
+        % (CATEGORY_COLORS[c], CATEGORY_SHORT[c], c, CATEGORY_SHORT[c], c) for c in CATEGORIES)
+    presets = "".join('<button type="button" class="wy-preset" data-preset="%s">%s</button>' % (k, k)
+                      for k in ("W0", "W1", "W2", "W3"))
+    return (
+        '<figure class="weigh" id="weigh-it">'
+        '<div class="wy-head"><b>Weigh it yourself</b> — <span class="wy-sub">constructed index — '
+        'adjust the rubric yourself</span></div>'
+        '<div class="wy-presets">Presets: ' + presets + '</div>'
+        '<div class="wy-sliders">' + sliders + '</div>'
+        '<script type="application/json" id="index-counts">' + json.dumps(payload, ensure_ascii=False) + '</script>'
+        '<figcaption class="lf-caption">Interactive re-weighting of the momentum chart above (needs JavaScript). '
+        'With JS off, the chart shows the baseline W0 and this control is inert — the static figure is complete. '
+        'W3 uses event-type weighting; the sliders show category weights. Nothing here changes a row\'s '
+        'verification status; it only re-scores the constructed, OPEN-CAVEATED index.</figcaption>'
+        '</figure>')
 
 
 def load_all():
@@ -295,20 +472,30 @@ def load_all():
     return _read_csv(LEDGER), _read_csv(DRAFT), weights
 
 
-def _inject_figure(result):
-    with open(SOURCE, encoding="utf-8") as fh:
+def _inject(path, start, end, block):
+    with open(path, encoding="utf-8") as fh:
         src = fh.read()
-    start, end = "<!--chart:start-->", "<!--chart:end-->"
     i, j = src.find(start), src.find(end)
     if i < 0 or j < 0:
-        raise SystemExit("compute_index: chart markers not found in editions/index.source.html")
-    block = start + "\n" + build_figure_block(result) + "\n" + end
-    new = src[:i] + block + src[j + len(end):]
+        raise SystemExit("compute_index: markers %s/%s not found in %s" % (start, end, os.path.relpath(path, ROOT)))
+    new = src[:i] + start + "\n" + block + "\n" + end + src[j + len(end):]
     if new != src:
-        with open(SOURCE, "w", encoding="utf-8") as fh:
+        with open(path, "w", encoding="utf-8") as fh:
             fh.write(new)
         return True
     return False
+
+
+def _figure_block(svg, caption, cls):
+    return ('<figure class="%s">\n' % cls + svg +
+            '\n<figcaption class="lf-caption">' + caption + '</figcaption>\n</figure>')
+
+
+def _load_weights_public():
+    with open(WEIGHTS, encoding="utf-8") as fh:
+        w = json.load(fh)
+    return {"category_weightings": w["category_weightings"],
+            "event_weightings": w["event_weightings"], "labels": w.get("labels", {})}
 
 
 if __name__ == "__main__":
@@ -317,7 +504,16 @@ if __name__ == "__main__":
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
-    injected = _inject_figure(result)
-    print("compute_index: wrote %s (%d decades)%s" %
-          (os.path.relpath(OUT, ROOT), len(result["meta"]["decades"]),
-           "; injected figure into source" if injected else "; figure already current"))
+    changed = []
+    if _inject(SOURCE, "<!--chart:start-->", "<!--chart:end-->",
+               _figure_block(result["svg"], result["caption"], "chart")):
+        changed.append("chart")
+    if _inject(SOURCE, "<!--spine:start-->", "<!--spine:end-->",
+               _figure_block(result["spine_svg"], result["spine_caption"], "chart spine")):
+        changed.append("spine")
+    if _inject(SOURCE, "<!--weigh:start-->", "<!--weigh:end-->", result["weigh_figure"]):
+        changed.append("weigh")
+    if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
+        changed.append("dossiers")
+    print("compute_index: wrote %s; injected: %s" %
+          (os.path.relpath(OUT, ROOT), ", ".join(changed) if changed else "nothing new"))

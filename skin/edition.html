@@ -245,6 +245,26 @@
   @media (prefers-reduced-motion:no-preference){
     .lbx img{transition:transform .2s ease}
   }
+  /* inline-SVG figures (momentum chart, century spine): full-width, click-to-expand */
+  figure > svg{display:block;width:100%;height:auto;cursor:zoom-in}
+  .lbx-svg{
+    display:none; max-width:min(1180px,96vw); max-height:92vh; overflow:auto;
+    background:var(--card); border-radius:var(--r-lg); box-shadow:var(--shadow-lift); padding:12px;
+  }
+  .lbx-svg svg{width:100%;height:auto}
+  /* "Weigh it yourself" instrument */
+  figure.weigh{padding:14px 16px 12px}
+  .wy-head{font-family:var(--mono);font-size:13px;margin-bottom:8px}
+  .wy-head b{color:var(--teal)} .wy-sub{color:var(--ink2)}
+  .wy-presets{font-family:var(--mono);font-size:12px;margin-bottom:10px;color:var(--ink2)}
+  .wy-preset{font-family:var(--mono);font-size:12px;margin:0 3px;padding:3px 9px;border:1px solid var(--line);background:var(--card);border-radius:var(--r-pill);cursor:pointer;color:var(--ink)}
+  .wy-preset:hover{border-color:var(--teal);color:var(--teal)}
+  .wy-sliders{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}
+  .wy-row{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px}
+  .wy-cat{flex:0 0 82px}
+  .wy-slider{flex:1;min-width:0}
+  .wy-val{flex:0 0 30px;text-align:right;color:var(--ink2)}
+  @media(max-width:560px){.wy-sliders{grid-template-columns:1fr}}
 
   /* ===== lineage strip (hidden until lineage.json has chapters) ===== */
   .lineage-strip{
@@ -615,40 +635,112 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
 <!--/chrome-bar-->
 <div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Figure, full size" aria-hidden="true">
   <img id="lbx-img" alt="">
+  <div class="lbx-svg" id="lbx-svg" aria-hidden="true"></div>
 </div>
 <script>
 (function(){
   var lbx = document.getElementById('lbx');
   var lbxImg = document.getElementById('lbx-img');
-  if(!lbx || !lbxImg) return;
+  var lbxSvg = document.getElementById('lbx-svg');
+  if(!lbx || !lbxImg || !lbxSvg) return;
   var imgs = document.querySelectorAll('figure img');
-  if(!imgs.length) return;            // INERT when there are no figures
+  // inline-SVG figures (momentum chart, century spine) — direct child <svg> only, so
+  // small inline icons or the instrument's controls never become lightbox targets.
+  var svgs = document.querySelectorAll('figure > svg');
+  if(!imgs.length && !svgs.length) return;   // INERT when there are no figures
   var lastFocus = null;
-  function open(src, alt){
+  function openImg(src, alt){
     lastFocus = document.activeElement;
+    lbxSvg.style.display='none'; lbxImg.style.display='block';
     lbxImg.src = src; lbxImg.alt = alt || '';
+    lbx.classList.add('open'); lbx.setAttribute('aria-hidden','false');
+    lbx.tabIndex = -1; lbx.focus();
+  }
+  function openSvg(svg){
+    lastFocus = document.activeElement;
+    var clone = svg.cloneNode(true);
+    clone.removeAttribute('role'); clone.removeAttribute('tabindex'); clone.style.cursor='';
+    lbxSvg.innerHTML=''; lbxSvg.appendChild(clone);
+    lbxImg.style.display='none'; lbxSvg.style.display='block';
     lbx.classList.add('open'); lbx.setAttribute('aria-hidden','false');
     lbx.tabIndex = -1; lbx.focus();
   }
   function close(){
     lbx.classList.remove('open'); lbx.setAttribute('aria-hidden','true');
-    lbxImg.src = '';
+    lbxImg.src=''; lbxSvg.innerHTML=''; lbxSvg.style.display='none';
     if(lastFocus && lastFocus.focus) lastFocus.focus();
   }
   imgs.forEach(function(img){
-    img.setAttribute('role','button');
-    img.setAttribute('tabindex','0');
-    if(!img.getAttribute('aria-label'))
-      img.setAttribute('aria-label','View figure full size');
-    img.addEventListener('click', function(){ open(img.currentSrc||img.src, img.alt); });
+    img.setAttribute('role','button'); img.setAttribute('tabindex','0');
+    if(!img.getAttribute('aria-label')) img.setAttribute('aria-label','View figure full size');
+    img.addEventListener('click', function(){ openImg(img.currentSrc||img.src, img.alt); });
     img.addEventListener('keydown', function(e){
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(img.currentSrc||img.src, img.alt); }
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openImg(img.currentSrc||img.src, img.alt); }
     });
   });
-  lbx.addEventListener('click', close);   // backdrop OR image click closes (cursor:zoom-out)
+  svgs.forEach(function(svg){
+    svg.setAttribute('role','button'); svg.setAttribute('tabindex','0');
+    svg.addEventListener('click', function(){ openSvg(svg); });
+    svg.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openSvg(svg); }
+    });
+  });
+  lbx.addEventListener('click', close);   // backdrop click closes (cursor:zoom-out)
   document.addEventListener('keydown', function(e){
     if(e.key==='Escape' && lbx.classList.contains('open')) close();
   });
+})();
+</script>
+<!-- Weigh it yourself: client-side re-scoring of the momentum chart. Scoring math is
+     scoring/score.js (the SAME module the JS/Python agreement test checks); this block
+     only wires the controls. No-ops with JS off or when #index-counts is absent. -->
+<script src="scoring/score.js"></script>
+<script>
+(function(){
+  if(typeof DossierScore==='undefined') return;
+  var el=document.getElementById('index-counts'); if(!el) return;
+  var data; try{ data=JSON.parse(el.textContent); }catch(e){ return; }
+  var counts=data.counts, geo=data.geometry, W=data.weights;
+  var pbars=document.querySelectorAll('.chart svg .pbar');
+  if(!pbars.length || !geo) return;
+  function yf(s){ return geo.padT + geo.plotH*(1-s); }
+  function apply(weights, isEvent){
+    var shares=DossierScore.computeShares(counts, weights, isEvent);
+    pbars.forEach(function(r){
+      var d=r.getAttribute('data-decade'), c=r.getAttribute('data-country');
+      var s=(shares[d]&&shares[d][c]!=null)?shares[d][c]:0;
+      var y=yf(s); r.setAttribute('y', y.toFixed(1));
+      r.setAttribute('height', Math.max(0,(geo.y0-y)).toFixed(1));
+    });
+  }
+  function sliderWeights(){
+    var w={};
+    document.querySelectorAll('.wy-slider').forEach(function(s){
+      var c=s.getAttribute('data-cat'); w[c]=parseFloat(s.value);
+      var o=document.querySelector('.wy-val[data-cat="'+c+'"]'); if(o) o.textContent=parseFloat(s.value).toFixed(1);
+    });
+    return w;
+  }
+  document.querySelectorAll('.wy-slider').forEach(function(s){
+    s.addEventListener('input', function(){ apply(sliderWeights(), false); });
+  });
+  document.querySelectorAll('.wy-preset').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p=b.getAttribute('data-preset');
+      if(W.category_weightings[p]){
+        var cw=W.category_weightings[p];
+        document.querySelectorAll('.wy-slider').forEach(function(s){
+          var c=s.getAttribute('data-cat'); s.value=(cw[c]!=null?cw[c]:1);
+        });
+        apply(sliderWeights(), false);
+      } else if(W.event_weightings[p]){
+        document.querySelectorAll('.wy-slider').forEach(function(s){ s.value=1; });
+        sliderWeights();
+        apply(W.event_weightings[p], true);   // W3 = event-type weighting
+      }
+    });
+  });
+  apply(W.category_weightings.W0, false);   // init at baseline (== the baked static bars)
 })();
 </script>
 <!--chrome-strip-->
