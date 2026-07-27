@@ -265,6 +265,60 @@ question must not be read off either one's raw coverage.
 | Tiangong (space) | 2022 (CN-2022-1, completed station) | 2011 & 2016 (`tiangong-1`, `tiangong-2`) | Same program, different modules: **2011/2016 precursor labs** vs **2022 completed station**. |
 | Communications satellite | 1962 (US-1962-1, Telstar, first *active*) | 1965 (`first commercial satellite`) | Possibly different satellites (Telstar 1962 experimental vs Early Bird 1965 first *commercial*); flagged as a near-miss. |
 
+### §D addendum — resolutions under the event-anchoring rule (Amendment 3)
+
+Each conflict below is resolved by naming the **event_type each source anchored
+to**. Headline: **all nine resolve with no change to any existing ledger year** —
+the ledger was consistently anchored to the correct in-scope event; the author's
+differing dates are a *different anchor type*, an *out-of-scope discovery anchor*,
+or a *different entity/generation*. Two are two-anchor cases where a second row is
+permissible but deferred (not on this pass's adjudicated add-list).
+
+1. **Xerography.** Ledger `US-1938-1` anchors to **invention** (Carlson's first
+   xerographic image, 1938). Author's 1959 is the **commercial-deployment** anchor
+   (Xerox 914). → Keep 1938; the 1959 deployment is a distinct anchor, not added.
+2. **Penicillin.** Ledger `US-1943-1` anchors to **commercial-deployment** (US
+   deep-tank mass production, 1943). Author's 1928 is the **discovery** anchor —
+   Fleming, **British → out of scope**. → Attribution confirmed; 1928 is a
+   different anchor *and* a different country, so not a ledger row. No change.
+3. **Oral contraceptive pill.** Ledger `US-1960-2` anchors to
+   **commercial-deployment** (FDA approval, 1960). Author's 1950 is pre-approval
+   R&D — no discrete anchor event in 1950. → Keep 1960.
+4. **Atari.** Ledger `US-1977-2` anchors to **commercial-deployment** (Atari 2600
+   console, 1977). Author's 1972 is the **founding** anchor (the company). → Two
+   distinct anchors; ledger holds the console (the more decisive event); the 1972
+   founding is a permissible second row, deferred.
+5. **Genentech / biotech.** Ledger `US-1980-1` anchors to a **milestone** (Bayh-Dole
+   Act + IPO, the 1980 industry-launch). Author's 1976 is the **founding** anchor
+   (the firm). → Ledger keeps the 1980 industry-launch framing; 1976 founding is a
+   distinct candidate anchor, deferred.
+6. **GPS.** The ledger already carries **two** anchors: `US-1978-1`
+   **first-flight/launch** (first Navstar satellite, 1978) and `US-1995-3`
+   **commercial-deployment** (full operational capability, 1995). Author's single
+   "1990" maps to neither discrete anchor (mid-buildout). → The two-anchor
+   treatment is exactly correct; no third row, no change.
+7. **Tianhe supercomputer.** Ledger `CN-2013-2` anchors to a **milestone**
+   (Tianhe-2 becomes world's fastest, 2013). Author's "tianhe" 2021 most likely
+   denotes a **later Tianhe machine** (a different completion/ranking event). →
+   Keep the 2013 ranking; a later Tianhe would be its own anchor, not added.
+8. **Tiangong.** Ledger `CN-2022-1` anchors to **completion** (completed station,
+   2022). Author's 2011/2016 are Tiangong-1/-2 precursor labs. → **Not a conflict**
+   — this is the canonical two-anchor case: the **first space lab** (Tiangong-1,
+   first-flight/launch, 2011) and the **completed station** (completion, 2022) are
+   distinct achievements. Ledger holds the completed-station anchor; the
+   first-lab anchor is a permissible second row, deferred (not on the add-list).
+9. **Communications satellite.** Ledger `US-1962-1` anchors to
+   **first-flight/launch** of **Telstar** (first *active* comms satellite, 1962).
+   Author's 1965 "first commercial satellite" is a **different satellite** (Intelsat I /
+   Early Bird, first *commercial* comms satellite). → Two different achievements
+   (first active vs first commercial); ledger keeps Telstar, Early Bird deferred.
+
+**Net effect on the ledger:** 0 year changes, 0 rows removed. Anchoring converted
+what looked like nine date disputes into: 5 confirmations of the ledger's existing
+anchor, 1 out-of-scope re-attribution confirmed (penicillin discovery), 1
+already-correct two-anchor case (GPS), and 2 deferred second-anchor candidates
+(Tiangong first-lab, and the Atari/Genentech founding anchors).
+
 ---
 
 ## §Stats — match rate per country per decade
