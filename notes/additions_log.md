@@ -279,3 +279,15 @@ justification (freeze rules); three refiled at span-start, two given explicit sp
 
 **Corpus totals unchanged:** 271 rows (US 143, China 128); 169 ESTABLISHED, 101
 OPEN-UNVERIFIED, 1 REPORTED.
+
+---
+
+## Removal — straggler sweep (2026-07-27)
+
+Author pre-authorized. **CN-2003-3 REMOVED** ("workshop of the world" — diffuse
+status phrase, no crisp 2003 anchor), superseded by its anchored twin **CN-2010-2**
+(world's largest manufacturing nation, 2010, UN data) — the Ding County → Zouping
+precedent. Tombstoned in `notes/removed_rows.md`.
+
+**Net:** −1 (a China OPEN-UNVERIFIED row). Corpus 271 → **270** (US 143, China 127).
+Census 266/4/1 → **266/3/1**.

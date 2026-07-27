@@ -153,11 +153,11 @@ check("Ledger S3: draft ESTABLISHED set reconciles with ledger set",
 # the avenue theses in avenues.json, and the baked console verdict. The label
 # CARRIES the numbers, so any change to a count must be made here AND in the
 # manuscript in the same commit (the CLAUDE.md lockstep rule) or CI goes red.
-_EXPECTED_CENSUS = (266, 4, 1)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
+_EXPECTED_CENSUS = (266, 3, 1)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
 _est_n = sum(1 for r in _ledger_rows if r.get("status") == "ESTABLISHED")
 _open_n = sum(1 for r in _draft_rows if r.get("status") == "OPEN-UNVERIFIED")
 _rep_n = sum(1 for r in _draft_rows if r.get("status") == "REPORTED")
-check("Census: 266 ESTABLISHED / 4 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)",
+check("Census: 266 ESTABLISHED / 3 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)",
       0 if (_est_n, _open_n, _rep_n) == _EXPECTED_CENSUS else 1, 0, 0)
 
 # ----------------------------------------------------------------

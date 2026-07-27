@@ -4,17 +4,17 @@ An Open Dossier · **China-vs-US-001**
 
 *Irfan Ali Khan — Independent Researcher*
 
-This dossier is a two-country **achievement ledger**: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer (the planned per-year comparative chart) stays gated behind full verification and is **not computed here**. The honest state today: 271 candidate rows, 266 ESTABLISHED, the rest labeled OPEN-UNVERIFIED or REPORTED and posted as open challenges. **Don't trust this paper — run it.**
+This dossier is a two-country **achievement ledger**: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer (the planned per-year comparative chart) stays gated behind full verification and is **not computed here**. The honest state today: 270 candidate rows, 266 ESTABLISHED, the rest labeled OPEN-UNVERIFIED or REPORTED and posted as open challenges. **Don't trust this paper — run it.**
 
 ## Avenues
 
 | Avenue | Thesis | Status | Forecast | Sources |
 |---|---|---|---|---|
-| The achievement ledger | A 271-row, event-anchored, per-row-verified corpus of US and Chinese achievements 1926–2026; 266 rows ESTABLISHED under a published promotion standard, with the full 1926–2025 chronological corpus now processed. | ESTABLISHED | — | verification_ritual.md, selection_criteria.md |
+| The achievement ledger | A 270-row, event-anchored, per-row-verified corpus of US and Chinese achievements 1926–2026; 266 rows ESTABLISHED under a published promotion standard, with the full 1926–2025 chronological corpus now processed. | ESTABLISHED | — | verification_ritual.md, selection_criteria.md |
 | Coverage shape | Facts about the corpus under the published selection rule: US coverage is steady and invention/deployment-heavy; China's is thin early, rises late, and is completion/milestone-heavy. A statement about the ledger — NOT a momentum verdict about the world. | ESTABLISHED | — | coverage_report.md, selection_criteria.md |
 | The momentum index | Designed, gated, and not run: no decade scores while the corpus still holds OPEN-UNVERIFIED rows. Rubric + sensitivity analysis committed as design only; the chart will be OPEN-CAVEATED when it exists, never higher. | OPEN-UNVERIFIED | — | scoring_rubric_DESIGN.md |
 | Early-century China floor | 1926–1945 China coverage is a floor, not a fact — real historical thinness compounded by English-language source bias. Posted as an open challenge: readers who know this literature can raise it, for named credit. | OPEN-UNVERIFIED | — | coverage_report.md |
-| Verification in progress | Live status: 266 ESTABLISHED, 4 OPEN-UNVERIFIED, 1 REPORTED. Batches 1–10 processed the full 1926–2025 chronological corpus; the 4 remaining OPEN rows are early stragglers held for a second independent source or a crisp anchor (the 2026 window is not yet closed). | OPEN-UNVERIFIED | — | claim_ledger.csv, verification_log.md |
+| Verification in progress | Live status: 266 ESTABLISHED, 3 OPEN-UNVERIFIED, 1 REPORTED. Batches 1–10 processed the full 1926–2025 chronological corpus; a straggler sweep then removed one un-anchorable row. The 3 remaining OPEN rows are early industrial/infrastructure stragglers held for a second independent source or a crisp anchor (the 2026 window is not yet closed). | OPEN-UNVERIFIED | — | claim_ledger.csv, verification_log.md |
 
 ## Consistency checks
 
@@ -26,7 +26,7 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Ledger S1: every draft row has a valid status
 - [PASS] Ledger S2: every ESTABLISHED ledger row meets the source standard
 - [PASS] Ledger S3: draft ESTABLISHED set reconciles with ledger set
-- [PASS] Census: 266 ESTABLISHED / 4 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)
+- [PASS] Census: 266 ESTABLISHED / 3 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)
 
 **TOTAL: 7 checks · 7 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
@@ -42,7 +42,7 @@ This dossier's bet is that the useful thing to publish is not another verdict bu
 
 ## 02 WHAT'S ESTABLISHED — THE CORPUS AND ITS DISCIPLINES
 
-The corpus is 271 candidate rows spanning 1926–2026, split between the US and China. Each row is **event-anchored** — tied to one specific dateable event (a founding, a first flight or launch, a completion, a commercial deployment, a discovery, a milestone) rather than a vague "era". A row becomes ESTABLISHED only when it clears a published promotion standard, held in `notes/verification_ritual.md`: a precise falsifiable claim; at least one qualifying independent source (or two independent journalistic/encyclopedic ones); its date confirmed against that specific anchor; and any conflicting US/Chinese figures recorded rather than silently adjudicated. 266 rows have cleared that bar, and the full 1926–2025 chronological corpus has now been processed.
+The corpus is 270 candidate rows spanning 1926–2026, split between the US and China. Each row is **event-anchored** — tied to one specific dateable event (a founding, a first flight or launch, a completion, a commercial deployment, a discovery, a milestone) rather than a vague "era". A row becomes ESTABLISHED only when it clears a published promotion standard, held in `notes/verification_ritual.md`: a precise falsifiable claim; at least one qualifying independent source (or two independent journalistic/encyclopedic ones); its date confirmed against that specific anchor; and any conflicting US/Chinese figures recorded rather than silently adjudicated. 266 rows have cleared that bar, and the full 1926–2025 chronological corpus has now been processed.
 
 The selection rule, in `notes/selection_criteria.md`, is country-neutral by construction: a category is assigned by a claim's primary significance, not by which country produced it, so the same test that files a US firm's founding files a Chinese one. Three disciplines guard the sensitive cases. The **event/magnitude split**: a reform's occurrence can be ESTABLISHED while its contested output figure is caveated — China's reform-era poverty reduction, for instance, is asserted on the World Bank's independent series [World Bank], with China's own poverty-line count noted alongside rather than blended in. **Data-integrity**: where US and Chinese figures for one quantity conflict, both are shown. And a **trajectory rule**: a multi-year cumulative achievement may stand as a single row only under an independently-maintained series, an explicit span written into the claim, and filing at the span's start year — so a mid-span marker can never masquerade as a discrete event.
 
@@ -58,7 +58,7 @@ The landscape above carries five cards. Two are ESTABLISHED and asserted plainly
 
 ### The achievement ledger — ESTABLISHED
 
-The ledger itself — 271 rows, event-anchored, per-row-verified, 266 ESTABLISHED under the promotion standard — is the dossier's spine and its most finished part. It is asserted directly, because documented, dated, sourced achievements are bedrock, and timidity about them would be its own dishonesty.
+The ledger itself — 270 rows, event-anchored, per-row-verified, 266 ESTABLISHED under the promotion standard — is the dossier's spine and its most finished part. It is asserted directly, because documented, dated, sourced achievements are bedrock, and timidity about them would be its own dishonesty.
 
 ### Coverage shape — ESTABLISHED (about the corpus)
 
@@ -76,7 +76,7 @@ Where the dossier would offer a scoreboard, it instead offers a gated design and
 
 ### Verification in progress — OPEN
 
-> **OPEN-UNVERIFIED** — **Live status: 266 ESTABLISHED, 4 OPEN-UNVERIFIED, 1 REPORTED.** Verification ran in chronological batches of about twenty-five rows; batches one through ten have now processed the full 1926–2025 corpus. Just four rows remain open — the early stragglers held for a second independent source or a crisp anchor: the Rong-family cotton-textile firms, `CN-1930-1`; the wartime relocation of industry and universities, `CN-1940-1`; the Chengdu–Chongqing Railway, `CN-1952-1`; and the "workshop of the world" status claim, `CN-2003-3`, whose crisp datable twin (world's-largest manufacturer, 2010) is itself ESTABLISHED. The 2026 window is not yet closed — the final months simply have not happened. The console above shows the current count.
+> **OPEN-UNVERIFIED** — **Live status: 266 ESTABLISHED, 3 OPEN-UNVERIFIED, 1 REPORTED.** Verification ran in chronological batches of about twenty-five rows; batches one through ten have now processed the full 1926–2025 corpus, and a dedicated straggler sweep then re-sourced the leftovers — removing one un-anchorable status claim ("workshop of the world," superseded by its dateable twin, the 2010 world's-largest-manufacturer row). Three rows remain open, each an early industrial or infrastructure entry held honestly open for a second independent source or a crisp anchor: the Rong-family cotton-textile firms, `CN-1930-1`; the wartime relocation of industry and universities, `CN-1940-1`; and the Chengdu–Chongqing Railway, `CN-1952-1` (its July 1952 opening is uncontested, but web re-sourcing surfaced only interested-party accounts alongside one independent reference — the standard biting on a true fact). The 2026 window is not yet closed — the final months simply have not happened. The console above shows the current count.
 
 ## 04 WHAT WOULD SETTLE THE OPEN QUESTIONS
 
