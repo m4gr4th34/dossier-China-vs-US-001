@@ -30,13 +30,13 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I1: scoring/index_output.json matches a fresh recompute from the ledger
 - [PASS] Index I2: every excluded (non-ESTABLISHED) row is named in the chart caption
 - [PASS] Index I3: every sensitivity band contains its primary score
-- [PASS] Index I4: index_output.json caption + SVG are present verbatim in index.html
+- [PASS] Index I4: momentum data-figure spec present verbatim in index.html
 - [PASS] Index I5: Century Spine block counts per year per country == the corpus
-- [PASS] Index I6: every spine block href resolves to a year anchor in dossier.html
-- [PASS] Index I7: Century Spine SVG present verbatim in index.html
+- [PASS] Index I6: every spine block year resolves to a year anchor in dossier.html
+- [PASS] Index I7: Century Spine data-figure spec present verbatim in index.html
 - [PASS] Index I8: year-dossier cards reconcile exactly with the ESTABLISHED ledger
 - [PASS] Index I9: year dossiers present verbatim in dossier.html
-- [PASS] Index I10: Weigh-it-yourself figure present verbatim in index.html
+- [PASS] Index I10: spine density silhouette recomputes exactly from the corpus (rolling window)
 
 **TOTAL: 17 checks · 17 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
@@ -60,7 +60,7 @@ The shape of the corpus is itself a set of ESTABLISHED facts — but facts **abo
 
 The corpus is easier to grasp as a picture than a table. The **Century Spine** below plants one block per row at its anchor year — the US stacking up from the centreline, China down — coloured by category and textured by verification label (solid ESTABLISHED, outlined OPEN, hatched REPORTED). It is a raw-count portrait of the ledger under the selection rule, not a momentum score; every block deep-links into its year dossier on the audit-trail edition (`dossier.html#y-YYYY`).
 
-*(figure: untitled — The Century Spine - one block per corpus row at its anchor year, US stacking up from the centreline and China down (1926-2026). RAW COUNTS under the published selection rule (notes/selection_criteria.md) and its density target - a fact ABOUT THE CORPUS, not a momentum score: 270 rows (US 143, China 127), of which 268 ESTABLISHED (solid), 1 OPEN-UNVERIFIED (outlined) and 1 REPORTED (hatched). Colour = category (shared legend below). Amendment-4 trajectory rows sit at their span-start year with a small forward tick. Each block links to its year dossier (dossier.html#y-YYYY).)*
+*(figure: The Century Spine: one block per corpus achievement 1926-2026, US above the centreline and China below, coloured by category and textured by verification label, with a 7-year rolling density silhouette. — The Century Spine - one block per corpus row at its anchor year, US stacking up from the centreline and China down (1926-2026). RAW COUNTS under the published selection rule (notes/selection_criteria.md) and its density target - a fact ABOUT THE CORPUS, not a momentum score: 270 rows (US 143, China 127), of which 268 ESTABLISHED (solid), 1 OPEN-UNVERIFIED (outlined) and 1 REPORTED (hatched). Colour = category (shared legend below). Amendment-4 trajectory rows sit at their span-start year with a small forward tick. Each block links to its year dossier (dossier.html#y-YYYY). The shaded envelope is a 7-year centred rolling count per country (a PRESENTATION smoothing choice, no weights); the centreline ribbon is the US-minus-China net of that count.)*
 
 **Go deeper: the disciplines in one place**
 
@@ -84,13 +84,9 @@ Here is the scoreboard — but wearing its true label. It is a real computation 
 
 > **OPEN-CAVEATED** — **Constructed momentum index — re-weight it yourself.** The primary bars use the baseline equal weighting (a pure ESTABLISHED-count share per decade); the coloured bands span four published weightings in `scoring/weights.json`, two of them deliberately tuned to favour each country's achievement profile. Where a band crosses the halfway line, defensible weightings disagree on who led that decade — those decades are **findings, not embarrassments**. The two non-ESTABLISHED rows (the Chengyu railway and the one REPORTED figure, both China, 1946–1955) are excluded from the bars and named in the caption; their exclusion understates China in that decade, and the whiskers show the corrected range. The full rubric, its alternatives, and the era-normalization scheme are published in `notes/scoring_rubric_DESIGN.md`.
 
-*(figure: untitled — Constructed momentum index (OPEN-CAVEATED) - NOT a measured fact. Primary series: baseline equal weighting W0, within-decade share N0, ESTABLISHED rows only. EXCLUDED and not scored: CN-1952-1 (OPEN-UNVERIFIED, 1946-1955); CN-1952-2 (REPORTED, 1946-1955) - understates China in 1946-1955 (the whiskers on that decade show the corrected range if those rows were established). Coloured bands span all four published weightings W0-W3; where a country's band crosses the halfway line, defensible weightings disagree on who leads that decade - those decades (1976-1985, 1986-1995, 1996-2005) are findings, not results. The final 2016-2025 bar is the last full decade; the 2026 window is not yet closed. Re-weight it yourself: the rubric is published and versioned in notes/scoring_rubric_DESIGN.md and scoring/weights.json.)*
+*(figure: Constructed momentum index: per-decade within-decade share, US vs China, with sensitivity bands and 1946-1955 exclusion whiskers. — Constructed momentum index (OPEN-CAVEATED) - NOT a measured fact. Primary series: baseline equal weighting W0, within-decade share N0, ESTABLISHED rows only. EXCLUDED and not scored: CN-1952-1 (OPEN-UNVERIFIED, 1946-1955); CN-1952-2 (REPORTED, 1946-1955) - understates China in 1946-1955 (the whiskers on that decade show the corrected range if those rows were established). Coloured bands span all four published weightings W0-W3; where a country's band crosses the halfway line, defensible weightings disagree on who leads that decade - those decades (1976-1985, 1986-1995, 1996-2005) are findings, not results. The final 2016-2025 bar is the last full decade; the 2026 window is not yet closed. Re-weight it yourself: the rubric is published and versioned in notes/scoring_rubric_DESIGN.md and scoring/weights.json.)*
 
-Read across the decades and the honest shape is neither triumph nor decline: an American lead through the mid-century, a genuinely contested middle where the bands overlap and the baseline runs to a tie (the decades named in the caption below), and a later-decade Chinese lead — with the whole picture sliding as you change the weighting. The one thing the chart refuses to give you is a single number that settles the argument.
-
-**Don't take the baseline's word for it.** The instrument below lets you drag the six category weights, or snap to the four published presets, and watch the primary bars move in real time — the exact scoring math the verifier checks, run in your browser from the same figures. It re-scores the constructed index; it never touches a row's verification label.
-
-*(figure: untitled — Interactive re-weighting of the momentum chart above (needs JavaScript). With JS off, the chart shows the baseline W0 and this control is inert — the static figure is complete. W3 uses event-type weighting; the sliders show category weights. Nothing here changes a row's verification status; it only re-scores the constructed, OPEN-CAVEATED index.)*
+Read across the decades and the honest shape is neither triumph nor decline: an American lead through the mid-century, a genuinely contested middle where the bands overlap and the baseline runs to a tie (the decades named in the caption), and a later-decade Chinese lead — with the whole picture sliding as you change the weighting. The chart above carries its own controls: drag the six category weights or snap to the four published presets and the primary bars re-score in real time, using the exact math the verifier checks. It never touches a row's verification label — and the one thing it refuses to give you is a single number that settles the argument.
 
 ### Early-century China floor — OPEN
 

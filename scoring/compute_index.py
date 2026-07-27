@@ -11,12 +11,17 @@ the data):
     W0-W3 sensitivity bands + 1946-1955 exclusion whiskers. -> index.source.html
     <!--chart:start/end-->. Rubric: notes/scoring_rubric_DESIGN.md, scoring/weights.json.
   * CENTURY SPINE: mirrored unit chart, one block per corpus row at its year
-    (US up, China down), colour = category, texture = verification label, each block
-    a link to dossier.html#y-YYYY. -> index.source.html <!--spine:start/end-->.
+    (US up, China down), colour = category, texture = verification label, plus a
+    7-year rolling density silhouette, each block a link to dossier.html#y-YYYY.
+    -> index.source.html <!--spine:start/end-->.
   * WEIGH IT YOURSELF: the per-decade per-category/-event ESTABLISHED counts the
-    client-side instrument re-scores, embedded as #index-counts JSON. -> index.source.html
-    <!--weigh:start/end-->. The scoring math is scoring/score.js (used by both the
-    page and the JS/Python agreement test); the JS never re-implements it.
+    client-side instrument re-scores travel inside the momentum figure's data-figure
+    spec. The scoring math is scoring/score.js (used by both the page and the JS/Python
+    agreement test); the JS never re-implements it.
+
+  The momentum + spine charts are LIVING FIGURES (figures/dossierviz.js draws them;
+  render_figures bakes the JS-off poster; figures.js gives the .lf-expand lightbox).
+  This script emits only the DATA (index_output.json + the injected data-figure specs).
   * YEAR DOSSIERS: per-decade <details>, per-year anchored headings (id="y-YYYY"),
     per-achievement cards (one per ESTABLISHED ledger row). -> dossier.source.html
     <!--dossiers:start/end-->.
@@ -56,9 +61,10 @@ CATEGORY_SHORT = {
     "innovation": "innovation", "science": "science", "infrastructure": "infrastructure",
     "industrial": "industrial", "social": "social", "governmental_economic": "gov/econ",
 }
-# Momentum-chart plot geometry (MUST match build_svg: W=900 H=380 padT=34 padB=54).
-# Shared with the "Weigh it yourself" instrument so JS moves the primary bars using
-# the exact same yf() the Python renderer used.
+# Momentum-chart plot geometry (MUST match figures/dossierviz.js M.*: W=900 H=380
+# padT=34 padB=54). The SVG is drawn in JS (dossierviz.js poster emitter + live
+# renderer); this geometry is shared into the figure spec so the instrument moves
+# the primary bars using the exact same yf() the poster used.
 MOM_PADT, MOM_PLOTH, MOM_Y0 = 34, 292, 326
 
 
@@ -209,12 +215,14 @@ def compute(ledger_rows, draft_rows, weights):
         "spine_counts": spine_counts,
         "dossier_card_ids": dossier_card_ids,
     }
+    sil, sil_max = _silhouette(draft_rows)
+    result["_silhouette"] = sil
+    result["_silhouette_max"] = sil_max
     result["caption"] = build_caption(result)
-    result["svg"] = build_svg(result)
     result["spine_caption"] = build_spine_caption(draft_rows, spine_counts)
-    result["spine_svg"] = build_spine_svg(draft_rows)
     result["dossiers_html"] = dossiers_html
-    result["weigh_figure"] = build_weigh_figure(result)
+    result["momentum_spec"] = build_momentum_spec(result)
+    result["spine_spec"] = build_spine_spec(result, draft_rows)
     return result
 
 
@@ -233,64 +241,6 @@ def build_caption(result):
             "(" + (", ".join(dis) if dis else "none") + ") are findings, not results. The final 2016-2025 "
             "bar is the last full decade; the 2026 window is not yet closed. Re-weight it yourself: the "
             "rubric is published and versioned in notes/scoring_rubric_DESIGN.md and scoring/weights.json.")
-
-
-def build_svg(result):
-    decades = result["meta"]["decades"]
-    W, H = 900, 380
-    padL, padR, padT, padB = 48, 16, 34, 54
-    plotW, plotH = W - padL - padR, H - padT - padB
-    n = len(decades)
-    group_w = plotW / n
-    bar_w = group_w * 0.30
-    gap = group_w * 0.06
-    y0 = padT + plotH
-
-    def yf(share):
-        return padT + plotH * (1.0 - share)
-
-    COL = {"US": "#2b6cb0", "China": "#c53030"}
-    BAND = {"US": "#93c5ec", "China": "#eaa0a0"}
-    p = ['<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg" role="img" '
-         'aria-label="Constructed momentum index: per-decade within-decade share, US vs China, '
-         'with sensitivity bands and 1946-1955 exclusion whiskers.">' % (W, H)]
-    p.append('<style>.ax{stroke:#9aa5b1;stroke-width:1}.gl{stroke:#e2e8f0;stroke-width:1}'
-             '.lbl{font:11px sans-serif;fill:#4a5568}.tk{font:10px sans-serif;fill:#718096}'
-             '.ti{font:13px sans-serif;fill:#2d3748}</style>')
-    p.append('<text class="ti" x="%d" y="16">Momentum index (OPEN-CAVEATED): within-decade share of ESTABLISHED achievements</text>' % padL)
-    for gy in (0.0, 0.5, 1.0):
-        yy = yf(gy)
-        p.append('<line class="%s" x1="%d" y1="%.1f" x2="%d" y2="%.1f"/>' %
-                 ("ax" if gy == 0.5 else "gl", padL, yy, W - padR, yy))
-        p.append('<text class="tk" x="%d" y="%.1f" text-anchor="end">%d%%</text>' % (padL - 4, yy + 3, int(gy * 100)))
-    for i, d in enumerate(decades):
-        gx = padL + i * group_w
-        cxc = gx + group_w / 2.0
-        p.append('<text class="tk" x="%.1f" y="%d" text-anchor="middle">%s</text>' % (cxc, H - padB + 16, d.replace("-", "–")))
-        offs = {"US": -(bar_w + gap) / 2.0, "China": (bar_w + gap) / 2.0}
-        for c in COUNTRIES:
-            s = result["series"][d][c]
-            bx = cxc + offs[c] - bar_w / 2.0
-            yt, yb = yf(s["sensitivity_max"]), yf(s["sensitivity_min"])
-            if s["sensitivity_max"] > s["sensitivity_min"]:
-                p.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" opacity="0.85"/>' %
-                         (bx, yt, bar_w, max(0.0, yb - yt), BAND[c]))
-            yp = yf(s["primary"])
-            p.append('<rect class="pbar" data-decade="%s" data-country="%s" x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' %
-                     (d, c, bx, yp, bar_w, max(0.0, y0 - yp), COL[c]))
-            exc = result["series"][d].get("exclusion")
-            if exc and exc["with"][c] != exc["without"][c]:
-                yw, ywo = yf(exc["with"][c]), yf(exc["without"][c])
-                wx = bx + bar_w / 2.0
-                p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1a202c" stroke-width="1.3"/>' % (wx, min(yw, ywo), wx, max(yw, ywo)))
-                for yy in (yw, ywo):
-                    p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1a202c" stroke-width="1.3"/>' % (wx - 3, yy, wx + 3, yy))
-    lx, ly = padL, H - 6
-    p.append('<rect x="%d" y="%d" width="10" height="10" fill="%s"/><text class="lbl" x="%d" y="%d">US</text>' % (lx, ly - 9, COL["US"], lx + 14, ly))
-    p.append('<rect x="%d" y="%d" width="10" height="10" fill="%s"/><text class="lbl" x="%d" y="%d">China</text>' % (lx + 60, ly - 9, COL["China"], lx + 74, ly))
-    p.append('<text class="lbl" x="%d" y="%d">band = W0-W3 sensitivity; whisker = 1946-1955 exclusion; 50%% line = leadership</text>' % (lx + 140, ly))
-    p.append('</svg>')
-    return "".join(p)
 
 
 # ============================================================
@@ -320,77 +270,9 @@ def build_spine_caption(draft_rows, spine_counts):
             "momentum score: %d rows (US %d, China %d), of which %d ESTABLISHED (solid), %d OPEN-UNVERIFIED "
             "(outlined) and %d REPORTED (hatched). Colour = category (shared legend below). Amendment-4 "
             "trajectory rows sit at their span-start year with a small forward tick. Each block links to "
-            "its year dossier (dossier.html#y-YYYY)." % (n, us, cn, est, opn, rep))
-
-
-def build_spine_svg(draft_rows):
-    W, H = 1120, 320
-    padL, padR = 44, 14
-    cy = H / 2.0
-    plotW = W - padL - padR
-    span = (YEAR_HI - YEAR_LO)
-    bh, gap = 5.0, 1.2
-    bw = 6.5
-
-    def xf(year):
-        return padL + (year - YEAR_LO) / span * plotW
-
-    rows = sorted(draft_rows, key=lambda r: (int(r["year"]), 0 if r["country"] == "US" else 1, r["id"]))
-    # stacking index per (year, country)
-    stack = {}
-    p = ['<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg" role="img" '
-         'aria-label="The Century Spine: one block per corpus achievement 1926-2026, US above the '
-         'centreline and China below, coloured by category and textured by verification label.">' % (W, H)]
-    p.append('<defs><pattern id="rep-hatch" width="4" height="4" patternTransform="rotate(45)" '
-             'patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="4" stroke="#ffffff" '
-             'stroke-width="1.4" opacity="0.9"/></pattern></defs>')
-    p.append('<style>.ax{stroke:#9aa5b1;stroke-width:1}.tk{font:9px sans-serif;fill:#718096}'
-             '.ti{font:13px sans-serif;fill:#2d3748}.cl{font:10px sans-serif;fill:#4a5568}</style>')
-    p.append('<text class="ti" x="%d" y="15">The Century Spine — one block per achievement, US above / China below</text>' % padL)
-    # centreline + decade ticks
-    p.append('<line class="ax" x1="%d" y1="%.1f" x2="%d" y2="%.1f"/>' % (padL, cy, W - padR, cy))
-    for yr in range(1930, 2027, 10):
-        xx = xf(yr)
-        p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#e2e8f0"/>' % (xx, 24, xx, H - 40))
-        p.append('<text class="tk" x="%.1f" y="%.1f" text-anchor="middle">%d</text>' % (xx, H - 28, yr))
-    p.append('<text class="tk" x="%.1f" y="%.1f">US &#8593;</text>' % (padL, 30))
-    p.append('<text class="tk" x="%.1f" y="%.1f">China &#8595;</text>' % (padL, H - 46))
-    for r in rows:
-        yr = int(r["year"])
-        c = r["country"]
-        cat = r["category"]
-        col = CATEGORY_COLORS.get(cat, "#888")
-        k = stack.get((yr, c), 0)
-        stack[(yr, c)] = k + 1
-        x = xf(yr) - bw / 2.0
-        if c == "US":
-            y = cy - (k + 1) * bh - k * gap - 1
-        else:
-            y = cy + k * (bh + gap) + 1
-        st = r["status"]
-        if st == "ESTABLISHED":
-            rect = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (x, y, bw, bh, col)
-        elif st == "REPORTED":
-            rect = ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>'
-                    '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#rep-hatch)"/>' %
-                    (x, y, bw, bh, col, x, y, bw, bh))
-        else:  # OPEN-UNVERIFIED
-            rect = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="none" stroke="%s" stroke-width="1.1"/>' % (x, y, bw, bh, col)
-        tick = ""
-        if r.get("year_precision") == "range":
-            tick = '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="0.8" opacity="0.8"/>' % (x + bw, y + bh / 2.0, x + bw + 5, y + bh / 2.0, col)
-        title = _esc("%s %d %s/%s [%s]" % (r["id"], yr, cat, r["event_type"], st))
-        p.append('<a href="dossier.html#y-%d"><title>%s</title>%s%s</a>' % (yr, title, rect, tick))
-    # legend
-    lx = padL
-    ly = H - 12
-    for i, cat in enumerate(CATEGORIES):
-        cxx = lx + i * 118
-        p.append('<rect x="%.1f" y="%.1f" width="9" height="9" fill="%s"/><text class="cl" x="%.1f" y="%.1f">%s</text>' %
-                 (cxx, ly - 8, CATEGORY_COLORS[cat], cxx + 12, ly, CATEGORY_SHORT[cat]))
-    p.append('<text class="cl" x="%.1f" y="%.1f">solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · tick = trajectory (span-start)</text>' % (lx, ly + 14))
-    p.append('</svg>')
-    return "".join(p)
+            "its year dossier (dossier.html#y-YYYY). The shaded envelope is a %d-year centred rolling "
+            "count per country (a PRESENTATION smoothing choice, no weights); the centreline ribbon is the "
+            "US-minus-China net of that count." % (n, us, cn, est, opn, rep, SILHOUETTE_WINDOW))
 
 
 # ============================================================
@@ -435,16 +317,73 @@ def build_year_dossiers(est_rows):
 # I/O + injection
 # ============================================================
 # ============================================================
-# WEIGH IT YOURSELF (client-side instrument; scoring math = scoring/score.js)
+# DENSITY SILHOUETTE (spine momentum envelope) — 7-year centred rolling count.
+# A 7-yr window smooths single-year spikes (a busy vs a quiet year) while
+# preserving decade-scale structure across the 100-year axis; odd width keeps it
+# centred. Counts ALL corpus rows (matching the blocks / the spine's raw-count
+# portrait), NOT a weighting. verify_numbers.py recomputes these exactly.
 # ============================================================
-def build_weigh_figure(result):
-    payload = {
-        "decades": result["meta"]["decades"],
-        "counts": result["counts"],
-        "weights": _load_weights_public(),
-        "categories": CATEGORIES,
+SILHOUETTE_WINDOW = 7
+
+
+def _silhouette(draft_rows):
+    half = SILHOUETTE_WINDOW // 2
+    per_year = {c: {} for c in COUNTRIES}
+    for r in draft_rows:
+        if r["country"] in COUNTRIES:
+            y = int(r["year"])
+            per_year[r["country"]][y] = per_year[r["country"]].get(y, 0) + 1
+    out = {c: [] for c in COUNTRIES}
+    mx = 0
+    for c in COUNTRIES:
+        for y in range(YEAR_LO, YEAR_HI + 1):
+            dens = sum(per_year[c].get(yy, 0) for yy in range(y - half, y + half + 1))
+            out[c].append([y, dens])
+            mx = max(mx, dens)
+    return out, mx
+
+
+# ============================================================
+# FIGURE SPECS (data-figure) + instrument controls
+# ============================================================
+def _attr_json(obj):
+    """HTML-escaped JSON for a single-quoted data-figure attribute (render_figures
+    and the browser both decode the entities back to raw JSON)."""
+    s = json.dumps(obj, ensure_ascii=False)
+    return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;").replace("'", "&#39;"))
+
+
+def build_momentum_spec(result):
+    series = {}
+    for d, dd in result["series"].items():
+        series[d] = {"exclusion": dd.get("exclusion")}
+        for c in COUNTRIES:
+            s = dd[c]
+            series[d][c] = {"primary": s["primary"], "sensitivity_min": s["sensitivity_min"],
+                            "sensitivity_max": s["sensitivity_max"]}
+    return {
+        "type": "momentum", "version": 1,
+        "decades": result["meta"]["decades"], "series": series,
+        "counts": result["counts"], "weights": _load_weights_public(), "categories": CATEGORIES,
         "geometry": {"padT": MOM_PADT, "plotH": MOM_PLOTH, "y0": MOM_Y0},
+        "stage": "#ffffff", "caption": result["caption"],
     }
+
+
+def build_spine_spec(result, draft_rows):
+    rows = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"],
+             "et": r["event_type"], "st": r["status"], "pr": r.get("year_precision", "")}
+            for r in draft_rows if r["country"] in COUNTRIES]
+    sil, mx = result["_silhouette"], result["_silhouette_max"]
+    return {
+        "type": "spine", "version": 1, "rows": rows,
+        "silhouette": sil, "silhouette_max": mx, "window": SILHOUETTE_WINDOW,
+        "stage": "#ffffff", "caption": result["spine_caption"],
+    }
+
+
+def build_weigh_controls():
     sliders = "".join(
         '<label class="wy-row"><span class="wy-cat" style="color:%s">%s</span>'
         '<input type="range" class="wy-slider" data-cat="%s" min="0.5" max="2" step="0.1" value="1" '
@@ -452,18 +391,11 @@ def build_weigh_figure(result):
         % (CATEGORY_COLORS[c], CATEGORY_SHORT[c], c, CATEGORY_SHORT[c], c) for c in CATEGORIES)
     presets = "".join('<button type="button" class="wy-preset" data-preset="%s">%s</button>' % (k, k)
                       for k in ("W0", "W1", "W2", "W3"))
-    return (
-        '<figure class="weigh" id="weigh-it">'
-        '<div class="wy-head"><b>Weigh it yourself</b> — <span class="wy-sub">constructed index — '
-        'adjust the rubric yourself</span></div>'
-        '<div class="wy-presets">Presets: ' + presets + '</div>'
-        '<div class="wy-sliders">' + sliders + '</div>'
-        '<script type="application/json" id="index-counts">' + json.dumps(payload, ensure_ascii=False) + '</script>'
-        '<figcaption class="lf-caption">Interactive re-weighting of the momentum chart above (needs JavaScript). '
-        'With JS off, the chart shows the baseline W0 and this control is inert — the static figure is complete. '
-        'W3 uses event-type weighting; the sliders show category weights. Nothing here changes a row\'s '
-        'verification status; it only re-scores the constructed, OPEN-CAVEATED index.</figcaption>'
-        '</figure>')
+    return ('<div class="wy-controls">'
+            '<div class="wy-head"><b>Weigh it yourself</b> — <span class="wy-sub">constructed index — '
+            'adjust the rubric yourself</span></div>'
+            '<div class="wy-presets">Presets: ' + presets + '</div>'
+            '<div class="wy-sliders">' + sliders + '</div></div>')
 
 
 def load_all():
@@ -486,9 +418,10 @@ def _inject(path, start, end, block):
     return False
 
 
-def _figure_block(svg, caption, cls):
-    return ('<figure class="%s">\n' % cls + svg +
-            '\n<figcaption class="lf-caption">' + caption + '</figcaption>\n</figure>')
+def _living_figure(cls, spec, inner=""):
+    # data-figure carries the DATA; render_figures bakes the JS-off poster (via the
+    # registered emitter in figures/dossierviz.js) + the figcaption (from spec.caption).
+    return "<figure class=\"%s\" data-figure='%s'>%s</figure>" % (cls, _attr_json(spec), inner)
 
 
 def _load_weights_public():
@@ -506,13 +439,11 @@ if __name__ == "__main__":
         fh.write("\n")
     changed = []
     if _inject(SOURCE, "<!--chart:start-->", "<!--chart:end-->",
-               _figure_block(result["svg"], result["caption"], "chart")):
-        changed.append("chart")
+               _living_figure("living-figure chart momentum-fig", result["momentum_spec"], build_weigh_controls())):
+        changed.append("momentum")
     if _inject(SOURCE, "<!--spine:start-->", "<!--spine:end-->",
-               _figure_block(result["spine_svg"], result["spine_caption"], "chart spine")):
+               _living_figure("living-figure chart spine-fig", result["spine_spec"])):
         changed.append("spine")
-    if _inject(SOURCE, "<!--weigh:start-->", "<!--weigh:end-->", result["weigh_figure"]):
-        changed.append("weigh")
     if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
         changed.append("dossiers")
     print("compute_index: wrote %s; injected: %s" %

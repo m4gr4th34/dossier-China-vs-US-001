@@ -14,10 +14,16 @@ static, JS-off-complete pieces, all generated deterministically by
   bars live from the same baked JSON the verifier checks (scoring math ported once to
   `scoring/score.js`, JS/Python agreement asserted).
 - **Mid view** — the **Century Spine**: one block per corpus row at its year, US up /
-  China down, colour = category, texture = verification label, each block a deep link.
+  China down, colour = category, texture = verification label, each block a deep link,
+  **plus a rolling-window (7-yr) density silhouette** — mirrored filled areas behind the
+  blocks + a net-difference centreline ribbon — so the spine reads as momentum, not dots.
 - **Per-achievement cards** — the **Year Dossiers** on the audit-trail edition, one
   card per ESTABLISHED row under a per-year `#y-YYYY` anchor the spine links into.
-- Inline-SVG figures are now click-to-expand via the skin's lightbox.
+- The momentum + spine charts are now **living `data-figure` figures** (figures/dossierviz.js:
+  poster emitter for the JS-off floor + live renderer), so they use the runtime's
+  **documented expand affordance** — the `.lf-expand` trigger + near-viewport `#lf-lightbox`
+  from `figures.js` — not an ad-hoc lightbox. The momentum figure is one bounded unit: the
+  "Weigh it yourself" controls sit directly above the chart they re-score.
 
 **Remaining ambition (future pass):** fuse these three into ONE figure with **smooth,
 continuous zoom** and **mid-altitude transitions** — a single canvas the reader drags

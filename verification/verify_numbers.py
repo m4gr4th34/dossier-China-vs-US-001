@@ -199,13 +199,16 @@ for _d, _dd in _committed.get("series", {}).items():
 check("Index I3: every sensitivity band contains its primary score",
       _band_bad, 0, 0)
 
-# (I4) the generated caption + SVG appear verbatim in the baked front door.
+# (I4) the momentum figure's data-figure spec + its caption appear verbatim in the
+#      baked front door, so the living figure draws from verified numbers (and the JS
+#      instrument reads the verified counts). The caption is baked as <figcaption>.
 with open(os.path.join(_ROOT, "index.html"), encoding="utf-8") as _fh:
     _index_html = _fh.read()
-_drift = (0 if _committed.get("caption") in _index_html else 1) \
-       + (0 if _committed.get("svg") in _index_html else 1)
-check("Index I4: index_output.json caption + SVG are present verbatim in index.html",
-      _drift, 0, 0)
+# The spec carries the caption as a field, so spec-attr presence verifies both the
+# draw numbers AND the caption text reach the page (render_figures bakes the
+# <figcaption> from spec.caption).
+check("Index I4: momentum data-figure spec present verbatim in index.html",
+      0 if _ci._attr_json(_committed["momentum_spec"]) in _index_html else 1, 0, 0)
 
 # ================================================================
 # PRESENTATION-LAYER CHECKS (Century Spine, Year Dossiers, instrument).
@@ -228,15 +231,15 @@ for _r in _draft_rows2:
 check("Index I5: Century Spine block counts per year per country == the corpus",
       0 if _committed.get("spine_counts") == _spine_recount else 1, 0, 0)
 
-# (I6) every spine block href (#y-YYYY) resolves to a year anchor in dossier.html.
-_spine_years = set(_re.findall(r'dossier\.html#y-(\d+)', _committed.get("spine_svg", "")))
+# (I6) every spine block's year has a dossier anchor (#y-YYYY) in dossier.html.
+_spine_years = {str(_r["y"]) for _r in _committed["spine_spec"]["rows"]}
 _anchor_years = set(_re.findall(r'id="y-(\d+)"', _dossier_html))
-check("Index I6: every spine block href resolves to a year anchor in dossier.html",
+check("Index I6: every spine block year resolves to a year anchor in dossier.html",
       len(_spine_years - _anchor_years), 0, 0)
 
-# (I7) spine SVG present verbatim in the baked front door.
-check("Index I7: Century Spine SVG present verbatim in index.html",
-      0 if _committed.get("spine_svg", "___") in _index_html else 1, 0, 0)
+# (I7) the spine's data-figure spec appears verbatim in the baked front door.
+check("Index I7: Century Spine data-figure spec present verbatim in index.html",
+      0 if _ci._attr_json(_committed["spine_spec"]) in _index_html else 1, 0, 0)
 
 # (I8) year-dossier cards reconcile EXACTLY (count + ids) with the ESTABLISHED ledger.
 _ledger_est_ids = {r.get("id") for r in _ledger_rows if r.get("status") == "ESTABLISHED"}
@@ -248,9 +251,22 @@ check("Index I8: year-dossier cards reconcile exactly with the ESTABLISHED ledge
 check("Index I9: year dossiers present verbatim in dossier.html",
       0 if _committed.get("dossiers_html", "___") in _dossier_html else 1, 0, 0)
 
-# (I10) the instrument (with its embedded counts) present verbatim in index.html.
-check("Index I10: Weigh-it-yourself figure present verbatim in index.html",
-      0 if _committed.get("weigh_figure", "___") in _index_html else 1, 0, 0)
+# (I10) the density silhouette recomputes EXACTLY from the corpus (finding #3):
+#       a window-year centred rolling count per country, independently recomputed here.
+_half = _committed["spine_spec"]["window"] // 2
+_yr_counts = {"US": {}, "China": {}}
+for _r in _draft_rows2:
+    if _r.get("country") in ("US", "China"):
+        _y = int(_r["year"])
+        _yr_counts[_r["country"]][_y] = _yr_counts[_r["country"]].get(_y, 0) + 1
+_sil_bad = 0
+for _c in ("US", "China"):
+    for _pt in _committed["spine_spec"]["silhouette"][_c]:
+        _expect = sum(_yr_counts[_c].get(_k, 0) for _k in range(_pt[0] - _half, _pt[0] + _half + 1))
+        if _pt[1] != _expect:
+            _sil_bad += 1
+check("Index I10: spine density silhouette recomputes exactly from the corpus (rolling window)",
+      _sil_bad, 0, 0)
 
 # ----------------------------------------------------------------
 print()

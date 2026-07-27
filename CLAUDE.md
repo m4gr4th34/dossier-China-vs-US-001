@@ -212,6 +212,16 @@ verification script, and its claim ledger all live here.
   automatic Zenodo DOI archiving and OpenTimestamps blockchain anchoring.
   Do not create releases without the author's explicit instruction.
 - NEVER modify anything in timestamps/ — those are cryptographic proofs.
+- **Deployed verification (mandatory for any UI/presentation change).** Local gates
+  and a local dev server are **pre-flight only** — they do not prove the reader's
+  experience. After pushing a change that touches the rendered pages (skin, figures,
+  editions, CSS/JS, interactive widgets), you MUST verify every acceptance criterion
+  on the **deployed GitHub Pages URL**
+  (`https://m4gr4th34.github.io/dossier-China-vs-US-001/`): load it, confirm the
+  console is clean, exercise the interactions (expand, sliders, deep links), and check
+  **both desktop and mobile widths**. The task is not done until the report says
+  **"verified on deployed"** and names the URL. If Pages has not finished building yet,
+  wait and re-check — never substitute a local result for the deployed one.
 - File map:
   - index.html        — the paper (GENERATED: edit editions/index.source.html + skin/edition.html, then `npm run render-edition`; never hand-edit — CI's `check-edition` gate enforces it). Self-explaining edition + avenue landscape + verification console, with the cards + console verdict BAKED to static bytes (JS-off readable).
   - editions/         — skin-free content sources: index.source.html / dossier.source.html / verify.source.html (one per edition), each with frontmatter (eyebrow/title/byline/active) + slot:body/foot/cites, plus an OPTIONAL slot:head_extra (per-edition CSS; dossier/verify use it, index omits it via the `''` fallback). Edit THESE, never the rendered *.html.

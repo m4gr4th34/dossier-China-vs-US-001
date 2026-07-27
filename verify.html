@@ -245,13 +245,15 @@
   @media (prefers-reduced-motion:no-preference){
     .lbx img{transition:transform .2s ease}
   }
-  /* inline-SVG figures (momentum chart, century spine): full-width, click-to-expand */
-  figure > svg{display:block;width:100%;height:auto;cursor:zoom-in}
-  .lbx-svg{
-    display:none; max-width:min(1180px,96vw); max-height:92vh; overflow:auto;
-    background:var(--card); border-radius:var(--r-lg); box-shadow:var(--shadow-lift); padding:12px;
-  }
-  .lbx-svg svg{width:100%;height:auto}
+  /* living data-figures (momentum chart, century spine): full-width inline SVG.
+     Expand is the runtime's documented .lf-expand trigger + #lf-lightbox (figures.js) —
+     no hand-rolled lightbox here. */
+  figure.living-figure > svg, figure.living-figure svg.lf-svg{display:block;width:100%;height:auto}
+  /* momentum figure = one bounded unit: the "Weigh it yourself" controls sit ABOVE the
+     baked chart (order:-1), zero scroll between a slider and the bars it moves. */
+  figure.momentum-fig{display:flex;flex-direction:column}
+  figure.momentum-fig .wy-controls{order:-1;padding:2px 2px 12px;border-bottom:1px solid var(--line);margin-bottom:10px}
+  figure.momentum-fig svg.lf-svg, figure.momentum-fig > svg{order:0}
   /* "Weigh it yourself" instrument */
   figure.weigh{padding:14px 16px 12px}
   .wy-head{font-family:var(--mono);font-size:13px;margin-bottom:8px}
@@ -723,73 +725,57 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
 </script>
 <div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Figure, full size" aria-hidden="true">
   <img id="lbx-img" alt="">
-  <div class="lbx-svg" id="lbx-svg" aria-hidden="true"></div>
 </div>
 <script>
 (function(){
   var lbx = document.getElementById('lbx');
   var lbxImg = document.getElementById('lbx-img');
-  var lbxSvg = document.getElementById('lbx-svg');
-  if(!lbx || !lbxImg || !lbxSvg) return;
+  if(!lbx || !lbxImg) return;
   var imgs = document.querySelectorAll('figure img');
-  // inline-SVG figures (momentum chart, century spine) — direct child <svg> only, so
-  // small inline icons or the instrument's controls never become lightbox targets.
-  var svgs = document.querySelectorAll('figure > svg');
-  if(!imgs.length && !svgs.length) return;   // INERT when there are no figures
+  if(!imgs.length) return;            // INERT when there are no <img> figures
   var lastFocus = null;
-  function openImg(src, alt){
+  function open(src, alt){
     lastFocus = document.activeElement;
-    lbxSvg.style.display='none'; lbxImg.style.display='block';
     lbxImg.src = src; lbxImg.alt = alt || '';
-    lbx.classList.add('open'); lbx.setAttribute('aria-hidden','false');
-    lbx.tabIndex = -1; lbx.focus();
-  }
-  function openSvg(svg){
-    lastFocus = document.activeElement;
-    var clone = svg.cloneNode(true);
-    clone.removeAttribute('role'); clone.removeAttribute('tabindex'); clone.style.cursor='';
-    lbxSvg.innerHTML=''; lbxSvg.appendChild(clone);
-    lbxImg.style.display='none'; lbxSvg.style.display='block';
     lbx.classList.add('open'); lbx.setAttribute('aria-hidden','false');
     lbx.tabIndex = -1; lbx.focus();
   }
   function close(){
     lbx.classList.remove('open'); lbx.setAttribute('aria-hidden','true');
-    lbxImg.src=''; lbxSvg.innerHTML=''; lbxSvg.style.display='none';
+    lbxImg.src = '';
     if(lastFocus && lastFocus.focus) lastFocus.focus();
   }
   imgs.forEach(function(img){
     img.setAttribute('role','button'); img.setAttribute('tabindex','0');
     if(!img.getAttribute('aria-label')) img.setAttribute('aria-label','View figure full size');
-    img.addEventListener('click', function(){ openImg(img.currentSrc||img.src, img.alt); });
+    img.addEventListener('click', function(){ open(img.currentSrc||img.src, img.alt); });
     img.addEventListener('keydown', function(e){
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openImg(img.currentSrc||img.src, img.alt); }
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(img.currentSrc||img.src, img.alt); }
     });
   });
-  svgs.forEach(function(svg){
-    svg.setAttribute('role','button'); svg.setAttribute('tabindex','0');
-    svg.addEventListener('click', function(){ openSvg(svg); });
-    svg.addEventListener('keydown', function(e){
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openSvg(svg); }
-    });
-  });
-  lbx.addEventListener('click', close);   // backdrop click closes (cursor:zoom-out)
+  lbx.addEventListener('click', close);
   document.addEventListener('keydown', function(e){
     if(e.key==='Escape' && lbx.classList.contains('open')) close();
   });
 })();
 </script>
+<!-- Living-figure runtime: the momentum + spine figures carry data-figure specs and are
+     drawn by figures/dossierviz.js; figures.js gives each the DOCUMENTED expand affordance
+     (the .lf-expand trigger + near-viewport #lf-lightbox). JS-off: the baked poster stands. -->
+<script src="figures/figures.js"></script>
+<script src="figures/dossierviz.js"></script>
 <!-- Weigh it yourself: client-side re-scoring of the momentum chart. Scoring math is
      scoring/score.js (the SAME module the JS/Python agreement test checks); this block
-     only wires the controls. No-ops with JS off or when #index-counts is absent. -->
+     only wires the controls. No-ops with JS off or when the momentum figure is absent. -->
 <script src="scoring/score.js"></script>
 <script>
 (function(){
   if(typeof DossierScore==='undefined') return;
-  var el=document.getElementById('index-counts'); if(!el) return;
-  var data; try{ data=JSON.parse(el.textContent); }catch(e){ return; }
+  var fig=document.querySelector('.momentum-fig[data-figure]'); if(!fig) return;
+  var data; try{ data=JSON.parse(fig.getAttribute('data-figure')); }catch(e){ return; }
   var counts=data.counts, geo=data.geometry, W=data.weights;
-  var pbars=document.querySelectorAll('.chart svg .pbar');
+  // the baked poster svg lives inside the momentum figure; move its primary bars in place
+  var pbars=fig.querySelectorAll('svg .pbar');
   if(!pbars.length || !geo) return;
   function yf(s){ return geo.padT + geo.plotH*(1-s); }
   function apply(weights, isEvent){
