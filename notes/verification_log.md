@@ -187,3 +187,12 @@ China (12), each with ≥1 independent-academic or two independent sources:
    nuclear power plant. `infrastructure`/`science`, `completion`.
 3. **Boeing 707 first flight (US, 1957)** — inaugurated the mass jet-airliner age;
    the US ledger has DC-3 and 747 but not the jet-age 707. `innovation`, `first-flight/launch`.
+
+---
+
+## Batch-3 re-adjudication — Burma Road (CN-1938-3) · 2026-07-27
+
+Author ruled to **narrow** the claim to the Chinese-built Yunnan section. **Re-verified → PROMOTED to ESTABLISHED.**
+- **Narrowed claim:** the Yunnan section (Kunming–Wanting, ~960 km), built by ~200,000 Chinese laborers under Nationalist direction, opened to motor traffic 1938.
+- **Anchor decision:** *opened-to-motor-traffic 1938* (trucks began moving cargo into China in 1938 — Wikipedia, WW2DB) chosen over *formal completion 1939* (Britannica). The traffic-opening is the better-attested datable event; 1939 recorded as the alternative in the row/ledger.
+- **Sources:** Wikipedia (Burma Road); World War II Database; The Irrawaddy — two+ independent encyclopedic/journalistic (a Nationalist-era, not PRC, claim, so no PRC-official concern). Narrowing to the Yunnan section resolved the joint-attribution problem (the Burma-side labor and British/American engineering are excluded from the claim).

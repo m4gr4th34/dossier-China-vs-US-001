@@ -219,3 +219,17 @@ Lands OPEN-UNVERIFIED, queues for verification.
 | CN-1938-3 | 1938 | completion | Burma Road completed | `infrastructure`. **Joint China–Britain context stated plainly:** Chinese-built (est. ~200,000 laborers) but terminating in British Burma (Lashio); recorded as a primarily-Chinese engineering achievement with the British-Burma terminus noted. Attribution judged China with that caveat. |
 
 **Net:** +1. China 124 → **125**; corpus 261 → **262**.
+
+---
+
+## Post-freeze per-row change — batch-3 proposal ruling (2026-07-27)
+
+Author approved three proposals. Provenance: **verification-batch-3-proposal, author-approved**. All OPEN-UNVERIFIED; queue for batch 4.
+
+| id | year | anchor | row | note |
+|---|---|---|---|---|
+| CN-1956-3 | 1956 | milestone | Simplified-characters scheme promulgated | `social`; the first (1956) list, distinct from Hanyu Pinyin (CN-1958-1). |
+| US-1957-1 | 1957 | completion | Shippingport nuclear plant | `infrastructure`; first full-scale US commercial nuclear power plant. |
+| US-1958-5 | 1958 | commercial-deployment | Boeing 707 enters service | `innovation`; **anchor rationale:** the achievement is inaugurating the commercial jet age, realized at market entry (Pan Am service, 26 Oct 1958), so commercial-deployment is chosen over the 20 Dec 1957 prototype first flight — consistent with the Boeing 747's commercial-deployment anchor (US-1970-1). The 1957 first flight is recorded as the alternative. |
+
+**Net:** +3 rows. China 125 → **126**, US 137 → **139**. Corpus 262 → **265**. (Burma Road's promotion changed no counts.)
