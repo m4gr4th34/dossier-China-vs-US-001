@@ -205,3 +205,17 @@ and queue for verification in their chronological batch.
 **Net:** +4 added, −2 removed. China 122 → **124**; corpus 259 → **261**. The
 `coverage_report.md` v0.4 tables are the freeze-time snapshot; this delta is
 tracked here, in `removed_rows.md`, and in `verification_log.md`.
+
+---
+
+## Post-freeze per-row change — batch-2 proposal ruling (2026-07-27)
+
+The verification batch-2 log surfaced the Burma Road as a proposal; the author
+**approved** it. Provenance: **verification-batch-2-proposal, author-approved**.
+Lands OPEN-UNVERIFIED, queues for verification.
+
+| id | year | anchor | row | note |
+|---|---|---|---|---|
+| CN-1938-3 | 1938 | completion | Burma Road completed | `infrastructure`. **Joint China–Britain context stated plainly:** Chinese-built (est. ~200,000 laborers) but terminating in British Burma (Lashio); recorded as a primarily-Chinese engineering achievement with the British-Burma terminus noted. Attribution judged China with that caveat. |
+
+**Net:** +1. China 124 → **125**; corpus 261 → **262**.
