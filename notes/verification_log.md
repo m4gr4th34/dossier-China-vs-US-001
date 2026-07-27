@@ -393,3 +393,41 @@ reform after the post-1989 conservative retrenchment and amid the USSR's collaps
 
 None this batch. The 1984–1994 window is densely covered on both sides; no notable
 omission surfaced during verification.
+
+---
+
+## Consistency fix — trajectory-claim amendment (Amendment 4) (2026-07-27)
+
+Author-approved **option b**: a cumulative multi-year achievement may stand as a
+single ledger row iff (i) its underlying series is independently maintained
+(`international-body`/`independent-academic`), (ii) `year_precision=range` with the
+span stated in `claim_text`, and (iii) the anchor-year convention is documented.
+The documented convention: **cumulative-range rows are filed at the START-year of
+their stated span** — the only convention under which the `year` field cannot
+masquerade as a discrete event. Full text: `notes/selection_criteria.md`
+Amendment 4.
+
+**Country-blind sweep of the ledger by claim shape (not by country):**
+
+| id (old → new) | country | verdict | action |
+|---|---|---|---|
+| CN-1990-4 → **CN-1978-3** @1978 | China | cumulative trajectory | **reshaped + refiled** at span-start; claim states 1978–2019; World Bank series (international-body) already satisfied (i). |
+| US-1943-2 → **US-1942-3** @1942 | US | cumulative trajectory | **reshaped + refiled** at span-start; claim states 1942–1945; **series source upgraded to independent-academic** (Harrison, *Economics of WWII*, Cambridge 1998) to satisfy (i). |
+| US-2013-1 → **US-2008-4** @2008 | US | cumulative trajectory (still OPEN-UNVERIFIED) | **reshaped + refiled** at span-start; `exact`→`range`; claim states ~2008–2018 (US largest gas producer 2011, crude 2018). Stays OPEN-UNVERIFIED — reshaped so it is correctly shaped before its verification batch. |
+| CN-1950-2 @1950 | China | start-anchored bounded program | logged as **true non-trajectory**; year IS the enabling 1950 law; span "(1950–1953)" added to claim for (ii) clarity; not refiled. |
+| CN-1953-1 @1953 | China | commencement point-event ("begins") | logged as **true non-trajectory**; year IS the start; span "(1953–1957)" added for clarity; not refiled. |
+| CN-1928-1 @1928 | China | completion point-event ("ends") | **true point-event**, unchanged. |
+| CN-1935-2 @1935 | China | completion point-event ("completes") | **true point-event**, unchanged. |
+| US-1935-2 @1935 | US | completion point-event ("completed") | **true point-event**, unchanged. |
+
+**Why country-blind matters here:** the US WWII-production row was a mid-span
+marker (1943) exactly as the China poverty row was (1990); both got the identical
+reshape. Waving one through while fixing the other would be the metric-selection
+bias the dossier exists to refuse. The shale row (US) is the third instance, caught
+before it was ever promoted.
+
+**Counts unchanged:** 271 rows, 169 ESTABLISHED, 101 OPEN-UNVERIFIED, 1 REPORTED.
+Two ESTABLISHED rows changed decade-bucket (poverty 1990s→1970s; shale, still
+OPEN-UNVERIFIED, 2010s→2000s); the frozen coverage v0.4 snapshot is a historical
+snapshot and is not regenerated, but the live-status line (counts) stays true.
+`verify_numbers.py` 6/6 green.

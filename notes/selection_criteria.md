@@ -376,3 +376,52 @@ are resolved this way in that report's §D addendum.
 *Selection layer v0.3. Adds the `event_type` column (backfilled for all existing
 rows; the backfill changes no `year`, `country`, or `category`). Rows added from
 the cross-validation adjudication are logged in `notes/additions_log.md`.*
+
+## Amendment 4 — cumulative-trajectory rows (v0.4-consistency)
+
+Some achievements are not single dated events but **cumulative multi-year
+trajectories** — a quantity that accrues, or a status reached, only across a span
+of years (e.g. reform-era poverty reduction; wartime production mobilization; the
+shale production ramp). Filing such a claim under one calendar year, worded as if
+it were a point-event, lets a **marker year masquerade as an anchor** — the exact
+failure this amendment closes.
+
+**Rule (option b).** A cumulative multi-year achievement MAY stand as a single
+ledger row iff ALL THREE hold:
+  (i)   the underlying series is **independently maintained** — its source class is
+        `international-body` or `independent-academic` (not official-national alone,
+        and never interested-party). The magnitude the row asserts must be readable
+        off that independent series.
+  (ii)  `year_precision = range`, and **the span is stated explicitly in
+        `claim_text`** (e.g. "Over 1978–2019, …"). No bare single-year wording.
+  (iii) the **anchor-year convention is documented** (below) and followed, so the
+        `year` field is a transparent filing choice, not a pretend event date.
+
+**Anchor-year convention (documented).** A cumulative-range row is filed under the
+**START-year of its stated span.** This is the only convention under which the
+`year` field cannot masquerade as a discrete event: the reader sees the row sit at
+the year the trajectory *began*, with the full span written in the claim. (How the
+per-year momentum chart should treat a range row — anchor at start, or spread
+across the span — is a *scoring* question, deferred to
+`notes/scoring_rubric_DESIGN.md`; it does not change how the row is *filed*.)
+
+**Not covered by this rule.** A **completion** or **commencement** point-event
+(e.g. "the Long March completes, 1935"; "the First Five-Year Plan begins, 1953")
+is already a single-date achievement — its `year` IS the event. Such rows may carry
+`year_precision = range` to reflect a preceding campaign's duration, but they assert
+no cumulative magnitude and are not reshaped by this amendment; where they carry a
+range precision, the bounded span is added to `claim_text` for reader clarity.
+
+**Application (this pass).** CN-1990-4 (poverty) → refiled CN-1978-3 @ 1978, span
+1978–2019 explicit. US-1943-2 (WWII production) → refiled US-1942-3 @ 1942, span
+1942–1945 explicit, series source upgraded to independent-academic (Harrison,
+*The Economics of World War II*, Cambridge 1998). US-2013-1 (shale, still
+OPEN-UNVERIFIED) → refiled US-2008-4 @ 2008, span ~2008–2018 explicit. The
+start-anchored bounded programs CN-1950-2 and CN-1953-1 gained explicit spans.
+The completions CN-1928-1, CN-1935-2, US-1935-2 are logged as true point-events,
+unchanged. All per-row edits are justified in `notes/verification_log.md` and
+`notes/additions_log.md`.
+
+*Selection layer v0.4-consistency. Country-blind: applied by claim shape, not by
+country — a US trajectory row (WWII production, shale) gets the identical treatment
+as the China trajectory row (poverty).*

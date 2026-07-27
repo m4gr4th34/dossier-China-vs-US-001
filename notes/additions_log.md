@@ -261,3 +261,21 @@ Author approved three proposals. Provenance: **verification-batch-5-proposal, au
 | US-1974-1 | 1974 | commercial-deployment | first UPC barcode scan | `innovation`; Marsh supermarket, Troy OH, 26 Jun 1974. |
 
 **Net:** +3. US 141 → **143**, China 127 → **128**. Corpus 268 → **271**.
+
+---
+
+## Per-row reshapes — trajectory-claim amendment (Amendment 4) (2026-07-27)
+
+No additions/removals (net 0). Five ESTABLISHED/draft rows edited per-row with
+justification (freeze rules); three refiled at span-start, two given explicit spans.
+
+| id (old → new) | change |
+|---|---|
+| CN-1990-4 → CN-1978-3 | refiled @1978 (span-start); `year_precision=range`; claim states 1978–2019; World Bank series. |
+| US-1943-2 → US-1942-3 | refiled @1942 (span-start); claim states 1942–1945; source upgraded to independent-academic (Harrison 1998). |
+| US-2013-1 → US-2008-4 | refiled @2008 (span-start); `exact`→`range`; claim states ~2008–2018; stays OPEN-UNVERIFIED. |
+| CN-1950-2 | span "(1950–1953)" added to claim; start-anchored bounded program, not refiled. |
+| CN-1953-1 | span "(1953–1957)" added to claim; commencement point-event, not refiled. |
+
+**Corpus totals unchanged:** 271 rows (US 143, China 128); 169 ESTABLISHED, 101
+OPEN-UNVERIFIED, 1 REPORTED.

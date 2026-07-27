@@ -21,6 +21,10 @@ are the drafting agent's independent selection under `notes/selection_criteria.m
 > 271 rows (US 143, China 128), of which 169 ESTABLISHED (verification batches
 > 1–7, covering 1926–1994), 101 OPEN-UNVERIFIED, and 1 REPORTED (CN-1952-2 —
 > magnitude on contested PRC official statistics).**
+>
+> *Amendment 4 (trajectory rows, 2026-07-27): CN-1990-4→CN-1978-3, US-1943-2→US-1942-3,
+> and US-2013-1→US-2008-4 refiled at their span-start years; counts unchanged, two ESTABLISHED
+> rows shifted decade-bucket. The v0.4 crosstab snapshot below is historical and not regenerated.*
 > The snapshot tables are kept as the labeled v0.4 baseline, not re-run per row.
 
 **Freeze-time totals (v0.4 snapshot): US 137 rows, China 122 rows, 259 total.**
