@@ -279,3 +279,62 @@ mobile call; CN-1974-1 Terracotta Army; CN-1975-1 first recoverable satellite.
    across ARPANET; `innovation`.
 3. **UPC barcode first commercial scan (US, 1974)** — inaugurated automated retail
    scanning; `innovation`, `commercial-deployment`.
+
+---
+
+## Verification batch 6 — rows 1971–1983 (2026-07-27)
+
+**Scope:** the 25 next-unprocessed chronological rows (three pre-1976 stragglers
+from the batch-5 ruling + the opening rows of Reform and Opening), spanning
+1971–1983. **Outcome: 25 promoted to ESTABLISHED — a clean sweep, no REPORTED
+reclassification.**
+
+**Ledger:** 119 → **144 ESTABLISHED**. Corpus 271 (US 143, China 128): 144
+ESTABLISHED, 126 OPEN-UNVERIFIED, 1 REPORTED.
+
+**Promoted (25):** US-1971-5 first networked email, CN-1974-2 Type-091 submarine,
+US-1974-1 UPC barcode, US-1975-1 Altair/Microsoft; CN-1976-1 end of the Cultural
+Revolution, US-1976-1 Apple, US-1976-2 Cray-1, US-1976-3 Genentech; CN-1977-1
+gaokao restored, US-1977-1 Voyager 1 & 2, US-1977-2 Atari 2600, US-1977-3 first
+whole-body MRI; CN-1978-1 Reform and Opening (Third Plenum), CN-1978-2 Household
+Responsibility System, US-1978-1 first GPS satellite; CN-1979-1 US–China
+normalization, CN-1980-1 first Special Economic Zone, CN-1980-2 IMF/World Bank
+seats, CN-1980-3 one-child policy, US-1980-1 Bayh–Dole/Genentech IPO; US-1981-1
+IBM PC, US-1981-2 Space Shuttle Columbia; US-1982-1 Jarvik-7; CN-1983-1 Yinhe-I
+supercomputer, US-1983-1 TCP/IP flag day.
+
+**The REPORTED discipline was applied and found no triggers this batch.** The
+Reform-era *events* are each corroborated by **independent** sources — not by
+PLA/state or official-statistical sourcing alone — so none flips to REPORTED.
+Where a *magnitude* rode on an event, the event/magnitude split was applied and
+an **independent** estimate (or an explicit "official, disputed" flag) was
+recorded in notes rather than the number being asserted in the claim:
+
+- **Household Responsibility System (CN-1978-2):** event (decollectivization from
+  1978, nationwide by ~1983) established. Magnitude taken from **independent
+  scholarship, not official statistics** — Lin (1992, *American Economic Review*)
+  attributes ~half (≈47%) of 1978–84 farm-output growth to the HRS; rural incomes
+  rose >10%/yr in the decade from 1979.
+- **One-child policy (CN-1980-3):** policy introduction (CPC open letter, 25 Sep
+  1980) established; the government's later "400 million births averted" figure is
+  an **official estimate disputed by demographers** — recorded as context, not
+  adopted.
+- **Shenzhen SEZ (CN-1980-1):** establishment (1980) established; Shenzhen's later
+  growth left as context, not an asserted magnitude.
+- **Yinhe-I (CN-1983-1):** completion (22 Dec 1983, NUDT) established via an
+  **independent** scholarly history (Si Hongwei; Project MUSE); the "third country
+  after the US and Japan" framing is flagged as Chinese state-media (CGTN) origin,
+  not adopted.
+
+**Interested-party set-aside honored:** Type-091 (CN-1974-2) was verified against
+**independent naval scholarship** (Britannica; Naval Encyclopedia) with PLA/state
+sources explicitly set aside — commissioned 1 Aug 1974 (hull 401, "Long March 1").
+
+**Note on US-1977-3 (MRI):** the row anchors the first *whole-body human* MRI
+image (Damadian's "Indomitable," 3 Jul 1977); the 2003 Nobel for MRI went to
+Lauterbur & Mansfield — recorded in notes so the claim is not overstated.
+
+### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
+
+None this batch. The 1971–1983 window is densely covered on both sides; no
+notable omission surfaced during verification.
