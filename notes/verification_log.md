@@ -480,3 +480,58 @@ reshapes — identical treatment by claim shape, not country.
 ### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
 
 None this batch. The 1994–2003 window is densely covered on both sides.
+
+---
+
+## Verification batch 9 — rows 2003–2010 (2026-07-27)
+
+**Scope:** the 25 next-unprocessed chronological rows, 2003–2010 (the corporate/
+tech-platform era). **Outcome: 24 promoted to ESTABLISHED; 1 held OPEN-UNVERIFIED.**
+
+**Ledger:** 194 → **218 ESTABLISHED**. Corpus 271 (US 143, China 128): 218
+ESTABLISHED, 52 OPEN-UNVERIFIED, 1 REPORTED.
+
+**Promoted (24):** US-2003-1 HGP completed, CN-2003-2 China's ~1% HGP share,
+US-2003-2 Tesla, US-2004-1 Facebook, US-2004-2 Spirit/Opportunity, CN-2005-1
+Lenovo–IBM PC, US-2005-1 YouTube, CN-2006-1 Qinghai–Tibet Railway, CN-2006-2 Three
+Gorges Dam, CN-2006-3 DJI, US-2006-1 AWS, CN-2007-1 Chang'e 1, US-2007-1 iPhone,
+CN-2008-1 Beijing Olympics, CN-2008-2 Beijing–Tianjin HSR, CN-2008-3 Shenzhou 7
+spacewalk, US-2008-1 Falcon 1, US-2008-2 App Store, US-2008-3 Android, US-2008-4
+shale revolution, CN-2010-1 world's 2nd-largest economy, CN-2010-2 world's largest
+manufacturer, CN-2010-3 Xiaomi, US-2010-1 first synthetic cell.
+
+**Held OPEN-UNVERIFIED (1):** CN-2003-3 ("consolidates its position as the
+'workshop of the world'"). Fail-outcome = **remains OPEN-UNVERIFIED** — a
+journalistic status phrase with no crisp, falsifiable 2003 anchor (fails the
+precision requirement). Its datable, independently-sourced twin is CN-2010-2
+(world's largest manufacturer, 2010, UN data), promoted this batch. Not REPORTED:
+it is the author's own unverified claim, merely imprecise.
+
+**Era watch-items (both exercised):**
+- **Corporate self-reporting is interested-party.** The "first/largest/dominant"
+  corporate claims were anchored to a datable founding/launch and their later
+  dominance corroborated by **independent** trade-press or academic, never IR
+  pages: DJI's ~70% drone share via Forbes (not DJI IR); Android's dominance dated
+  to ~2011 via StatCounter/IDC, with the 2008 launch as the anchor; Xiaomi's
+  "top-tier" status flagged as a later development off the 2010 founding; the App
+  Store and iPhone verified via independent trade-press, not Apple newsroom alone.
+- **Source-independence for recent Chinese tech.** Checked that corroborating
+  sources were genuinely independent rather than one English-language story
+  recycled — the "world's largest/2nd-largest" China rows rest on **independent
+  international-body series** (World Bank/IMF GDP for CN-2010-1; UN Statistics
+  Division manufacturing value-added for CN-2010-2), not on a circle of outlets
+  citing each other. No REPORTED triggers.
+
+**Event/magnitude splits noted:** Three Gorges structural completion 2006 vs full
+22,500 MW capacity 2012; Android launch 2008 vs dominance ~2011; DJI/Xiaomi
+founding vs later market position; the China-2nd-economy Q2-vs-full-year-2010
+nuance recorded.
+
+**Front-door lockstep (new standing step):** census updated to 218/52/1 in
+`avenues.json` (ledger + verification cards), `editions/index.source.html` prose,
+and the `verify_numbers.py` census check; both pipelines re-rendered; check-edition,
+check-markdown, check-projection all green; verify_numbers 7/7.
+
+### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
+
+None this batch. The 2003–2010 window is densely covered on both sides.

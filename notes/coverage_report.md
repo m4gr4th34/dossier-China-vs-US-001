@@ -18,8 +18,8 @@ are the drafting agent's independent selection under `notes/selection_criteria.m
 > freeze have moved the live corpus on: additions/conversions in
 > `additions_log.md`, removals in `removed_rows.md`, and promotions to ESTABLISHED
 > in `verification_log.md` + `claim_ledger.csv`. **Live count as of 2026-07-27:
-> 271 rows (US 143, China 128), of which 194 ESTABLISHED (verification batches
-> 1–8, covering 1926–2003), 76 OPEN-UNVERIFIED, and 1 REPORTED (CN-1952-2 —
+> 271 rows (US 143, China 128), of which 218 ESTABLISHED (verification batches
+> 1–9, covering 1926–2010), 52 OPEN-UNVERIFIED, and 1 REPORTED (CN-1952-2 —
 > magnitude on contested PRC official statistics).**
 >
 > *Amendment 4 (trajectory rows, 2026-07-27): CN-1990-4→CN-1978-3, US-1943-2→US-1942-3,
