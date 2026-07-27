@@ -37,3 +37,43 @@ opposite miscoding (US firms missing) did not exist to correct.
 - A symmetric reminder: the recode also did **not** hunt for missing US rows in
   other categories; this pass was scoped to fixing the category *coding* artifact
   plus the specific `innovation` omissions named in the coverage report.
+
+---
+
+## v0.3 additions — from the cross-validation adjudication (author-sheet-via-crossvalidation)
+
+Nine rows added after the author reviewed `notes/crossvalidation_report.md` §B
+(author-only candidates). Provenance for all: **author-sheet-via-crossvalidation**
+(present in the author's spreadsheet, judged to pass the notability rule, adopted
+into the ledger). All land **OPEN-UNVERIFIED**; each carries an `event_type`
+anchor (Amendment 3).
+
+| id | year | anchor | row | reason for adding |
+|---|---|---|---|---|
+| CN-1999-2 | 1999 | founding | BGI founded | Among the world's largest genome-sequencing organizations; distinct founding anchor from its later HGP-share completion row (CN-2003-2). |
+| CN-1999-3 | 1999 | founding | iFlytek founded | Leading speech-AI firm; genuine national-scale tech player. |
+| CN-2001-3 | 2001 | founding | Hikvision founded | World's largest video-surveillance-equipment maker. **Notability is not endorsement:** its role in state surveillance (incl. Xinjiang) and consequent foreign sanctions are stated plainly in the row's `notes`. |
+| CN-2010-3 | 2010 | founding | Xiaomi founded | Top-tier global smartphone / IoT maker; the strongest single innovation omission. |
+| CN-2014-4 | 2014 | founding | NIO founded | Major premium-EV maker; rounds out the EV cluster (BYD, CATL). |
+| CN-2014-5 | 2014 | founding | SenseTime founded | Leading computer-vision/AI firm. Surveillance use and foreign sanctions noted plainly in `notes`; notability is not endorsement. |
+| CN-2016-3 | 2016 | first-flight/launch | Long March 5 maiden flight | Heavy-lift rocket that enabled the station, lunar-sample, and Mars missions. |
+| CN-2019-3 | 2019 | completion | Beijing Daxing airport opens | Among the world's largest single-terminal airports. |
+| CN-2019-4 | 2019 | commercial-deployment | HarmonyOS released | Huawei's independent OS built under US sanctions; a notable post-sanctions capability. |
+
+China total: 112 → **121**. (US unchanged.)
+
+### Parked — NOT added (pending verification)
+- **TMSR / thorium molten-salt reactor** (`tmsr-sf (100mw)`, author-dated 2024): a
+  potentially major energy-science *first*, but its operational status is not yet
+  something I can corroborate to the standard the ledger needs even for an
+  OPEN-UNVERIFIED row anchored to a real event. **Parked pending operational
+  verification** (confirmation the reactor reached the claimed operational
+  milestone, with a datable event to anchor). Revisit when a firm anchor exists;
+  the bracketed `[tmsr-lf (24mw)]` (2020) remains speculative-at-authoring.
+
+### Candidates considered from §B but NOT added this pass
+- Other author-only candidates surfaced in the cross-validation (e.g. JD, Megvii,
+  Geely, Bitmain, Cambricon, quantum-radar, Long March 5's precursors, the
+  Tiangong-1 first-lab second anchor) were **not** part of the author's explicit
+  adjudicated add-list for this pass and are left for a future review, so the
+  scope of what was adopted stays legible.
