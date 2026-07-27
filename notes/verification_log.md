@@ -431,3 +431,52 @@ Two ESTABLISHED rows changed decade-bucket (poverty 1990s→1970s; shale, still
 OPEN-UNVERIFIED, 2010s→2000s); the frozen coverage v0.4 snapshot is a historical
 snapshot and is not regenerated, but the live-status line (counts) stays true.
 `verify_numbers.py` 6/6 green.
+
+---
+
+## Verification batch 8 — rows 1994–2003 (2026-07-27)
+
+**Scope:** the 25 next-unprocessed chronological rows, 1994–2003 (the commercial
+web, China's WTO-era integration). **Outcome: 25 promoted to ESTABLISHED — clean
+sweep, no REPORTED reclassification.** One Amendment-4 reshape applied mid-batch.
+
+**Ledger:** 169 → **194 ESTABLISHED**. Corpus 271 (US 143, China 128): 194
+ESTABLISHED, 76 OPEN-UNVERIFIED, 1 REPORTED.
+
+**Promoted (25):** US-1994-1 Netscape/Amazon, US-1994-2 NAFTA; CN-1995-1 BYD,
+US-1995-1 Windows 95, US-1995-2 Java, US-1995-3 GPS FOC, US-1995-4 eBay; CN-1997-1
+HK/Macau handovers, US-1997-1 Deep Blue, US-1997-2 Mars Pathfinder/Sojourner;
+**CN-1988-3** (reshaped from CN-1998-1) expressway network, US-1998-1 Google,
+US-1998-2 ISS assembly; CN-1999-1 Tencent/Alibaba/Baidu, CN-1999-2 BGI, CN-1999-3
+iFlytek; CN-2000-1 Western Development Strategy; CN-2001-1 WTO accession, CN-2001-2
+world's-largest mobile market, CN-2001-3 Hikvision, US-2001-1 Wikipedia, US-2001-2
+iPod; CN-2002-1 world's-largest FDI recipient, US-2002-1 SpaceX; CN-2003-1 Shenzhou 5.
+
+**Amendment-4 trajectory reshape (country-blind):** CN-1998-1 ("expressway network
+expands explosively, … among the world's largest") was a cumulative trajectory
+anchored at a **mid-span stimulus marker (1998)** — the exact masquerade Amendment 4
+forbids. Reshaped to a compliant cumulative-range row and **refiled at span-start:
+CN-1988-3 @1988**, `year_precision=range`, claim states 1988–2011, series from an
+**independent** source (Rodrigue, *The Geography of Transport Systems*): China's
+first expressway (1988) → surpassing the US Interstate to become the world's longest
+network (2011, ~84,000 km). This is the China-side twin of the US shale/WWII
+reshapes — identical treatment by claim shape, not country.
+
+**Disciplines exercised:**
+- **CN-2001-2 (mobile market):** the first pass conflated the 2001 total-subscriber
+  crossover with the 2011 *smartphone* crossover; a targeted follow-up confirmed the
+  **2001** total-subscriber crossover (ITU/UN series; ~140M by Dec 2001 vs the US's
+  ~128M). Promoted on the ITU/UN international-body series + CNN, with the
+  smartphone-crossover distinction noted so the claim is not overstated.
+- **US-1998-2 (ISS):** recorded on the US row for NASA's lead role, but noted as a
+  genuinely **multinational** project (Russia co-lead, Zarya Russian-built/US-funded;
+  ESA/Japan/Canada partners) — the same US-led-international caveat applied to the HGP.
+- **US-2001-2 (iPod):** verified via independent sources (Britannica/NPR), not
+  Apple's own release note alone.
+- **REPORTED discipline applied, no triggers:** the two "world's largest …" China
+  rows rest on **independent international-body series** (ITU/UN for mobile; UNCTAD
+  for FDI), not PRC official statistics — so neither is REPORTED.
+
+### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
+
+None this batch. The 1994–2003 window is densely covered on both sides.
