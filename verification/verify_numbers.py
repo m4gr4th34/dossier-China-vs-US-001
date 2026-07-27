@@ -90,6 +90,65 @@ check(f"Consistency: all forecast probabilities lie in [{PCT_MIN},{PCT_MAX}]", o
 # mirroring whatever you add to buildChecks() in index.html. Same rule:
 # never widen a tolerance to make a failing check pass — fix the paper.
 
+# ================================================================
+# LEDGER STRUCTURAL CHECKS (verification ritual — notes/verification_ritual.md).
+# Read the achievement corpus (data/achievements_draft.csv) and the formal
+# ESTABLISHED ledger (claim_ledger.csv) and enforce:
+#   (S1) every draft row carries a valid status label
+#   (S2) every ESTABLISHED ledger row meets the promotion source standard
+#   (S3) the draft's ESTABLISHED set reconciles exactly with the ledger set
+# Same contract as above: computed = number of violations, must be 0. A failure
+# means fix the ledger/corpus, never the check.
+# ================================================================
+import csv as _csv
+
+_ROOT = os.path.join(HERE, os.pardir)
+_DRAFT = os.path.join(_ROOT, "data", "achievements_draft.csv")
+_LEDGER = os.path.join(_ROOT, "claim_ledger.csv")
+_VALID_STATUS = {"OPEN-UNVERIFIED", "ESTABLISHED", "REPORTED"}
+_QUALIFYING_SINGLE = {"official-national", "international-body", "independent-academic"}
+_TWO_SOURCE_OK = {"journalistic", "encyclopedic"}
+
+
+def _read_csv(path):
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as fh:
+        return list(_csv.DictReader(fh))
+
+
+def _meets_source_standard(row):
+    """ESTABLISHED needs one official/international/academic source, OR two
+    independent journalistic/encyclopedic sources."""
+    src = (row.get("sources") or "").strip()
+    if not src:
+        return False
+    classes = [c.strip() for c in (row.get("source_class") or "").split("|") if c.strip()]
+    if any(c in _QUALIFYING_SINGLE for c in classes):
+        return True
+    n_sources = len([s for s in src.replace(";", "|").split("|") if s.strip()])
+    return len(classes) >= 2 and all(c in _TWO_SOURCE_OK for c in classes) and n_sources >= 2
+
+
+_draft_rows = _read_csv(_DRAFT)
+_ledger_rows = _read_csv(_LEDGER)
+
+# (S1) every draft row has a valid status label.
+_bad_status = [r.get("id") for r in _draft_rows if r.get("status") not in _VALID_STATUS]
+check("Ledger S1: every draft row has a valid status", len(_bad_status), 0, 0)
+
+# (S2) every ledger row is ESTABLISHED and meets the source standard.
+_bad_ledger = [r.get("id") for r in _ledger_rows
+               if r.get("status") != "ESTABLISHED" or not _meets_source_standard(r)]
+check("Ledger S2: every ESTABLISHED ledger row meets the source standard",
+      len(_bad_ledger), 0, 0)
+
+# (S3) draft ESTABLISHED set == ledger set (counts and ids reconcile).
+_draft_est = {r.get("id") for r in _draft_rows if r.get("status") == "ESTABLISHED"}
+_ledger_ids = {r.get("id") for r in _ledger_rows}
+check("Ledger S3: draft ESTABLISHED set reconciles with ledger set",
+      len(_draft_est ^ _ledger_ids), 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)
