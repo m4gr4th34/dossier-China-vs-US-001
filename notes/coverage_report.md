@@ -1,48 +1,50 @@
 # Coverage report — achievement ledger draft (1926–2026)
 
-Generated from `data/achievements_draft.csv`. All **239 rows are OPEN-UNVERIFIED**;
+Generated from `data/achievements_draft.csv`. All **248 rows are OPEN-UNVERIFIED**;
 this report describes *coverage and its weaknesses*, not verified truth. Counts
 are the drafting agent's independent selection under `notes/selection_criteria.md`.
 
-**Totals: US 127 rows, China 112 rows, 239 total.**
+**Totals: US 127 rows, China 121 rows, 248 total.**
 
-> **This report has been updated after the v0.2 country-blind category recode.**
-> The tables in §1–§3 are now the *post-recode* counts. The original *pre-recode*
-> tables are preserved verbatim in **Appendix A** so the correction is visible
-> history. Read the recode note next.
-
----
-
-## Recode note (v0.2) — what changed and why
-
-The first draft's §4.1/§4.2 flagged the `category` field as contaminated by a
-country-correlated coding habit (US firm-foundings coded `innovation`; comparable
-Chinese achievements coded `industrial`/`infrastructure`/`governmental_economic`).
-Two corrections were applied:
-
-1. **Country-blind recode** of 15 rows against explicit rules
-   (`selection_criteria.md` Amendment 1), with the `country` column masked from
-   the decision. Only the `category` field changed; no rows added or removed. The
-   rule cuts both ways: US landmark products (nylon, McDonald's model, System/360,
-   Boeing 747, IBM PC) moved *into* `innovation`; the ISS, IBM Watson (an AI
-   demonstration), and SpaceX's booster landing moved *into* `science`; Chinese
-   supercomputers (Yinhe-I, Tianhe-2), the Jiefang truck, and the C919 moved into
-   `innovation`; China's SEZ establishment moved into `governmental_economic`; its
-   internet-connectivity milestone into `infrastructure`; the Alibaba IPO into
-   `industrial`.
-2. **Five omission rows added** (`notes/additions_log.md`): Huawei, BYD, DJI,
-   CATL, ByteDance — Chinese `innovation` firms the draft had omitted — all
-   OPEN-UNVERIFIED.
-
-**Effect on the headline artifact:** the `innovation` split moved from **US 43 /
-China 6** to **US 46 / China 14**, and — more importantly than the totals —
-Chinese innovation is now *populated across the modern decades* rather than nearly
-empty (see §3). US `industrial` collapsed from 8 to 3, confirming that most of
-those rows were landmark *products* miscoded as production milestones.
+> **This is the v0.3 report.** Live tables (§1–§4) are the current counts after
+> the event-anchoring pass (Amendment 3) and the nine cross-validation additions.
+> The prior **v0.2 post-recode** tables are preserved in **Appendix B**, and the
+> original **pre-recode** tables in **Appendix A**, so every correction stays
+> auditable. Read the update note next.
 
 ---
 
-## 1. Totals per country per decade (post-recode)
+## Update note (v0.3) — what changed since v0.2
+
+1. **Event-anchoring (Amendment 3).** Added an `event_type` column
+   (discovery/invention/founding/first-flight-launch/commercial-deployment/
+   completion/milestone) and backfilled all rows; the anchor decides each row's
+   year and country. No year/country/category changed. New §4 shows the
+   distribution.
+2. **Nine cross-validation additions** (`additions_log.md`, provenance
+   *author-sheet-via-crossvalidation*): BGI, iFlytek, Hikvision, Xiaomi, NIO,
+   SenseTime (innovation), Long March 5 (science), Beijing Daxing airport
+   (infrastructure), HarmonyOS (innovation) — author-sheet candidates that passed
+   the notability rule. **China 112 → 121.** (TMSR/thorium was parked pending
+   operational verification.)
+3. **Date conflicts resolved** by anchoring, with **zero** changes to existing
+   ledger years (see `crossvalidation_report.md` §D addendum).
+
+### ⚠ The most important new caveat: adoption asymmetry
+The v0.2 recode and these v0.3 additions were **deliberately China-focused**,
+because the original artifact *under-credited* China. They added 5 + 9 = **14
+Chinese firms/achievements, almost all in 1996–2026**, while **no symmetric US
+completeness pass has been done** — the cross-validation surfaced strong US
+author-only candidates too (FedEx, Cisco, Intel, Bitcoin, MRI, 3D printing, …)
+that were **not** added. So today's recent-decade picture (China 20 in 2006–2015,
+17 in 2016–2026, vs US 13/13) partly reflects **asymmetric adoption effort, not
+only underlying reality.** This must be stated loudly to any downstream momentum
+index: *do not read the recent China>US row counts as momentum* until a symmetric
+US pass is run (see §7).
+
+---
+
+## 1. Totals per country per decade (v0.3)
 
 | Decade | US | China |
 |---|---|---|
@@ -53,44 +55,38 @@ those rows were landmark *products* miscoded as production milestones.
 | 1966-1975 | 13 | 10 |
 | 1976-1985 | 12 | 12 |
 | 1986-1995 | 12 | 13 |
-| 1996-2005 | 12 | 11 |
-| 2006-2015 | 13 | 17 |
-| 2016-2026 | 13 | 14 |
-| **Total** | **127** | **112** |
+| 1996-2005 | 12 | 14 |
+| 2006-2015 | 13 | 20 |
+| 2016-2026 | 13 | 17 |
+| **Total** | **127** | **121** |
 
-**The structural pattern is unchanged and remains the ledger's headline signal:**
-US density is nearly flat (12–14 every decade); China's rises from a thin early
-tail (6–11 through 1975) to parity in the reform decades and a lead in the last
-two (17 and 14 vs 13). That *shape* — not any single row — is the robust finding.
-It is a coverage fact, **not** a momentum verdict: whether a rising row count
-means rising "momentum" is a scoring question for the separate, caveated index
-layer, and the raw counts are deliberately unweighted (a first satellite and a
-founded startup each count as one row).
+**Density-target note (now a real exceedance, flagged honestly).** China
+**2006–2015 = 20** and **2016–2026 = 17** are both **above the 5–15 target band**
+(1996–2005 sits at 14). Each added row independently clears the notability bar, so
+the criteria §7 rule says keep them and flag the overflow rather than trim to a
+quota — but the exceedance is now large enough that it interacts with the adoption
+asymmetry above: the modern Chinese decades are the *only* cells that received two
+rounds of candidate adoption. A future pass should either run the symmetric US
+adoption or trim both sides to the band; until then the recent-decade totals are
+not comparable at face value.
 
-**Density-target note:** China 2006–2015 now sits at **17, above the 5–15 target
-band**. This is the criteria §7 "justified overflow" case: the three added firms
-(DJI, CATL, ByteDance) each independently clear the notability bar, so the honest
-move is to keep them and flag the overflow here rather than cut valid rows to hit
-a quota. Every other cell remains within 6–14.
-
-## 2. Category totals per country (post-recode)
+## 2. Category totals per country (v0.3)
 
 | Category | US | China |
 |---|---|---|
-| innovation | 46 | 14 |
-| infrastructure | 10 | 17 |
+| innovation | 46 | 21 |
+| infrastructure | 10 | 18 |
 | industrial | 3 | 12 |
-| science | 46 | 27 |
+| science | 46 | 28 |
 | social | 9 | 12 |
 | governmental_economic | 13 | 30 |
 
-The `innovation` column is now country-consistently coded, but a real gap remains
-(46 vs 14) — see §4.1 for what that residual does and does not mean. The
-`governmental_economic` gap (30 vs 13) *widened by one* in the recode (SEZ moved
-in) and is now understood as substantially structural rather than artifactual —
-see §4.2.
+The `innovation` gap has narrowed across three passes (US43/CN6 → US46/CN14 →
+**US46/CN21**) as the coding artifact was fixed and omissions adopted; the residual
+is now heavily shaped by the adoption asymmetry (§ update note) and the genuine
+time-shape of when each commercial-innovation economy existed (§5.1).
 
-## 3. Full matrices (decade × category, post-recode)
+## 3. Full matrices (decade × category, v0.3)
 
 ### United States
 
@@ -118,106 +114,181 @@ see §4.2.
 | 1966-1975 | 0 | 1 | 0 | 6 | 1 | 2 | 10 |
 | 1976-1985 | 2 | 0 | 0 | 1 | 2 | 7 | 12 |
 | 1986-1995 | 2 | 3 | 0 | 1 | 2 | 5 | 13 |
-| 1996-2005 | 2 | 1 | 2 | 2 | 0 | 4 | 11 |
-| 2006-2015 | 5 | 4 | 2 | 4 | 1 | 1 | 17 |
-| 2016-2026 | 2 | 3 | 1 | 7 | 1 | 0 | 14 |
+| 1996-2005 | 5 | 1 | 2 | 2 | 0 | 4 | 14 |
+| 2006-2015 | 8 | 4 | 2 | 4 | 1 | 1 | 20 |
+| 2016-2026 | 3 | 4 | 1 | 8 | 1 | 0 | 17 |
 
-## 4. Where my confidence is weakest (read this before trusting the tables)
+## 4. Event-type distribution (v0.3, new)
 
-### 4.1 `innovation` — the artifact is corrected; a residual, more-plausibly-real gap remains
-After the recode and additions, US innovation (46) vs China (14) is coded by one
-country-blind rule, and Chinese innovation is populated across the modern decades
-(0→2 in 1986–95, 2→5 in 2006–15) instead of near-empty. What the *residual* gap
-means, honestly:
-- **Much of it is now plausibly real, but time-shaped.** The US produced datable,
-  market-creating firms and products across the *entire* century; China's
-  innovation rows cluster after ~1984 (its first commercial-tech firms) and
-  especially after 2000. A century-long lead in datable firm/product foundings is
-  a genuine feature of the two development paths — but it is a statement about
-  *when each country's commercial-innovation economy existed*, not a clean measure
-  of inventive capacity per decade.
-- **The recode is itself a set of judgment calls.** "A landmark new product =
-  innovation; a scale/leadership milestone = industrial" is defensible but not
-  unique; a reviewer could, e.g., keep aircraft as `industrial` and would get a
-  different table. The rule is now explicit (Amendment 1) so that disagreement is
-  legible.
-- **Residual datability bias persists.** Diffuse capability build-outs still lack
-  crisp years and remain under-represented relative to founded firms.
+| event_type | US | China |
+|---|---|---|
+| discovery | 2 | 4 |
+| invention | 19 | 4 |
+| founding | 19 | 18 |
+| first-flight/launch | 21 | 12 |
+| commercial-deployment | 31 | 5 |
+| completion | 5 | 18 |
+| milestone | 30 | 60 |
 
-### 4.2 `governmental_economic` (China 30 vs US 13) — now read as mostly structural, not artifact
-The recode moved SEZ establishment *into* this column (a genuine reform-policy
-achievement) and moved the Alibaba IPO *out* (to `industrial`), leaving China at
-30. This gap is now best read as **substantive**: China's reform century produced
-an unusually dense sequence of discrete, datable institutional and policy
-milestones (SEZs, WTO accession, fiscal/currency reform, five-year-plan shifts,
-central-bank founding), whereas comparable US institutional change is either older
-than the 1926 window, more diffuse, or coded into `social` (Civil Rights,
-Medicare, the pill). It still should **not** be read as a scoreboard — it reflects
-*how each state's development was structured*, and the row-granularity of
-"a reform" vs "a law" is itself a modeling choice.
+The anchoring makes the two development paths legible at a glance, and the shapes
+are substantive, not artifacts:
+- **US is `invention`- and `commercial-deployment`-heavy** (19 + 31): a century of
+  lab inventions productized into markets.
+- **China is `completion`- and `milestone`-heavy** (18 + 60): built works (dams,
+  bridges, railways, stations, telescopes) and state/policy/ranking milestones.
+- **`founding` is near-parity** (19 vs 18) — but China's foundings cluster
+  post-1984 and are the category most affected by the adoption asymmetry (§ update
+  note), so read it with that caveat.
+- The high China `milestone` count (60) is the same phenomenon as the
+  `governmental_economic` gap (§5.2): China's reform century is dense in discrete,
+  datable policy/threshold events.
 
-### 4.3 China 1926–1945 is still genuinely under-covered
-Unchanged by the recode. The Republican-era and War-of-Resistance decades (China 9,
-then 6 — the draft's two thinnest cells) are thin for a real reason (fragmentation,
-warlordism, then total war and occupation) **and** a bias reason (the
-English-language record under-documents this period's Chinese science, industry,
-and institution-building, and my own knowledge is thinner here). Treat these two
-decades as a floor; a China-specialist source pass would likely add rows.
+## 5. Where my confidence is weakest (read this before trusting the tables)
 
-### 4.4 Early-PRC rows rest on contested statistics
-Unchanged. Several 1949–1978 rows (output recovery to prewar peaks, early
-poverty/health gains, First-Five-Year-Plan base-building) rely on official PRC
-figures with documented reliability disputes. Entered OPEN-UNVERIFIED with the
-caveat in `notes`; exactly the kind of numbers the dossier's data-integrity
-doctrine says to show against an independent series where possible.
+### 5.1 `innovation` — artifact corrected; residual is time-shape **plus adoption asymmetry**
+US 46 vs China 21 is now coded by one country-blind rule, and Chinese innovation
+is populated across the modern decades. Two honest drivers of the residual:
+- **Time-shape (real):** the US produced datable market-creating firms/products
+  across the *entire* century; China's cluster after ~1984. That is a real feature
+  of the two paths — a statement about *when* each commercial-innovation economy
+  existed, not inventive capacity per decade.
+- **Adoption asymmetry (a method artifact, new and important):** China's recent
+  innovation count was raised by two China-focused adoption passes; the comparable
+  US author-only candidates were left un-adopted. So part of the *narrowing* on the
+  China side — and the recent-decade China>US flip — is effort, not measurement.
+  Symmetry requires either adopting the US candidates or not having adopted the
+  Chinese ones; the honest state is that this has not been equalized.
 
-### 4.5 The 2016–2026 tail is deliberately light and recency-limited
-Unchanged. The window ends mid-2026, but confident entries stop near early 2025.
-Nothing from roughly the last 18 months of the window is included, to avoid
-asserting recent or unverified events, so the final decade reads as "first ~9
-years." (The five added firms are anchored to their *founding* years, all ≤2012,
-so they do not touch the recent tail.)
+### 5.2 `governmental_economic` (China 30 vs US 13) — mostly structural
+Unchanged in reading: China's reform century produced an unusually dense sequence
+of discrete, datable institutional/policy milestones; comparable US institutional
+change is older than the 1926 window, more diffuse, or coded into `social`. Not a
+scoreboard — it reflects how each state's development was structured. (The `milestone`
+event-type gap in §4 is the same fact seen through the anchor lens.)
 
-### 4.6 Attribution and date calls a reviewer may contest
-Unchanged. Excluded on non-US/non-China attribution: the World Wide Web (CERN),
-the Higgs boson (CERN), AlphaGo/AlphaFold (UK lab), Dolly and IVF (UK). Included
-as US with a collaboration note: CRISPR-Cas9 (US–France), mRNA vaccines (US +
-German BioNTech). `circa`/`range` anchors for multi-year projects are defensible
-but not unique. Pre-1949 "China" folds Republican-era achievements under one
-`country` label, with the political entity recorded in `notes`.
+### 5.3 China 1926–1945 is still genuinely under-covered
+Unchanged and untouched by every pass so far: the Republican-era and
+War-of-Resistance decades (China 9, then 6) are thin for real reasons
+(fragmentation, war) **and** English-source bias. Treat as a floor; a
+China-specialist source pass would likely add rows. This is now the *only*
+clearly-thin China region left, and correcting it would raise early-decade counts
+(partly offsetting the recent-decade adoption asymmetry).
 
-## 5. How the pre-declared biases actually played out (updated post-recode)
+### 5.4 Early-PRC rows rest on contested statistics
+Unchanged. Several 1949–1978 rows rely on official PRC figures with documented
+reliability disputes; entered OPEN-UNVERIFIED with the caveat in `notes`.
 
-| Bias (criteria §8) | Verdict after the recode |
+### 5.5 The 2016–2026 tail is still recency-limited
+The window ends mid-2026; confident entries stop near early 2025. The v0.3
+additions are anchored to founding/first-flight/completion events **all ≤ 2019**
+(latest: Daxing airport and HarmonyOS, 2019), so they do not touch the uncertain
+recent tail.
+
+### 5.6 Attribution and date calls a reviewer may contest
+Unchanged. Excluded on non-US/non-China attribution: World Wide Web (CERN), Higgs
+(CERN), AlphaGo/AlphaFold (UK), Dolly/IVF (UK). Included as US with a collaboration
+note: CRISPR (US–France), mRNA vaccines (US + German BioNTech). Anchoring
+(Amendment 3) now makes the penicillin-type cases explicit: the in-scope row is
+whichever *anchor event* is US/Chinese (penicillin → US 1943 commercial-deployment,
+not the 1928 British discovery).
+
+## 6. How the pre-declared biases actually played out (v0.3)
+
+| Bias (criteria §8) | Verdict |
 |---|---|
-| Recency bias | Held in check; density flat-to-rising, 2016–2026 tail capped early. Added firms anchored to founding years (≤2012). |
-| English-source bias vs China | **Partly fixed** — the flagged `innovation` omissions were added; 1926–1945 remains under-covered (still flagged, still not fixed). |
-| Category imbalance | **Largely addressed** for the coding artifact via the country-blind recode; the residual `innovation` and `gov/economic` gaps are now interpreted (§4.1/§4.2), not laundered as measurements. |
-| Nameable-project / great-man bias | Still present — founded-firms and megaprojects dominate; diffuse achievements remain thinner and mostly `circa`. |
-| Survivorship / hindsight | Unquantified; accepted as a limitation. |
-| Statistical definitional drift | Flagged per-row for poverty/output/literacy claims; not resolved. |
+| Recency bias | **Now partly re-introduced on the China side** by the adoption passes (recent decades over target); flagged in §1 and §5.1 as the top thing to equalize. |
+| English-source bias vs China | Modern innovation omissions fixed; **1926–1945 still under-covered** (§5.3). |
+| Category imbalance | Coding artifact addressed; residual `innovation`/`gov-economic` gaps interpreted, not laundered. |
+| Nameable-project / great-man bias | Still present, and the firm-founding adoption passes lean *into* it — `founding` is now a large event-type (§4). |
+| Survivorship / hindsight | Unquantified; accepted. |
+| Statistical definitional drift | Flagged per-row; not resolved. |
 
-## 6. Bottom line for the next pass
-The category-coding artifact that §4.1/§4.2 originally warned against is now
-**corrected and documented**, so the category counts are safer to reason about —
-but they are still *counts of a judgment-laden selection*, not measurements, and
-the momentum index must be built with the caveats in §4 visible, not on raw
-tallies. Highest-value remaining corrections before scoring: (a) a
-China-specialist source pass on **1926–1945** (the one clearly-thin region the
-recode did not touch); (b) an independent-series cross-check on the contested
-**early-PRC statistics**; (c) a completeness sweep for `industrial`/`infrastructure`
-omissions symmetric to the `innovation` one just done (e.g., China's solar-PV
-manufacturing dominance, logged in `additions_log.md`). The decade-total *shape*
-(China's thin early tail rising to a late lead) is the most robust finding and the
-one least sensitive to any of these classification questions.
+## 7. Bottom line for the next pass
+The category-coding artifact is corrected and the ledger is now event-anchored, so
+the tables are cleaner to reason about — but a **new asymmetry** was introduced:
+two China-focused adoption passes densified 1996–2026 on the China side with no
+symmetric US pass. **Before any momentum index is built, equalize this** — the
+single highest-value next action is a **symmetric US author-only adoption pass**
+(FedEx, Cisco, Intel, Bitcoin, MRI, 3D printing, PayPal, etc.), decided by the same
+notability rule, so the recent decades are comparable. Then: (b) the
+China-specialist **1926–1945** pass (§5.3); (c) the contested **early-PRC statistics**
+cross-check; (d) the deferred symmetric `industrial`/`infrastructure` sweep. The
+one finding robust to all of this remains the **decade-total shape** (China's thin
+early tail rising over the century) — but even that is now partly adoption-shaped
+in the last two decades and must be read with §1/§5.1 in view.
 
 ---
 
-## Appendix A — pre-recode tables (superseded)
+## Appendix B — v0.2 post-recode tables (superseded)
 
-Preserved verbatim from the first drafting pass (234 rows, before the v0.2
-country-blind recode and the five added firm rows). Kept so the correction is
-auditable. **Do not cite these as current** — see §1–§3 above.
+Preserved verbatim from the v0.2 report (239 rows: after the country-blind category
+recode and the first five added firms, before event-anchoring and the nine
+cross-validation additions). **Do not cite as current** — see §1–§4.
+
+### B.1 Totals per country per decade (v0.2)
+
+| Decade | US | China |
+|---|---|---|
+| 1926-1935 | 14 | 9 |
+| 1936-1945 | 12 | 6 |
+| 1946-1955 | 13 | 11 |
+| 1956-1965 | 13 | 9 |
+| 1966-1975 | 13 | 10 |
+| 1976-1985 | 12 | 12 |
+| 1986-1995 | 12 | 13 |
+| 1996-2005 | 12 | 11 |
+| 2006-2015 | 13 | 17 |
+| 2016-2026 | 13 | 14 |
+| **Total** | **127** | **112** |
+
+### B.2 Category totals per country (v0.2)
+
+| Category | US | China |
+|---|---|---|
+| innovation | 46 | 14 |
+| infrastructure | 10 | 17 |
+| industrial | 3 | 12 |
+| science | 46 | 27 |
+| social | 9 | 12 |
+| governmental_economic | 13 | 30 |
+
+### B.3 US decade × category (v0.2)
+
+| Decade | innov | infra | indus | sci | social | gov/econ | Tot |
+|---|---|---|---|---|---|---|---|
+| 1926-1935 | 5 | 2 | 0 | 4 | 1 | 2 | 14 |
+| 1936-1945 | 3 | 2 | 1 | 3 | 1 | 2 | 12 |
+| 1946-1955 | 4 | 0 | 0 | 6 | 1 | 2 | 13 |
+| 1956-1965 | 4 | 1 | 0 | 3 | 4 | 1 | 13 |
+| 1966-1975 | 7 | 0 | 0 | 4 | 0 | 2 | 13 |
+| 1976-1985 | 6 | 1 | 0 | 4 | 0 | 1 | 12 |
+| 1986-1995 | 6 | 3 | 0 | 2 | 0 | 1 | 12 |
+| 1996-2005 | 7 | 0 | 0 | 5 | 0 | 0 | 12 |
+| 2006-2015 | 3 | 0 | 1 | 7 | 2 | 0 | 13 |
+| 2016-2026 | 1 | 1 | 1 | 8 | 0 | 2 | 13 |
+
+### B.4 China decade × category (v0.2)
+
+| Decade | innov | infra | indus | sci | social | gov/econ | Tot |
+|---|---|---|---|---|---|---|---|
+| 1926-1935 | 0 | 1 | 1 | 2 | 1 | 4 | 9 |
+| 1936-1945 | 0 | 1 | 2 | 1 | 0 | 2 | 6 |
+| 1946-1955 | 0 | 1 | 2 | 1 | 3 | 4 | 11 |
+| 1956-1965 | 1 | 2 | 2 | 2 | 1 | 1 | 9 |
+| 1966-1975 | 0 | 1 | 0 | 6 | 1 | 2 | 10 |
+| 1976-1985 | 2 | 0 | 0 | 1 | 2 | 6 | 12 |
+| 1986-1995 | 2 | 3 | 0 | 1 | 2 | 5 | 13 |
+| 1996-2005 | 2 | 1 | 2 | 2 | 0 | 4 | 11 |
+| 2006-2015 | 5 | 4 | 1 | 4 | 1 | 1 | 17 |
+| 2016-2026 | 2 | 3 | 1 | 7 | 1 | 0 | 14 |
+
+---
+
+## Appendix A — pre-recode tables (original independent draft, superseded)
+
+Preserved verbatim from the first drafting pass (234 rows, before any recode or
+additions). Kept so the whole correction history is auditable. **Do not cite as
+current.**
 
 ### A.1 Totals per country per decade (pre-recode)
 
