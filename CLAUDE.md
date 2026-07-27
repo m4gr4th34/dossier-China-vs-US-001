@@ -127,16 +127,75 @@ labeled one is not.**
   resolves it true or refuted.
 
 ## What this project is
-The strategy room for **Dossier [NNN / short-name]: [ONE-LINE TOPIC]**.
+The strategy room for **Dossier China-vs-US-001 — US–China Century Ledger: A year-by-year, side-by-side comparison of American and Chinese innovation, infrastructure, and social achievements (1926–2026), a per-year comparative bar chart of relative momentum, and a loosely-held projection of the two trajectories at +10, +20, and +30 years.**
 Connected repo: this synced repository. The dossier's two reading
 surfaces (the self-explaining front door and the audit trail), its manuscript, its
 verification script, and its claim ledger all live here.
 
 ## Standing context (edit per dossier)
-- [List this dossier's open claims by ledger id.]
-- [List current open red-team findings.]
-- [Note anything a fresh session must know: the topic's sensitivities, the
-  key prior work, the boldest claims and exactly how they're labeled.]
+- Open claims: None formally entered yet — to be built during prior-art recon.
+  Anticipated structure: the ESTABLISHED bucket will hold documented, dateable
+  achievements (patents, infrastructure completions with verified specs,
+  published social indicators from World Bank / UN / OECD / national statistics
+  bureaus, each with its source and known caveats); the per-year "momentum
+  scores" that drive the bar chart will be OPEN-CAVEATED (real underlying data,
+  but the scoring rubric is an authorial construction and must be published as
+  such); the 10/20/30-year projections will be EXPLORATORY-CONJECTURE, full stop
+  — they are extrapolations of a constructed index, not forecasts, and must
+  never be labeled higher.
+- Open red-team findings: None yet — adversarial pass comes after the first
+  draft. Anticipated attack surfaces to pre-empt: metric-selection bias (any
+  rubric can be tuned to make either country "win"), and non-comparability of
+  eras (a 1930s achievement and a 2020s achievement are not the same unit).
+- Anything a fresh session must know:
+  - Framing discipline (critical): This is a geopolitically charged topic where
+    both triumphalist and declinist narratives are cottage industries. The
+    dossier's entire value is that it is neither. State documented achievements
+    plainly as ESTABLISHED with sources — China's HSR network mileage and
+    poverty-reduction statistics are bedrock, and so are America's postwar
+    scientific dominance and institutional depth; being timid about either is a
+    mistake. But the synthesis — "current momentum favors X" — is an inference
+    from a constructed index and stays OPEN-CAVEATED, with the rubric fully
+    exposed so a hostile reader can re-weight it and get a different chart. Truth
+    in labeling cuts BOTH ways: never launder an authorial scoring choice into an
+    "objective" measurement, and never soft-pedal a genuinely documented
+    achievement because it's politically inconvenient in either direction.
+  - Data-integrity discipline (the topic's core sensitivity): Chinese official
+    statistics have documented reliability disputes (GDP smoothing, provincial
+    over-reporting, the Li Keqiang index critique); US statistics have their own
+    definitional shifts across a century. Every data point carries its source
+    class: official-national, international-body, independent-academic, or
+    REPORTED—NON-SCIENTIFIC SOURCE UNCORROBORATED for journalistic-only claims.
+    Where US and Chinese figures for the same quantity conflict, show both, don't
+    adjudicate silently.
+  - Methodology must be first-class content: the achievement-selection criteria,
+    the per-year scoring rubric, and the era-normalization scheme are themselves
+    claims and get their own section with labels. The bar chart is only as honest
+    as its rubric, and the rubric is published, versioned, and challengeable —
+    that IS the dossier.
+  - Projections doctrine: the +10/+20/+30-year outlooks are momentum
+    extrapolations under stated assumptions (demographics, debt, decoupling,
+    technology diffusion), presented as scenario bands, not point predictions.
+    Each named assumption gets its own label. Prior-art on the failure rate of
+    exactly this genre of prediction (1980s "Japan as Number One" literature is
+    the canonical cautionary specimen) must be cited in the projections section
+    itself.
+  - Key prior work to map in recon: Maddison Project historical GDP series,
+    World Bank & UN development indicators, Angus Deaton / Branko Milanović on
+    cross-country welfare comparison, Michael Beckley ("Unrivaled") and Graham
+    Allison ("Destined for War") as the two poles of the momentum debate, ASPI
+    Critical Technology Tracker, Nature Index and patent-quality (not just
+    patent-count) literature, and the econometric critiques of Chinese official
+    data. Treat both Chinese state media and US think-tank advocacy pieces as
+    adjacent-at-best and flag them.
+  - The boldest claim and its label: "Chinese momentum, if sustained, overtakes
+    the US composite index within [N] years" → EXPLORATORY-CONJECTURE, presented
+    as a scenario conditional on named assumptions, with the falsifying
+    observations spelled out (e.g., which demographic or productivity data points
+    would break the trend). The publishable, defensible spine is the honest
+    separation of the documented achievement ledger from the constructed momentum
+    index from the speculative projection — three rungs, three labels, never
+    blurred.
 
 ## Geography (three layers)
 1. **GitHub = the truth.** The synced repo is the canonical state.
