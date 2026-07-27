@@ -215,3 +215,110 @@ file and every data row it governs.
 *Selection layer v0.1 (draft). Change this file and the rows may change; that is
 intended. The rulebook is as much the object of review as the ledger it
 produces.*
+
+---
+
+## Amendment 1 — country-neutral category decision rules (v0.2)
+
+**Why:** the first coverage pass (`notes/coverage_report.md` §4) found the
+`category` field contaminated by a country-correlated classification habit — US
+company-foundings and tech products were coded `innovation`, while functionally
+comparable Chinese achievements were coded `industrial`, `infrastructure`, or
+`governmental_economic`. That manufactured much of the apparent innovation gap.
+This amendment replaces the loose §2 category descriptions with explicit,
+**country-neutral tests**, and the whole ledger is re-adjudicated against them
+with the `country` column masked from the decision.
+
+**The governing principle (non-negotiable):** *classify by the nature of the
+achievement, never by who did it or how it was owned.* State-owned or
+state-adjacent origin does **not** demote a commercial or technological
+achievement to `governmental_economic`. A state-founded champion firm and a
+venture-funded startup, if each became a major technology/industrial player, are
+both `innovation`.
+
+### The six tests (apply "primary significance"; tie-break order below)
+
+- **science** — the achievement is primarily a gain in fundamental knowledge or a
+  scientific/exploration first: discoveries, scientific firsts, research
+  instruments/megaprojects (telescopes, colliders, genome projects), scientific
+  prizes, foundational device inventions credited as *physics/biology
+  breakthroughs* (transistor, laser, solar cell, recombinant DNA, CRISPR,
+  information theory, insulin synthesis, fusion ignition, gravitational waves,
+  first nuclear chain reaction / first weapon test as an engineering-science
+  first), **and all crewed or robotic spaceflight and space-station milestones**
+  (satellites, crewed flights, landings, rovers, sample returns, orbital
+  laboratories, reusable-launch technical firsts). Test: *did the frontier of
+  knowledge or exploration move, rather than a market or a production line?*
+
+- **innovation** — the achievement is the creation of a new commercially or
+  technologically significant product, platform, service, computing machine, or
+  material, **or the founding of a company that became a major technology or
+  industrial player** — regardless of ownership. Includes firm foundings, landmark
+  commercial products/platforms, new applied technologies that created or
+  reshaped a market, and the first indigenous development of a complex
+  technological product (a first domestic airliner, automobile, or supercomputer
+  counts here). Test: *did a new product, technology, material, or major firm come
+  into being — and is that, not a research first, the point?*
+
+- **industrial** — the achievement is a **manufacturing-, production-, or
+  market/economic-scale leadership** milestone, where the achievement is *scale or
+  leadership itself*, not a specific new product or firm: wartime production
+  mobilization, output-recovery benchmarks, heavy-industrial base-building,
+  resource self-sufficiency, "largest manufacturer/exporter", "largest producer of
+  X", a record public listing marking a sector's global scale, or briefly becoming
+  the world's most valuable company on the strength of a product category. Test:
+  *is the achievement about how much is produced or who leads a market, rather than
+  a new artifact?*
+
+- **infrastructure** — physical networks and fixed facilities: rail and high-speed
+  rail, highways/expressways, dams, bridges, ports, airports, power grids and
+  power stations, telecom/broadband/5G networks, undersea cables, internet
+  backbones, satellite-navigation systems, satellite-internet constellations.
+  **Adopting or connecting to existing infrastructure** (e.g., a country's first
+  connection to the global internet) is infrastructure, not a research first.
+
+- **social** — poverty reduction, public health, education access, demographic
+  policy, civil-rights milestones, mass-welfare outcomes and institutions'
+  outcomes, and major national civic events (Olympics/Asian Games).
+
+- **governmental_economic** — founding of durable governing/economic
+  **institutions**, structural economic/monetary/fiscal **reforms**, landmark
+  economic legislation, trade-regime and diplomatic-institutional milestones, and
+  economic-policy zones/programs (SEZs, tax reform, currency reform, WTO accession,
+  central-bank founding, alliance/treaty institutions). Reserved for genuine
+  governance/economic-structure/policy/diplomacy achievements — **never** the
+  destination for a commercial/technological achievement merely because the state
+  was involved.
+
+### Tie-break order (when two tests both seem to fit)
+
+1. **science over everything** if the achievement's fame is a knowledge or
+   exploration first (a space-station is science, not infrastructure; an AI system
+   *demonstration* like a champion-beating match is science, but an AI *product
+   release* is innovation).
+2. **innovation vs industrial:** a *new product/firm/material* → innovation; a
+   *scale/leadership* milestone → industrial.
+3. **innovation vs governmental_economic:** a *commercial/technological* artifact
+   or firm → innovation, even if state-owned; a *policy/institution/reform* →
+   governmental_economic.
+4. **the physical thing vs the policy that launched it:** a built network/facility
+   → infrastructure; the economic-reform policy or zone designation itself →
+   governmental_economic.
+
+### Worked calls that changed under this amendment (illustrative, both countries)
+
+- A landmark new aircraft (DC-3, Boeing 747, C919) → `innovation`, not
+  `industrial` — country-neutrally, all three are new flagship products.
+- A first-of-its-kind or fastest supercomputer (Cray-1, Yinhe-I, Tianhe-2) →
+  `innovation` — a built computing machine, coded the same regardless of country.
+- A crewed orbital laboratory (ISS, Tiangong) → `science`, not `infrastructure`.
+- An AI *demonstration* (Deep Blue, Watson) → `science`; an AI *product* (ChatGPT,
+  DeepSeek) → `innovation`.
+- Connecting a country to the global internet → `infrastructure` (adoption), while
+  *inventing* internet protocols → `science` (research first).
+- Establishing Special Economic Zones → `governmental_economic` (a reform policy),
+  even though it drove physical development.
+
+*Selection layer v0.2. The recode touches only the `category` field of existing
+rows; no row is added or removed by the recode itself. Newly-surfaced omissions
+are added as separate OPEN-UNVERIFIED rows and logged in `notes/`.*
