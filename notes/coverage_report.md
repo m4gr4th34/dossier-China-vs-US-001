@@ -10,11 +10,18 @@
 > does not freeze the separate, later scoring/momentum layer, which is built on
 > top of this corpus and is out of scope here.
 
-All **259 rows are OPEN-UNVERIFIED**; this report describes *coverage and its
-weaknesses*, not verified truth. Counts are the drafting agent's independent
-selection under `notes/selection_criteria.md`.
+This report describes *coverage and its weaknesses*, not verified truth. Counts
+are the drafting agent's independent selection under `notes/selection_criteria.md`.
 
-**Totals: US 137 rows, China 122 rows, 259 total.**
+> **Post-freeze status (live).** The tables below are the **freeze-time v0.4
+> snapshot (259 rows, all OPEN-UNVERIFIED)**. Per-row ritual changes since the
+> freeze have moved the live corpus on: additions/conversions in
+> `additions_log.md`, removals in `removed_rows.md`, and promotions to ESTABLISHED
+> in `verification_log.md` + `claim_ledger.csv`. **Live count as of 2026-07-27:
+> 261 rows (US 137, China 124), of which 22 ESTABLISHED, 239 OPEN-UNVERIFIED.**
+> The snapshot tables are kept as the labeled v0.4 baseline, not re-run per row.
+
+**Freeze-time totals (v0.4 snapshot): US 137 rows, China 122 rows, 259 total.**
 
 > Live tables (§1–§4) are the frozen **v0.4** counts. Prior tables are preserved:
 > **Appendix C** (v0.3), **Appendix B** (v0.2 post-recode), **Appendix A**

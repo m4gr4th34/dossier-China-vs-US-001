@@ -167,3 +167,41 @@ foundational-tech and industry-creating events occurred. **The draft corpus is
 now frozen** (see `coverage_report.md` header): no further bulk content passes;
 subsequent changes are per-row, through the verification ritual, with logged
 justification.
+
+---
+
+## Post-freeze per-row changes — batch-1 proposal ruling (2026-07-27)
+
+The verification batch-1 log surfaced four China 1926–1945 candidates as
+proposals; the author **approved them with structure**. These are the first
+per-row changes through the freeze. Provenance for all:
+**verification-batch-1-proposal, author-approved**. All land **OPEN-UNVERIFIED**
+and queue for verification in their chronological batch.
+
+### Added (4)
+
+| id | year | anchor | row | note |
+|---|---|---|---|---|
+| CN-1930-2 | 1930 | milestone | tariff-autonomy restoration completed | Anchor justification: the restoration ran as a treaty sequence (US 1928 → others → **Japan, the last major power, 1930**); anchored to the 1930 completion, to be confirmed at verification. `governmental_economic`. |
+| CN-1931-1 | 1931 | founding | Liang Shuming's Zouping rural reconstruction | **Converts** the diffuse Ding County education row (CN-1929-2, removed). `social`. |
+| CN-1933-1 | 1933 | milestone | 'abolish the tael, adopt the yuan' currency reform | Datable 1933 precursor to the 1935 fabi reform (CN-1935-1). `governmental_economic`. |
+| CN-1936-1 | 1936 | completion | Canton–Hankow (Yuehan) Railway completed | **Covers/converts** the diffuse Nanjing-decade infrastructure row (CN-1934-1, removed), narrowed to the era's flagship datable railway. `infrastructure`. |
+
+### Converted / removed (2 → `notes/removed_rows.md`)
+
+- **CN-1929-2** (Ding County education, diffuse) → removed, *superseded by anchored
+  reformulation* CN-1931-1 (Zouping).
+- **CN-1934-1** (Nanjing-decade infrastructure, diffuse) → removed, *superseded by
+  anchored reformulation* CN-1936-1 (Canton–Hankow Railway).
+
+### Not converted — remains OPEN-UNVERIFIED (do not force)
+
+- **CN-1930-1** (cotton-textile leadership, diffuse `industrial`): no added anchored
+  claim genuinely covers it (currency reform and the railway are unrelated to
+  cotton-textile output), so per the author's ruling it is left OPEN-UNVERIFIED
+  rather than force-converted. Re-eligible in a future per-row pass if a datable
+  anchor (a specific mill/output milestone) is found.
+
+**Net:** +4 added, −2 removed. China 122 → **124**; corpus 259 → **261**. The
+`coverage_report.md` v0.4 tables are the freeze-time snapshot; this delta is
+tracked here, in `removed_rows.md`, and in `verification_log.md`.
