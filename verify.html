@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DOSSIER NNN — @@TITLE@@ (Open Dossier)</title>
-<meta name="description" content="@@DESCRIPTION@@. A survey that explains itself.">
+<title>DOSSIER China-vs-US-001 — China vs. US (working title) (Open Dossier)</title>
+<meta name="description" content="Working draft — research in progress. A survey that explains itself.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -368,18 +368,18 @@
 <body data-chrome="reading">
 <header>
   <div class="chrome">
-    <div class="eyebrow">An Open Dossier · <b>NNN</b></div>
+    <div class="eyebrow">An Open Dossier · <b>China-vs-US-001</b></div>
     <div class="cta">
       <a class="btn" href="index.html">The paper</a>
       <a class="btn" href="dossier.html">Audit trail</a>
       <a class="btn" href="lineage.html">Chapters</a>
-      <a class="btn" href="https://github.com/YOURUSER/YOURREPO/issues" target="_blank" rel="noopener">Contribute ↗</a>
+      <a class="btn" href="https://github.com/m4gr4th34/dossier-China-vs-US-001/issues" target="_blank" rel="noopener">Contribute ↗</a>
     </div>
     <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
       <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
       <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
       <span class="pv-item pv-here"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">this page</span></span>
-      <a class="pv-item" href="https://github.com/YOURUSER/YOURREPO" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+      <a class="pv-item" href="https://github.com/m4gr4th34/dossier-China-vs-US-001" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
     </div>
     <div class="lineage-strip" id="lineageStrip" aria-label="Lineage"></div>
     <h1>Verifying this paper's Bitcoin timestamp</h1>
@@ -407,7 +407,7 @@
   holds one <code>.ots</code> proof file per release — each the OpenTimestamps proof for that
   release's source archive (named for the release tag, e.g. <code>&lt;tag&gt;.tar.gz.ots</code>).
   Browse and download them at
-  <a href="https://github.com/YOURUSER/YOURREPO/tree/main/timestamps" target="_blank" rel="noopener"><code>timestamps/</code></a>,
+  <a href="https://github.com/m4gr4th34/dossier-China-vs-US-001/tree/main/timestamps" target="_blank" rel="noopener"><code>timestamps/</code></a>,
   picking the one matching the release you want to check. (Until the first release is published
   and the auto-timestamp workflow runs, this folder will be empty.)</p>
 </section>
@@ -423,7 +423,7 @@
     </li>
     <li>
       <b>Get the matching release archive</b>
-      <span>From the <a href="https://github.com/YOURUSER/YOURREPO/releases" target="_blank" rel="noopener">GitHub releases page</a>,
+      <span>From the <a href="https://github.com/m4gr4th34/dossier-China-vs-US-001/releases" target="_blank" rel="noopener">GitHub releases page</a>,
       download the "Source code (tar.gz)" for the same release the proof belongs to — e.g.
       <code>&lt;tag&gt;.tar.gz</code> for that release's proof. The archive and its <code>.ots</code> file must be the pair.</span>
     </li>
@@ -448,7 +448,7 @@
 <footer>
   <b>Back to the paper:</b> <a href="index.html">the paper</a> ·
   <a href="dossier.html">audit trail</a> ·
-  <a href="https://github.com/YOURUSER/YOURREPO" target="_blank" rel="noopener">source &amp; releases</a>
+  <a href="https://github.com/m4gr4th34/dossier-China-vs-US-001" target="_blank" rel="noopener">source &amp; releases</a>
   <br><br><span class="mono">An Open Dossier · CC BY 4.0 · timestamps anchored via OpenTimestamps · every verification label is true</span>
 </footer>
 
@@ -620,11 +620,11 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
     d.href='verify.html';
   } else if(isIndex){
     var cd=p.concept_doi||'';
-    if(!cd || cd.indexOf('TODO')===0){ v.textContent='DOI after first release'; d.href='https://github.com/YOURUSER/YOURREPO'; }
+    if(!cd || cd.indexOf('TODO')===0){ v.textContent='DOI after first release'; d.href='https://github.com/m4gr4th34/dossier-China-vs-US-001'; }
     else { d.href='https://doi.org/'+cd; v.textContent=cd+' \u2197'; }
   } else if(!p.version_doi || p.version_doi.indexOf('TODO')===0){
     v.textContent='DOI after first release';
-    d.href='https://github.com/YOURUSER/YOURREPO';
+    d.href='https://github.com/m4gr4th34/dossier-China-vs-US-001';
   } else {
     d.href='https://doi.org/'+p.version_doi; v.textContent=p.version_doi+' \u2197';
   }
@@ -699,7 +699,7 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
   // drafts are never baked, so they still fall through to the generic fallback below.
   if(document.querySelector('#pv-doi[data-doi-baked]')) return;
   document.getElementById('pv-doi-v').textContent='see repository \u2197';
-  document.getElementById('pv-doi').href='https://github.com/YOURUSER/YOURREPO';});
+  document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-China-vs-US-001';});
 </script>
 <div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Figure, full size" aria-hidden="true">
   <img id="lbx-img" alt="">

@@ -1,19 +1,17 @@
-# open-dossier-template
+# China vs. US (working title)
 
-**The starting point for every Open Dossier publication.**
-Click "Use this template" to create your Dossier NNN in one step.
-
-### ▶ [See a living figure — fall from a planet to the galaxy, live](https://m4gr4th34.github.io/open-dossier-template/showcase.html)
+**An Open Dossier publication by Irfan Ali Khan (Independent Researcher).**
+Working draft — research in progress; not yet released.
 
 <!-- AGENT: after the author's GitHub Pages site is live, replace this comment with a quick-links line placed HERE (immediately after the title/tagline, above the GETTING-STARTED line and the badge) so visitors can open the live result in one click. Use the author's real Pages URL:
-### ▶ [Read the living paper](https://USER.github.io/REPO/) · [Run the checks](https://USER.github.io/REPO/#verify) · [Audit trail](https://USER.github.io/REPO/dossier.html) · [Living figures showcase](https://USER.github.io/REPO/showcase.html)
+### ▶ [Read the living paper](https://USER.github.io/REPO/) · [Run the checks](https://USER.github.io/REPO/#verify) · [Audit trail](https://USER.github.io/REPO/dossier.html)
 Rationale: lead with the live result for the skeptic, then GETTING-STARTED for the would-be author, then the explanatory sections. Do not leave these as live links until the Pages site actually resolves, or they 404. -->
 
 <!-- DRAFT BANNER: present during pre-release. At first release, the "Spawning"/release ritual replaces this block with the standard live-document links (no "work in progress" caveat). See DEPLOY.md and the Rituals section. AGENT: replace YOURUSER/YOURREPO in these links with the real repo path during the spawn rename pass, so the author's draft preview works immediately. -->
 ### 📖 Live preview (work in progress)
 > **This dossier is an active draft — not yet released.** Sections, claims, and checks may be incomplete. Shared early so the ideas can be read and discussed as they develop.
 
-▶ **[Read the self-explaining edition](https://YOURUSER.github.io/YOURREPO/)** · [Audit trail](https://YOURUSER.github.io/YOURREPO/dossier.html)
+▶ **[Read the self-explaining edition](https://m4gr4th34.github.io/dossier-China-vs-US-001/)** · [Audit trail](https://m4gr4th34.github.io/dossier-China-vs-US-001/dossier.html)
 
 ## How this works (the pre-release operating model)
 
@@ -51,7 +49,7 @@ You bring the idea and the judgment. An AI agent does the rest — drafting, typ
 
 The first scientists to publish this way will look, in hindsight, like the first people who emailed instead of mailed.
 
-[![claims: verified](https://github.com/m4gr4th34/open-dossier-template/actions/workflows/verify.yml/badge.svg)](https://github.com/m4gr4th34/open-dossier-template/actions/workflows/verify.yml)
+[![claims: verified](https://github.com/m4gr4th34/dossier-China-vs-US-001/actions/workflows/verify.yml/badge.svg)](https://github.com/m4gr4th34/dossier-China-vs-US-001/actions/workflows/verify.yml)
 
 ---
 

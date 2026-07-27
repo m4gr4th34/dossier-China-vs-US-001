@@ -1,18 +1,18 @@
 cff-version: 1.2.0
 message: "If you use or build on this work, please cite it as below."
 type: software
-title: "DOSSIER NNN — @@TITLE@@ (Open Dossier format)"
+title: "DOSSIER China-vs-US-001 — China vs. US (working title) (Open Dossier format)"
 authors:
-  - family-names: "@@FAMILY-NAME@@"
-    given-names: "@@GIVEN-NAME@@"
-    affiliation: "Independent Researcher, @@CITY@@, @@COUNTRY@@"
-version: "@@VERSION@@"
-date-released: "@@DATE@@"  # ISO 8601: YYYY-MM-DD
+  - family-names: "Ali Khan"
+    given-names: "Irfan"
+    affiliation: "Independent Researcher"
+version: "0.1.0-draft"
+date-released: "YYYY-MM-DD"  # ISO 8601: YYYY-MM-DD
 license: "CC-BY-4.0"
-repository-code: "https://github.com/YOURUSER/YOURREPO"
-url: "https://YOURUSER.github.io/YOURREPO/"
+repository-code: "https://github.com/m4gr4th34/dossier-China-vs-US-001"
+url: "https://m4gr4th34.github.io/dossier-China-vs-US-001/"
 # doi: "10.5281/zenodo.XXXXXXX"   # uncomment and fill after first Zenodo release
 keywords:
   - open dossier
   - verified open research
-  - "@@FIELD@@"
+  - "China vs. US"

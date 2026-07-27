@@ -1,5 +1,5 @@
 {
-  "name": "open-dossier-template",
+  "name": "dossier-china-vs-us-001",
   "version": "1.0.0",
   "private": true,
   "description": "Open Dossier template — author-local tooling (vendored KaTeX for build-time prerendered math). Readers need no JS; CI never renders math.",
