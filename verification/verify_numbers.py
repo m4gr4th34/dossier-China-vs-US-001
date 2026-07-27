@@ -160,6 +160,53 @@ _rep_n = sum(1 for r in _draft_rows if r.get("status") == "REPORTED")
 check("Census: 268 ESTABLISHED / 1 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)",
       0 if (_est_n, _open_n, _rep_n) == _EXPECTED_CENSUS else 1, 0, 0)
 
+# ================================================================
+# MOMENTUM-INDEX CHECKS (OPEN-CAVEATED scoring layer; RUBRIC v1).
+# The scoring layer is a real computation over the ESTABLISHED ledger, so it is
+# held to the same lockstep discipline as every other number: recompute it from
+# the ledger and assert the committed scoring/index_output.json is EXACTLY what
+# the code produces; assert every excluded (non-ESTABLISHED) row is NAMED in the
+# caption; assert each sensitivity band contains its primary score; and assert
+# the generated caption + SVG appear verbatim in the baked front door (index.html),
+# so the chart can never drift from the data. Fix the paper, never the tolerance.
+# ================================================================
+sys.path.insert(0, os.path.join(_ROOT, "scoring"))
+import compute_index as _ci  # noqa: E402
+
+_INDEX_JSON = os.path.join(_ROOT, "scoring", "index_output.json")
+_led_rows, _draft_rows2, _weights = _ci.load_all()
+_recomputed = _ci.compute(_led_rows, _draft_rows2, _weights)
+with open(_INDEX_JSON, encoding="utf-8") as _fh:
+    _committed = json.load(_fh)
+
+# (I1) recompute from the ledger == the committed index_output.json, exactly.
+check("Index I1: scoring/index_output.json matches a fresh recompute from the ledger",
+      0 if _recomputed == _committed else 1, 0, 0)
+
+# (I2) every excluded (non-ESTABLISHED) row is named in the caption.
+_cap = _committed.get("caption", "")
+_unnamed = [e["id"] for e in _committed.get("excluded_rows", []) if e["id"] not in _cap]
+check("Index I2: every excluded (non-ESTABLISHED) row is named in the chart caption",
+      len(_unnamed), 0, 0)
+
+# (I3) each per-decade per-country sensitivity band contains the primary score.
+_band_bad = 0
+for _d, _dd in _committed.get("series", {}).items():
+    for _c in ("US", "China"):
+        _s = _dd[_c]
+        if not (_s["sensitivity_min"] <= _s["primary"] <= _s["sensitivity_max"]):
+            _band_bad += 1
+check("Index I3: every sensitivity band contains its primary score",
+      _band_bad, 0, 0)
+
+# (I4) the generated caption + SVG appear verbatim in the baked front door.
+with open(os.path.join(_ROOT, "index.html"), encoding="utf-8") as _fh:
+    _index_html = _fh.read()
+_drift = (0 if _committed.get("caption") in _index_html else 1) \
+       + (0 if _committed.get("svg") in _index_html else 1)
+check("Index I4: index_output.json caption + SVG are present verbatim in index.html",
+      _drift, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)

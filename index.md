@@ -4,7 +4,7 @@ An Open Dossier · **China-vs-US-001**
 
 *Irfan Ali Khan — Independent Researcher*
 
-This dossier is a two-country **achievement ledger**: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer (the planned per-year comparative chart) stays gated behind full verification and is **not computed here**. The honest state today: 270 candidate rows, 268 ESTABLISHED, the rest labeled OPEN-UNVERIFIED or REPORTED and posted as open challenges. **Don't trust this paper — run it.**
+This dossier is a two-country **achievement ledger**: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer is computed only as an explicitly **OPEN-CAVEATED** constructed index — shown with its full sensitivity bands and named exclusions, never as a measured verdict. The honest state today: 270 candidate rows, 268 ESTABLISHED, the rest labeled OPEN-UNVERIFIED or REPORTED and posted as open challenges. **Don't trust this paper — run it.**
 
 ## Avenues
 
@@ -12,7 +12,7 @@ This dossier is a two-country **achievement ledger**: a per-row-verified record 
 |---|---|---|---|---|
 | The achievement ledger | A 270-row, event-anchored, per-row-verified corpus of US and Chinese achievements 1926–2026; 268 rows ESTABLISHED under a published promotion standard, with the full 1926–2025 chronological corpus now processed. | ESTABLISHED | — | verification_ritual.md, selection_criteria.md |
 | Coverage shape | Facts about the corpus under the published selection rule: US coverage is steady and invention/deployment-heavy; China's is thin early, rises late, and is completion/milestone-heavy. A statement about the ledger — NOT a momentum verdict about the world. | ESTABLISHED | — | coverage_report.md, selection_criteria.md |
-| The momentum index | Designed, gated, and not run: no decade scores while the corpus still holds OPEN-UNVERIFIED rows. Rubric + sensitivity analysis committed as design only; the chart will be OPEN-CAVEATED when it exists, never higher. | OPEN-UNVERIFIED | — | scoring_rubric_DESIGN.md |
+| The momentum index | Now computed and shown as a constructed index (Option C gate: ESTABLISHED rows only, non-ESTABLISHED rows excluded and named). Primary = baseline equal weighting; bands span four published weightings; whiskers show the 1946–1955 exclusion. Re-weightable, rubric published — true only within its scope, never a measured verdict. | OPEN-CAVEATED | — | scoring_rubric_DESIGN.md, scoring/weights.json |
 | Early-century China floor | 1926–1945 China coverage is a floor, not a fact — real historical thinness compounded by English-language source bias. Posted as an open challenge: readers who know this literature can raise it, for named credit. | OPEN-UNVERIFIED | — | coverage_report.md |
 | Verification in progress | Live status: 268 ESTABLISHED, 1 OPEN-UNVERIFIED, 1 REPORTED. Batches 1–10 processed the full 1926–2025 corpus; a straggler sweep then removed one un-anchorable row and converted two more into anchored, verified rows. Just ONE row stays open: the Chengdu–Chongqing Railway (CN-1952-1) — its July 1952 opening is uncontested, but no independent non-PRC source has been found, so it is posted as an open challenge (named credit for whoever closes it). The 2026 window is also not yet closed. | OPEN-UNVERIFIED | — | claim_ledger.csv, verification_log.md |
 
@@ -27,16 +27,20 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Ledger S2: every ESTABLISHED ledger row meets the source standard
 - [PASS] Ledger S3: draft ESTABLISHED set reconciles with ledger set
 - [PASS] Census: 268 ESTABLISHED / 1 OPEN-UNVERIFIED / 1 REPORTED (live corpus counts)
+- [PASS] Index I1: scoring/index_output.json matches a fresh recompute from the ledger
+- [PASS] Index I2: every excluded (non-ESTABLISHED) row is named in the chart caption
+- [PASS] Index I3: every sensitivity band contains its primary score
+- [PASS] Index I4: index_output.json caption + SVG are present verbatim in index.html
 
-**TOTAL: 7 checks · 7 pass · 0 fail** — All checks pass — the survey is internally consistent.
+**TOTAL: 11 checks · 11 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
 **THE LEDGER · NARRATIVE**
 
 ## 01 THE QUESTION
 
-Whether American or Chinese momentum (Here 'momentum' means the relative rate at which a country accumulates notable, dateable achievements over time — not GDP, not military power, and not a prediction. In this dossier it is a constructed index computed over the achievement ledger, and it is deliberately not calculated until every row is verified.) is ahead is one of the most argued questions in geopolitics, and it is argued mostly with anecdotes. Serious scholarship splits into two poles: one holds the American lead durable [Beckley '18], the other reads the trajectory as a classic rising-power challenge [Allison '17]. That the field is genuinely divided is itself the only safe thing to assert up front — both narratives are cottage industries, and each can curate a list of achievements to "win".
+Whether American or Chinese momentum (Here 'momentum' means the relative rate at which a country accumulates notable, dateable achievements over time — not GDP, not military power, and not a prediction. In this dossier it is a constructed index computed over the achievement ledger and published as OPEN-CAVEATED: every output states its rubric and shows how it moves as the weighting changes.) is ahead is one of the most argued questions in geopolitics, and it is argued mostly with anecdotes. Serious scholarship splits into two poles: one holds the American lead durable [Beckley '18], the other reads the trajectory as a classic rising-power challenge [Allison '17]. That the field is genuinely divided is itself the only safe thing to assert up front — both narratives are cottage industries, and each can curate a list of achievements to "win".
 
-This dossier's bet is that the useful thing to publish is not another verdict but the instrument underneath one: a single, auditable ledger of what each country actually did and when, with every entry labeled to say exactly how well-checked it is. Build the ledger honestly first; argue about the scoreboard second — and only with the scoreboard's rubric fully exposed. Nothing on this page tells you who is winning, because the ledger that would earn such a claim is not finished and the index that would compute one is gated shut.
+This dossier's bet is that the useful thing to publish is not another verdict but the instrument underneath one: a single, auditable ledger of what each country actually did and when, with every entry labeled to say exactly how well-checked it is. Build the ledger honestly first; argue about the scoreboard second — and only with the scoreboard's rubric fully exposed. Nothing on this page hands you a single winner: the momentum index below IS computed, but only as an openly constructed, re-weightable index that shows the answer changing with the rubric — a scoreboard you can audit and overturn, not a verdict.
 
 *Map the achievements before scoring them — and never let the scoreboard smuggle itself in as a fact.*
 
@@ -64,11 +68,15 @@ The ledger itself — 270 rows, event-anchored, per-row-verified, 268 ESTABLISHE
 
 The decade-density and event-type patterns described in section 02 are established facts about the corpus under the published rule — and only that. They are asserted as description, never re-read as a race.
 
-### The momentum index — OPEN
+### The momentum index — OPEN-CAVEATED
 
-Where the dossier would offer a scoreboard, it instead offers a gated design and an honest label:
+Here is the scoreboard — but wearing its true label. It is a real computation over the ESTABLISHED rows, yet the **rubric** that turns achievements into a number (which categories count how much, how decades are normalized) is an authorial construction, so the whole layer is **OPEN-CAVEATED**: true only within its stated scope, and a reader who re-weights it gets a different chart. That is the point, not a flaw.
 
-> **OPEN-UNVERIFIED** — **The per-year comparative momentum chart is designed and gated, not run.** No decade scores are computed while the corpus still holds OPEN-UNVERIFIED rows; the scoring rubric and its sensitivity analysis are committed as design only, in `notes/scoring_rubric_DESIGN.md`. When the chart exists it will be labeled **OPEN-CAVEATED** — a construction over a constructed index, with its rubric fully exposed so a hostile reader can re-weight it and get a different chart. This card is the standing promise that it will never be labeled higher.
+> **OPEN-CAVEATED** — **Constructed momentum index — re-weight it yourself.** The primary bars use the baseline equal weighting (a pure ESTABLISHED-count share per decade); the coloured bands span four published weightings in `scoring/weights.json`, two of them deliberately tuned to favour each country's achievement profile. Where a band crosses the halfway line, defensible weightings disagree on who led that decade — those decades are **findings, not embarrassments**. The two non-ESTABLISHED rows (the Chengyu railway and the one REPORTED figure, both China, 1946–1955) are excluded from the bars and named in the caption; their exclusion understates China in that decade, and the whiskers show the corrected range. The full rubric, its alternatives, and the era-normalization scheme are published in `notes/scoring_rubric_DESIGN.md`.
+
+*(figure: untitled — Constructed momentum index (OPEN-CAVEATED) - NOT a measured fact. Primary series: baseline equal weighting W0, within-decade share N0, ESTABLISHED rows only. EXCLUDED and not scored: CN-1952-1 (OPEN-UNVERIFIED, 1946-1955); CN-1952-2 (REPORTED, 1946-1955) - understates China in 1946-1955 (the whiskers on that decade show the corrected range if those rows were established). Coloured bands span all four published weightings W0-W3; where a country's band crosses the halfway line, defensible weightings disagree on who leads that decade - those decades (1976-1985, 1986-1995, 1996-2005) are findings, not results. The final 2016-2025 bar is the last full decade; the 2026 window is not yet closed. Re-weight it yourself: the rubric is published and versioned in notes/scoring_rubric_DESIGN.md and scoring/weights.json.)*
+
+Read across the decades and the honest shape is neither triumph nor decline: an American lead through the mid-century, a genuinely contested middle where the bands overlap and the baseline runs to a tie (the decades named in the caption below), and a later-decade Chinese lead — with the whole picture sliding as you change the weighting. The one thing the chart refuses to give you is a single number that settles the argument.
 
 ### Early-century China floor — OPEN
 
@@ -80,11 +88,11 @@ Where the dossier would offer a scoreboard, it instead offers a gated design and
 
 ## 04 WHAT WOULD SETTLE THE OPEN QUESTIONS
 
-Each open card names its own closing move. The **ledger** closes the corpus when every remaining row is either promoted to ESTABLISHED or honestly reclassified — it stays OPEN-UNVERIFIED, or becomes REPORTED with the interested party named, or is removed to a logged tombstone. That is a bounded, mechanical amount of verification work, tracked batch by batch in `notes/verification_log.md`. Only then does the **momentum index** unlock: with no OPEN rows left to distort it, the gated chart can be computed and published as OPEN-CAVEATED, rubric exposed. The **early-century China floor** closes differently — not by internal work but by external expertise: it moves when readers who command the area-studies literature contribute anchored, sourced rows. None of these require anyone to trust the author; each names the exact thing that would move it.
+Each open card names its own closing move. The **ledger** closes the corpus when every remaining row is either promoted to ESTABLISHED or honestly reclassified — it stays OPEN-UNVERIFIED, or becomes REPORTED with the interested party named, or is removed to a logged tombstone. That is a bounded, mechanical amount of verification work, tracked batch by batch in `notes/verification_log.md`. The **momentum index** is already computed and shown (OPEN-CAVEATED); closing the last OPEN row — the Chengyu railway — would simply retire the one exclusion whisker, folding that 1946–1955 correction into the bars. The **early-century China floor** closes differently — not by internal work but by external expertise: it moves when readers who command the area-studies literature contribute anchored, sourced rows. None of these require anyone to trust the author; each names the exact thing that would move it.
 
 ## 05 SYNTHESIS SO FAR
 
-The defensible spine is three rungs kept rigorously apart: a documented **achievement ledger** (mostly ESTABLISHED, and the most finished thing here); a constructed **momentum index** (designed, gated, unrun — and never to be labeled above OPEN-CAVEATED); and, further out, a speculative **projection** of the two trajectories at +10, +20, and +30 years (which will be EXPLORATORY-CONJECTURE when it is written, and nothing higher). This front door is honest about which rung each claim sits on. What it deliberately does not contain is a scoreboard — there is no momentum verdict on this page, because the ledger that would earn one is unfinished and the index that would compute one is gated shut.
+The defensible spine is three rungs kept rigorously apart: a documented **achievement ledger** (mostly ESTABLISHED, and the most finished thing here); a constructed **momentum index** (now computed and shown as OPEN-CAVEATED — rubric exposed, re-weightable, and never to be labeled above OPEN-CAVEATED); and, further out, a speculative **projection** of the two trajectories at +10, +20, and +30 years (which will be EXPLORATORY-CONJECTURE when it is written, and nothing higher). This front door is honest about which rung each claim sits on. What it deliberately does not contain is a single-number verdict — the momentum index is a re-weightable construction shown with its disagreements on the surface, never "momentum favours X" asserted as a measured fact.
 
 *Three rungs, three labels, never blurred — and until the ledger is done, no number gets to call the race.*
 

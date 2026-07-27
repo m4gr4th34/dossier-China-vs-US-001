@@ -1,0 +1,20 @@
+{
+  "version": "v1",
+  "_comment": "Published, versioned weight tables for the momentum index. compute_index.py reads THIS file; changing a weight here changes the chart on next run, in lockstep with the verifier. category_weightings score by a row's category; event_weightings score by its event_type (a different operationalization of 'what counts as an achievement').",
+  "primary": "W0",
+  "normalization": "N0",
+  "category_weightings": {
+    "W0": {"innovation": 1.0, "science": 1.0, "infrastructure": 1.0, "industrial": 1.0, "social": 1.0, "governmental_economic": 1.0},
+    "W1": {"innovation": 1.5, "science": 1.5, "infrastructure": 1.0, "industrial": 1.0, "social": 1.0, "governmental_economic": 1.0},
+    "W2": {"innovation": 1.0, "science": 1.0, "infrastructure": 1.5, "industrial": 1.5, "social": 1.5, "governmental_economic": 1.5}
+  },
+  "event_weightings": {
+    "W3": {"discovery": 1.5, "invention": 1.5, "founding": 1.5, "completion": 1.0, "milestone": 1.0, "commercial-deployment": 1.0, "first-flight/launch": 1.0}
+  },
+  "labels": {
+    "W0": "baseline (equal weighting = pure ESTABLISHED count)",
+    "W1": "frontier-forward (innovation + science x1.5; structurally favors the US)",
+    "W2": "build-and-develop (infrastructure + industrial + social + governmental_economic x1.5; structurally favors China)",
+    "W3": "event-type frontier (discovery + invention + founding x1.5; a US-leaning cross-check on a different axis)"
+  }
+}
