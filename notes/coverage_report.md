@@ -18,10 +18,13 @@ are the drafting agent's independent selection under `notes/selection_criteria.m
 > freeze have moved the live corpus on: additions/conversions in
 > `additions_log.md`, removals in `removed_rows.md`, and promotions to ESTABLISHED
 > in `verification_log.md` + `claim_ledger.csv`. **Live count as of 2026-07-27:
-> 270 rows (US 143, China 127), of which 266 ESTABLISHED (verification batches
-> 1–10, covering the full 1926–2025 chronological corpus), 3 OPEN-UNVERIFIED, and
-> 1 REPORTED (CN-1952-2 — magnitude on contested PRC official statistics). The
-> straggler sweep (2026-07-27) removed CN-2003-3 (271→270).**
+> 270 rows (US 143, China 127), of which 268 ESTABLISHED (verification batches
+> 1–10 + straggler pass, covering the full 1926–2025 chronological corpus), 1
+> OPEN-UNVERIFIED, and 1 REPORTED (CN-1952-2 — magnitude on contested PRC official
+> statistics). The straggler sweep (2026-07-27) removed CN-2003-3, then converted
+> CN-1940-1→CN-1938-4 (Yichang evacuation) and CN-1930-1→CN-1932-1 (Shenxin) into
+> anchored, verified rows. The sole remaining OPEN row is CN-1952-1 (Chengyu
+> Railway) — an uncontested 1952 fact awaiting an independent non-PRC source.**
 >
 > *2026-window note (as of 2026-07-27): the dossier's stated window closes at
 > end-2026, but that period is not over. The corpus currently carries no 2026 row

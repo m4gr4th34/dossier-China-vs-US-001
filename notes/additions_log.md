@@ -291,3 +291,17 @@ precedent. Tombstoned in `notes/removed_rows.md`.
 
 **Net:** −1 (a China OPEN-UNVERIFIED row). Corpus 271 → **270** (US 143, China 127).
 Census 266/4/1 → **266/3/1**.
+
+---
+
+## Conversions — straggler sweep terminal rulings (2026-07-27, author-approved)
+
+Two diffuse OPEN rows converted to anchored rows and verified via the straggler
+ritual (same standard, no leniency); originals tombstoned in `removed_rows.md`.
+
+| old → new | anchor | source class | status |
+|---|---|---|---|
+| CN-1940-1 → **CN-1938-4** @1938 | 1938 Yichang evacuation (Lu Zuofu/Minsheng) | independent-academic | ESTABLISHED |
+| CN-1930-1 → **CN-1932-1** @1932 (circa) | Shenxin = China's largest industrial employer, ~1932 | independent-academic | ESTABLISHED |
+
+**Net:** row count unchanged (270). Census 266/3/1 → **268/1/1** (China count unchanged, 127).

@@ -19,3 +19,17 @@ momentum scoring while the corpus holds OPEN-UNVERIFIED rows, and when it does i
 carries the OPEN-CAVEATED label with its rubric exposed. It will be authored as a
 `data-figure` spec against the vendored `figures/` runtime (compose the shared
 primitives; seal a JS-off poster) when its turn comes.
+
+## Offline re-source: the Chengyu Railway open challenge (CN-1952-1)
+
+The Chengdu–Chongqing Railway's July 1952 opening — the first railway wholly built
+by the PRC — is an uncontested physical fact, but web re-sourcing (batches 3 and the
+2026-07-27 straggler sweep) surfaced only interested-party PRC-state accounts (SASAC,
+Xinhua, CGTN) alongside a single independent reference (Wikipedia). That is below the
+promotion standard (one qualifying-class source, or two independent journalistic/
+encyclopedic ones). The row stays OPEN-UNVERIFIED — the standard biting on a true
+fact — and is posted on the front door as an open challenge with named credit. The
+bounded close: an **offline/library re-source** for a genuinely independent, non-PRC
+account — a Western transport- or economic-history monograph (e.g. a chapter in a
+Cambridge/Harvard PRC economic history, or a specialist railway history), which web
+search does not index. Not a permanent-open ruling; a task awaiting a library pass.

@@ -58,3 +58,39 @@ status: OPEN-UNVERIFIED
 notes: Diffuse 'workshop of the world' status phrase, no crisp falsifiable 2003 anchor. Straggler sweep (2026-07-27), author pre-authorized REMOVE: superseded by its anchored, promoted twin CN-2010-2 (China becomes the world's largest manufacturing nation, 2010, UN Statistics Division data) - the same Ding County -> Zouping precedent (a diffuse status claim replaced by its dateable, sourced version). Removed to keep the corpus free of un-anchorable status phrases.
 verified_batch: 9
 ```
+
+
+### CN-1940-1 — REMOVED (converted → CN-1938-4, anchored reformulation; straggler-sweep, author-approved)
+
+```
+id: CN-1940-1
+year: 1940
+year_precision: range
+country: China
+category: industrial
+event_type: milestone
+claim_text: China relocates key industries and universities to the southwestern interior (Chongqing, Sichuan) to sustain wartime production and scholarship.
+source: Standard economic histories of wartime China
+source_class: encyclopedic
+status: OPEN-UNVERIFIED
+notes: Diffuse wartime-relocation claim, no discrete anchor. Straggler sweep terminal ruling (2026-07-27), author-approved CONVERT: replaced by the anchored 1938 Yichang industrial evacuation (Lu Zuofu / Minsheng Shipping), refiled as CN-1938-4. Broader southwestern wartime relocation of industry and universities becomes era context, not a standalone row.
+verified_batch: 2
+```
+
+
+### CN-1930-1 — REMOVED (converted → CN-1932-1, anchored reformulation; straggler-sweep, author-approved)
+
+```
+id: CN-1930-1
+year: 1930
+year_precision: circa
+country: China
+category: industrial
+event_type: milestone
+claim_text: Chinese-owned cotton-textile firms (e.g., the Rong family's Shenxin mills) become the leading modern manufacturing sector in the lower Yangtze.
+source: Standard economic histories of Republican China
+source_class: independent-academic
+status: OPEN-UNVERIFIED
+notes: Diffuse 'leading manufacturing sector' status claim, no crisp anchor. Straggler sweep terminal ruling (2026-07-27), author-approved CONVERT: replaced by the anchored fact that the Rong family's Shenxin mills were China's largest industrial employer by ~1932, refiled as CN-1932-1.
+verified_batch: 1
+```

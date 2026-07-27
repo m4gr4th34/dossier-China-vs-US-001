@@ -145,3 +145,24 @@ axis, not the verification ladder.)
   accounts. (Minghui figures flagged as non-evidentiary.)
 - **Rong / Shenxin:** HBS case 308-066; Rong Zongjing / Rong Desheng scholarship
   (Wikipedia + academic PDFs on the Shenxin bank consortium and Mill No. 7).
+
+---
+
+## Terminal dispositions (2026-07-27) — author rulings applied
+
+- **CN-1940-1 → CONVERTED & VERIFIED → CN-1938-4** (ESTABLISHED). Refiled at 1938,
+  anchor = the Yichang evacuation operation (Lu Zuofu / Minsheng, ~40 days, Oct–Dec
+  1938; 30,000+ people and ~100,000 tons incl. industrial equipment to Sichuan).
+  Independent-academic sourcing (Cornell UP 2021 + peer-reviewed PMC study). The
+  "1.5M people" figure is flagged non-evidentiary and not asserted. Old row tombstoned.
+- **CN-1930-1 → CONVERTED & VERIFIED → CN-1932-1** (ESTABLISHED, `circa` 1932).
+  Anchored to the Rong family's Shenxin mills as China's largest industrial employer
+  (~31,700 workers) by ~1932; independent-academic (HBS case 308-066). Old row tombstoned.
+- **CN-1952-1 (Chengyu Railway) → remains OPEN-UNVERIFIED**, posted as an explicit
+  front-door open challenge (named credit) and logged as an offline/library re-source
+  roadmap item (`notes/roadmap.md`).
+
+**Final live state: 268 ESTABLISHED / 1 OPEN-UNVERIFIED / 1 REPORTED (270 rows).** The
+momentum-index gate stays shut on the single remaining OPEN row (Chengyu); closing it
+would drive OPEN to 0 and unlock the gated chart (to be published OPEN-CAVEATED). The
+lone REPORTED row (CN-1952-2) is on the provenance axis and does not gate the index.
