@@ -247,3 +247,17 @@ Author approved three proposals. Provenance: **verification-batch-4-proposal, au
 | CN-1969-1 | 1969 | completion | Red Flag Canal | `infrastructure`; the official narrative is heavily mythologized — **independent scholarship + event/magnitude split flagged for verification**; era context (initiated ~1960, hand-built through the hard post-Great-Leap years) noted plainly. |
 
 **Net:** +3. US 139 → **141**, China 126 → **127**. Corpus 265 → **268**.
+
+---
+
+## Post-freeze per-row change — batch-5 proposal ruling (2026-07-27)
+
+Author approved three proposals. Provenance: **verification-batch-5-proposal, author-approved**. All OPEN-UNVERIFIED; queue for batch 6.
+
+| id | year | anchor | row | note |
+|---|---|---|---|---|
+| US-1971-5 | 1971 | milestone | first networked email | `innovation`; Tomlinson/ARPANET, the `@` convention. |
+| CN-1974-2 | 1974 | commercial-deployment | Type-091 nuclear submarine | `innovation` (coded to match the USS Nautilus, US-1954-1); anchor = commissioning (1 Aug 1974). **PLA/state sourcing is interested-party by definition** — independent naval/defense scholarship carries the standard at verification; military-context noted. |
+| US-1974-1 | 1974 | commercial-deployment | first UPC barcode scan | `innovation`; Marsh supermarket, Troy OH, 26 Jun 1974. |
+
+**Net:** +3. US 141 → **143**, China 127 → **128**. Corpus 268 → **271**.
