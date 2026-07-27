@@ -196,3 +196,45 @@ Author ruled to **narrow** the claim to the Chinese-built Yunnan section. **Re-v
 - **Narrowed claim:** the Yunnan section (Kunming–Wanting, ~960 km), built by ~200,000 Chinese laborers under Nationalist direction, opened to motor traffic 1938.
 - **Anchor decision:** *opened-to-motor-traffic 1938* (trucks began moving cargo into China in 1938 — Wikipedia, WW2DB) chosen over *formal completion 1939* (Britannica). The traffic-opening is the better-attested datable event; 1939 recorded as the alternative in the row/ledger.
 - **Sources:** Wikipedia (Burma Road); World War II Database; The Irrawaddy — two+ independent encyclopedic/journalistic (a Nationalist-era, not PRC, claim, so no PRC-official concern). Narrowing to the Yunnan section resolved the joint-attribution problem (the Burma-side labor and British/American engineering are excluded from the claim).
+
+---
+
+## Batch 4 — next 25 unprocessed chronological rows (1956 stragglers + 1958–1968, the Great Leap/Cultural-Revolution era) · processed 2026-07-27
+
+Includes the three batch-3-proposal rows. **Outcome: 25 PROMOTED to ESTABLISHED,
+0 REPORTED, 0 kept open, 0 removed** — 1958–1968 is dense with hard,
+independently-documented milestones; every China row cleared the bar with an
+independent-academic source (China Project/ChinaKnowledge, Springer, M+ Museum,
+GWU National Security Archive, Taylor & Francis/Nature, *Science*/Oxford, Bulletin
+of the Atomic Scientists, Structurae/CNN, Project MUSE/Cambridge).
+
+**Promoted (25):** CN-1956-3 simplified-characters scheme (1956); US-1957-1
+Shippingport (1957); CN-1958-1 Hanyu Pinyin (1958); US-1958-1 NASA, US-1958-2
+Explorer 1, US-1958-3 integrated circuit, US-1958-4 DARPA, US-1958-5 Boeing 707
+(commercial service 1958); CN-1959-1 Daqing oilfield, CN-1959-2 Great Hall of the
+People; US-1960-1 laser, US-1960-2 contraceptive-pill approval; US-1961-1 Shepard;
+US-1962-1 Telstar; CN-1964-1 first atomic bomb, CN-1964-2 Third Front (program
+launch); US-1964-1 IBM System/360, US-1964-2 Civil Rights Act; CN-1965-1 insulin
+total synthesis; US-1965-1 Voting Rights Act, US-1965-2 Medicare/Medicaid;
+CN-1967-1 first hydrogen bomb; CN-1968-1 Nanjing Yangtze Bridge, CN-1968-2 barefoot
+doctors; US-1968-1 Intel founded.
+
+**Era context recorded plainly (context, not adjudication; achievements-only scope
+held — no catastrophe rows):**
+- Daqing (1959) and the Great Hall / Ten Great Buildings (1959) fall within the
+  **Great Leap Forward** (1958–1962); noted in-row.
+- Barefoot doctors (1968) endorsed/scaled during the **Cultural Revolution**; noted.
+
+**Magnitudes carried in notes (event/magnitude split):** Third Front's 1964–1980
+cumulative scale (~205bn yuan, 11M+ relocated, 1,100+ projects); barefoot doctors
+(~1.5M by 1978, ~90% of villages); Daqing self-sufficiency (~1963).
+
+### Missed-achievement candidates — PROPOSALS ONLY (freeze: need author sign-off)
+
+1. **Red Flag Canal (红旗渠), Linzhou (China, completed 1969)** — a ~1,500 km hand-built
+   irrigation canal system, a signature self-reliance engineering feat of the era.
+   `infrastructure`, `completion`. (Falls just past this batch's window.)
+2. **Unimate, first industrial robot (US, 1961)** — installed on a GM line;
+   inaugurated industrial robotics. `innovation`.
+3. **Xerox 914 (US, 1959)** — first plain-paper office copier; the *commercial-deployment*
+   second anchor for xerography (whose invention is US-1938-1). Two-anchor candidate.
