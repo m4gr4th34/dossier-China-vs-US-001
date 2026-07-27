@@ -338,3 +338,58 @@ Lauterbur & Mansfield — recorded in notes so the claim is not overstated.
 
 None this batch. The 1971–1983 window is densely covered on both sides; no
 notable omission surfaced during verification.
+
+---
+
+## Verification batch 7 — rows 1984–1994 (2026-07-27)
+
+**Scope:** the 25 next-unprocessed chronological rows, 1984–1994 (the reform/
+opening buildout and the early Internet era). **Outcome: 25 promoted to
+ESTABLISHED — a clean sweep, no REPORTED reclassification.**
+
+**Ledger:** 144 → **169 ESTABLISHED**. Corpus 271 (US 143, China 128): 169
+ESTABLISHED, 101 OPEN-UNVERIFIED, 1 REPORTED.
+
+**Promoted (25):** CN-1984-1 Lenovo/Haier, CN-1984-2 14 coastal cities, US-1984-1
+Macintosh, US-1984-2 Cisco; CN-1985-1 Great Wall Station (Antarctica), US-1985-1
+Windows 1.0; CN-1986-1 863 Program, US-1986-1 NSFNET; CN-1987-1 Huawei; CN-1988-1
+BEPC, CN-1988-2 Hainan province/SEZ, US-1988-1 TAT-8, US-1988-2 first commercial
+3D printer; CN-1990-1 Shanghai/Shenzhen stock exchanges, CN-1990-2 Pudong,
+CN-1990-3 Beijing Asian Games, CN-1990-4 reform-era poverty reduction, US-1990-1
+Hubble, US-1990-2 Human Genome Project; CN-1991-1 Qinshan nuclear; CN-1992-1 Deng's
+Southern Tour; US-1993-1 Mosaic, US-1993-2 Pentium; CN-1994-1 tax-sharing/FX reform,
+CN-1994-2 first full Internet connectivity.
+
+**REPORTED discipline applied, no triggers.** Every event is independently
+corroborated (encyclopedic/academic/international-body, not PRC official or
+interested-party sourcing alone). The event/magnitude split and the
+data-integrity discipline were exercised where a magnitude appeared:
+
+- **Reform-era poverty reduction (CN-1990-4):** promoted via the **independent
+  source of record — the World Bank, not PRC official statistics**: ~800M lifted
+  out of extreme poverty over 1978–2019 (~75% of global reduction, 1981–2020).
+  **Data-integrity discipline (both shown, not adjudicated):** this is on the
+  World Bank's international poverty line; China's own rural-poverty line yields a
+  different count, and the line choice materially moves the number. Recorded as a
+  reform-era *cumulative* trajectory with 1990 as an in-window marker, not a
+  discrete-year event — so the label stays true to the anchor.
+- **Pudong (CN-1990-2):** development announcement (18 Apr 1990) established; the
+  later ~60× GDP growth left as context, not asserted.
+- **3D printer (US-1988-2):** date reconciled in notes — SLA-1 introduced 1987,
+  commercially available 1988; the row anchors first commercial availability (1988).
+- **Hubble (US-1990-1):** the initial primary-mirror spherical aberration recorded
+  so the launch claim is not overstated.
+- **Tax-sharing/FX (CN-1994-1):** two distinct 1994 reforms (fenshuizhi + the
+  1 Jan 1994 exchange-rate unification) noted as bundled in one row.
+
+**Tiananmen-adjacent era, achievements-only scope honored.** 1989 correctly
+carries no row — the achievements-only discipline already excludes it, and it was
+neither added nor adjudicated. Where a 1990–1992 row sits against that backdrop,
+plain factual era-context lives in notes only: **Deng's Southern Tour (CN-1992-1)**
+notes, factually and without adjudication, that the tour re-legitimized market
+reform after the post-1989 conservative retrenchment and amid the USSR's collapse.
+
+### Missed-achievement candidates — PROPOSALS ONLY (need author sign-off)
+
+None this batch. The 1984–1994 window is densely covered on both sides; no notable
+omission surfaced during verification.
