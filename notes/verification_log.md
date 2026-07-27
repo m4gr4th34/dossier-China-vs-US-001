@@ -73,3 +73,56 @@ freeze means they require the author's explicit sign-off, not silent inclusion:
 
 *Recommend the author review proposals 1–4 before batch 2, since 2 and 3 could
 convert the two OPEN-UNVERIFIED China rows above into promotable, anchored claims.*
+
+---
+
+## Batch 2 — next 25 unprocessed chronological rows (1930–1948) · processed 2026-07-27
+
+Includes the four author-approved batch-1-proposal rows (now the earliest
+unprocessed rows). **Outcome: 24 PROMOTED to ESTABLISHED, 1 remains
+OPEN-UNVERIFIED, 0 REPORTED, 0 REMOVED.** All promotions verified against
+sources via web search this session; dates confirmed to each row's event anchor.
+
+### Promoted → ESTABLISHED (24)
+
+| id | yr | anchor | sources (class) | reasoning |
+|---|---|---|---|---|
+| CN-1930-2 | 1930 | milestone | Ching-Chun Wang, Annals AAPSS 1930; US FRUS 1928 (independent-academic + official) | Tariff-autonomy treaty sequence completed when Japan (last major power) acceded 6 May 1930; 1928 first treaties / 1929 tariff effective / **1930 completion** — anchor confirmed and justified. |
+| CN-1931-1 | 1931 | founding | Britannica; Rural Reconstruction Movement scholarship (independent-academic) | Liang Shuming founded the Shandong Rural Reconstruction Institute at Zouping in 1931 — founding anchor confirmed. Anchored reformulation of the removed Ding County row. |
+| CN-1933-1 | 1933 | milestone | Britannica (tael); LSE Economic History WP283 (independent-academic) | 1933 'abolish the tael, adopt the yuan' reform standardized the silver dollar — reform-milestone anchor confirmed. |
+| CN-1936-1 | 1936 | completion | Crush, Chinese railway history; first through train 6 Sep 1936 (independent-academic) | Canton–Hankow (Yuehan) Railway completed 1936, Guangzhou–Wuhan — completion anchor confirmed. Anchored reformulation of the removed Nanjing-infrastructure row. |
+| CN-1938-1 | 1938 | founding | Stanford UP, *Lianda* (independent-academic) | National Southwestern Associated University formed 1938 in Kunming from Peking/Tsinghua/Nankai — founding anchor confirmed. |
+| CN-1938-2 | 1938 | milestone | UMass Amherst archives; Victoria Univ Wellington (independent-academic) | Chinese Industrial Cooperatives (Gung Ho) founded Aug 1938 in Hankou — founding/milestone anchor confirmed. |
+| US-1938-1 | 1938 | invention | American Physical Society; Univ Rochester archives (independent-academic) | Carlson's first xerographic image, 22 Oct 1938 — invention anchor, not the 1959 product. |
+| US-1939-1 | 1939 | founding | Stanford University; EBSCO (independent-academic) | Hewlett-Packard founded 1939, Palo Alto — founding anchor confirmed. |
+| US-1942-1 | 1942 | invention | Argonne / Los Alamos Nat'l Labs (official-national) | Chicago Pile-1 first controlled chain reaction, 2 Dec 1942 — invention anchor confirmed. |
+| US-1942-2 | 1942 | completion | US Bureau of Reclamation; Britannica (official-national) | Grand Coulee Dam completed 1942 (generators to 1942), largest concrete structure — completion anchor confirmed. |
+| CN-1943-1 | 1943 | milestone | US FRUS 1943; Cambridge Modern Asian Studies (official + academic) | US/UK treaties relinquishing extraterritoriality signed 11 Jan 1943 — milestone anchor confirmed. |
+| US-1943-1 | 1943 | commercial-deployment | American Chemical Society landmark; USDA ARS Peoria (official-national) | US deep-tank fermentation mass production of penicillin, 1943 — deployment anchor (not the 1928 British discovery) confirmed. |
+| US-1943-2 | 1943 | milestone | National WWII Museum; GlobalSecurity war-production records (2 independent) | US wartime production peaked 1943 (~2,700 Liberty ships, ~300,000 aircraft over 1941-45) — scale-milestone anchor confirmed. |
+| US-1944-1 | 1944 | founding | IMF/World Bank archives; US State Dept Historian (international-body) | Bretton Woods conference (Jul 1944) produced the IMF + World Bank Articles — institution-founding anchor confirmed (formal existence Dec 1945 noted). |
+| US-1944-2 | 1944 | milestone | US National Archives; Britannica (official-national) | GI Bill signed 22 Jun 1944 — legislation-milestone anchor confirmed. |
+| CN-1945-1 | 1945 | milestone | United Nations records (international-body) | ROC a founding UN member and permanent SC member, Charter signed Jun 1945 — milestone anchor confirmed. |
+| US-1945-1 | 1945 | invention | Univ of Pennsylvania; Computer History Museum (independent-academic) | ENIAC completed/operational ~1945 (public Feb 1946) — invention anchor, year confirmed with note. |
+| US-1945-2 | 1945 | invention | US Dept of Energy; Los Alamos Nat'l Lab (official-national) | Trinity test, first nuclear detonation, 16 Jul 1945 — invention anchor confirmed. |
+| US-1945-3 | 1945 | milestone | Smithsonian; NSF histories (official-national) | Bush's 'Science, the Endless Frontier' submitted 5 Jul 1945 — policy-milestone anchor confirmed. |
+| US-1947-1 | 1947 | invention | Computer History Museum; IEEE/ETHW (independent-academic) | Bell Labs point-contact transistor, Dec 1947 — invention anchor confirmed (public June 1948). |
+| US-1947-2 | 1947 | first-flight/launch | US Air Force Historical Support Division; NASA (official-national) | Yeager broke the sound barrier in the Bell X-1, 14 Oct 1947 — flight anchor confirmed. |
+| US-1947-3 | 1947 | commercial-deployment | Encyclopedia.com; EBSCO (2 independent) | Levittown mass-produced suburban housing began 1947 — deployment anchor confirmed. |
+| US-1948-1 | 1948 | milestone | US National Archives; Congressional Research Service (official-national) | Marshall Plan (Economic Cooperation Act) signed 3 Apr 1948 — policy-milestone anchor confirmed. |
+| US-1948-2 | 1948 | invention | Shannon 1948, Bell System Technical Journal (primary/independent-academic) | Shannon's 'A Mathematical Theory of Communication' published 1948 — foundational-work/invention anchor confirmed. |
+
+### Remains OPEN-UNVERIFIED (1) — logged reason
+
+| id | yr | why not promoted |
+|---|---|---|
+| CN-1940-1 | 1940 | The wartime relocation of industry to the interior is real and documented, but "relocates key industries … to the southwestern interior" is a **diffuse `range` process** (~1937–1940) with no single discrete anchor event to confirm to a year (§1c). Plausibly true; stays OPEN-UNVERIFIED. A specific datable evacuation (e.g. the 1938 Yichang evacuation) could anchor a promotable reformulation. |
+
+### Missed-achievement candidate — PROPOSAL ONLY (freeze: needs author sign-off)
+
+1. **Burma Road completed (1938)** — China's ~1,150 km wartime supply route to Kunming,
+   built largely by hand by an estimated ~200,000 laborers; a genuine Chinese
+   wartime engineering achievement the ledger omits (`infrastructure`, `completion`).
+   Note: it is partly a China–Britain (Burma) joint effort — attribution to be
+   judged if approved. Flagged for author review; **not** added.
+

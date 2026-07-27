@@ -18,7 +18,8 @@ are the drafting agent's independent selection under `notes/selection_criteria.m
 > freeze have moved the live corpus on: additions/conversions in
 > `additions_log.md`, removals in `removed_rows.md`, and promotions to ESTABLISHED
 > in `verification_log.md` + `claim_ledger.csv`. **Live count as of 2026-07-27:
-> 261 rows (US 137, China 124), of which 22 ESTABLISHED, 239 OPEN-UNVERIFIED.**
+> 261 rows (US 137, China 124), of which 46 ESTABLISHED (verification batches 1–2,
+> covering 1926–1948), 215 OPEN-UNVERIFIED.**
 > The snapshot tables are kept as the labeled v0.4 baseline, not re-run per row.
 
 **Freeze-time totals (v0.4 snapshot): US 137 rows, China 122 rows, 259 total.**
