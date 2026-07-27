@@ -166,6 +166,12 @@ not auto-listed.
 
 ### B2 — US author-only
 
+> **ADJUDICATED (v0.4 symmetric US pass).** Every US author-only entry below has
+> now been judged by the same bar used for the China side; the ADD/REJECT
+> decisions, the Bitcoin country-anchoring decision, and the reject reasons are
+> recorded in `notes/additions_log.md` (v0.4). 10 US rows were adopted. This
+> closes the adoption-asymmetry flag and the corpus is now frozen.
+
 The US catch-all is dense; below are the strongest candidates my curated ledger
 lacks. (My ledger caps ~12–14 rows/decade, so many real US achievements are
 legitimately omitted; "candidate" means notable enough that the author should

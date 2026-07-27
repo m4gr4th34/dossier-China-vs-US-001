@@ -77,3 +77,93 @@ China total: 112 → **121**. (US unchanged.)
   Tiangong-1 first-lab second anchor) were **not** part of the author's explicit
   adjudicated add-list for this pass and are left for a future review, so the
   scope of what was adopted stays legible.
+
+---
+
+## v0.4 additions — the symmetric US adoption pass (author-sheet-via-crossvalidation)
+
+Closes the adoption-asymmetry flagged in `coverage_report.md` v0.3: the US
+author-only pool (`crossvalidation_report.md` §B2) is now adjudicated by the **same
+bar used for the China side** — add foundational technologies and
+industry-creating/defining firms not already in the ledger; reject consumer
+brands, VC firms, follower-firms, foreign/multinational attribution, and
+below-bar products. **Count is bar-driven, not tuned:** this pass adds **10 US**
+rows (vs the 9 China rows of v0.3) plus **1 China** second-anchor. All
+OPEN-UNVERIFIED, event-anchored.
+
+### US rows added (10)
+
+| id | year | anchor | row | reason |
+|---|---|---|---|---|
+| US-1958-4 | 1958 | founding | DARPA established | Foundational research agency; peer of NASA (seeded ARPANET/GPS/stealth). |
+| US-1968-1 | 1968 | founding | Intel founded | The company that commercialized the microprocessor; founding row parallel to Apple's, distinct from its product rows. |
+| US-1971-4 | 1971 | founding | FedEx founded | Created the overnight-logistics industry. |
+| US-1972-2 | 1972 | founding | Atari founded (Pong) | Two-anchor: birth of the commercial video-game industry, distinct from the 2600 console (US-1977-2). |
+| US-1972-3 | 1972 | invention | C language | Foundational systems-programming language (with Unix, underlies most software). |
+| US-1976-3 | 1976 | founding | Genentech founded | Two-anchor: birth of the biotech industry, distinct from the 1980 IPO/Bayh-Dole milestone (US-1980-1). |
+| US-1977-3 | 1977 | invention | first MRI scan | Foundational medical-imaging technology (US Damadian/Lauterbur; UK Mansfield shared the Nobel — attribution note in the row). |
+| US-1984-2 | 1984 | founding | Cisco founded | Defined internet-networking hardware. |
+| US-1988-2 | 1988 | commercial-deployment | first commercial 3D printer | Additive-manufacturing category; flagged as the weakest addition (notable, not economy-transforming). |
+| US-2008-3 | 2008 | commercial-deployment | Android launches | World's dominant mobile OS; symmetric analog to HarmonyOS (CN-2019-4). |
+
+US total: 127 → **137**.
+
+### China second-anchor added (1) — from the §D deferred sweep
+
+| id | year | anchor | row | reason |
+|---|---|---|---|---|
+| CN-2011-2 | 2011 | first-flight/launch | Tiangong-1 first space lab | Passes the two-anchor rule: first Chinese space lab and first orbital dockings (2011-12), distinct from the completed station (CN-2022-1, 2022). |
+
+China total: 121 → **122**.
+
+### Bitcoin — explicit country-anchoring decision: NOT added (documented)
+Bitcoin clears the notability bar easily (foundational cryptocurrency/blockchain).
+The blocker is **country attribution under the anchoring rule**, and the call is
+made visible here as instructed. The achievement's anchor is the **invention**
+(2008 whitepaper / 2009 genesis block) by the pseudonymous **"Satoshi Nakamoto,"
+of unknown nationality.** Amendment 3 says *attribution follows the anchor's
+performer* — and an invention whose inventor's nationality is unknown **cannot be
+cleanly attributed to the US.** Attributing Bitcoin to the US on the basis of the
+large US crypto ecosystem would be *attribution by association*, which the rule
+forbids. **Decision: excluded from the US ledger.** (A future pass could add a
+cleanly-US-anchored crypto milestone instead — e.g. a US exchange founding or the
+2024 US spot-Bitcoin-ETF approval — but the Bitcoin *invention* itself is not
+US-anchorable.)
+
+### US author-only entries REJECTED (with reason)
+- **AMD (1969), Nvidia founding (1993):** follower / already-represented — Intel
+  represents the semiconductor-founding milestone; Nvidia is represented by its
+  2024 AI-hardware row (US-2024-2). Below the two-anchor bar.
+- **PayPal, Netflix, Uber, Airbnb, GitHub, LinkedIn (platforms/services):** genuine
+  but below the *industry-creating / foundational-technology* bar this pass used;
+  kept selective, exactly as the China side left out JD/Meituan/Didi. E-commerce and
+  social are already represented (Amazon, eBay, Facebook, YouTube, Google).
+- **GPT-3 (2020):** redundant — bracketed by Transformer (US-2017-1) and ChatGPT
+  (US-2022-5) already in the ledger.
+- **Neuralink (2020):** demo-stage, no realized-achievement anchor (parked-like TMSR).
+- **M1 chip (2020), 23andMe (2006):** product / consumer-service, below bar.
+- **Lithium-ion battery (1985):** rejected on **attribution**, not notability —
+  the foundational work is genuinely multinational (Whittingham US, Goodenough
+  US/UK, Yoshino Japan), with no clean single-country anchor.
+- **Pentagon (1943), venture capital (1946), credit card (1950), general atomics
+  (1955), Lockheed (1926), McKinsey (1926):** office building / diffuse
+  financial-sector development / consumer financial product / below-bar firm —
+  none clears the "a serious history would be negligent to omit it" test at a
+  national-achievement level.
+- **Bucketed by class (rejected):** consumer food/retail brands (Starbucks, Whole
+  Foods, Chick-fil-A, In-N-Out, Shake Shack, …), VC firms (Sequoia, a16z, Founders
+  Fund, …), individual consumer gadgets (Roomba, Kindle variants, apple-watch/airpods
+  variants, …), and crypto tokens beyond the category-definer.
+- **Foreign (out of scope), appearing in the US-candidate columns:** first heart
+  transplant (South Africa), DNA double helix (UK/US), first mammal cloned (UK),
+  Higgs (CERN), human space flight (USSR), Toyota/Sony/Samsung/etc.
+
+### What this closes
+This is the **symmetric US pass** the v0.3 report demanded. Both sides have now
+been adjudicated by the same published bar. The residual innovation gap that
+remains (US > China, wider after this pass) is no longer an *adoption-effort*
+artifact — it is the genuine time-shape of when each country's datable
+foundational-tech and industry-creating events occurred. **The draft corpus is
+now frozen** (see `coverage_report.md` header): no further bulk content passes;
+subsequent changes are per-row, through the verification ritual, with logged
+justification.
