@@ -233,3 +233,17 @@ Author approved three proposals. Provenance: **verification-batch-3-proposal, au
 | US-1958-5 | 1958 | commercial-deployment | Boeing 707 enters service | `innovation`; **anchor rationale:** the achievement is inaugurating the commercial jet age, realized at market entry (Pan Am service, 26 Oct 1958), so commercial-deployment is chosen over the 20 Dec 1957 prototype first flight — consistent with the Boeing 747's commercial-deployment anchor (US-1970-1). The 1957 first flight is recorded as the alternative. |
 
 **Net:** +3 rows. China 125 → **126**, US 137 → **139**. Corpus 262 → **265**. (Burma Road's promotion changed no counts.)
+
+---
+
+## Post-freeze per-row change — batch-4 proposal ruling (2026-07-27)
+
+Author approved three proposals. Provenance: **verification-batch-4-proposal, author-approved**. All OPEN-UNVERIFIED; queue for batch 5.
+
+| id | year | anchor | row | note |
+|---|---|---|---|---|
+| US-1959-1 | 1959 | commercial-deployment | Xerox 914 | `innovation`; the commercial-deployment **second anchor** of xerography (invention anchor US-1938-1), cross-referenced both ways per the two-anchor rule. |
+| US-1961-2 | 1961 | commercial-deployment | Unimate first industrial robot | `innovation`; first GM-line deployment. |
+| CN-1969-1 | 1969 | completion | Red Flag Canal | `infrastructure`; the official narrative is heavily mythologized — **independent scholarship + event/magnitude split flagged for verification**; era context (initiated ~1960, hand-built through the hard post-Great-Leap years) noted plainly. |
+
+**Net:** +3. US 139 → **141**, China 126 → **127**. Corpus 265 → **268**.
