@@ -238,3 +238,44 @@ cumulative scale (~205bn yuan, 11M+ relocated, 1,100+ projects); barefoot doctor
    inaugurated industrial robotics. `innovation`.
 3. **Xerox 914 (US, 1959)** — first plain-paper office copier; the *commercial-deployment*
    second anchor for xerography (whose invention is US-1938-1). Two-anchor candidate.
+
+---
+
+## Batch 5 — next 25 unprocessed chronological rows (1959/1961 stragglers + 1969–1975) · processed 2026-07-27
+
+Includes the three batch-4-proposal rows. **Outcome: 25 PROMOTED to ESTABLISHED,
+0 REPORTED, 0 kept open, 0 removed.** 1969–1975 is dense with hard,
+independently-documented milestones; the reform-era contested-statistics
+disciplines were held ready but no row required REPORTED this batch (the
+magnitude claims that arose were independently corroborated or split off to
+notes). The reform-era REPORTED pressure begins in batch 6 (1976→).
+
+**Promoted (25):** US-1959-1 Xerox 914, US-1961-2 Unimate; CN-1969-1 Red Flag
+Canal, US-1969-1 Apollo 11, US-1969-2 ARPANET first message, US-1969-3 Unix;
+CN-1970-1 Dong Fang Hong 1, US-1970-1 Boeing 747, US-1970-2 EPA; CN-1971-1 UN
+seat, US-1971-1 Intel 4004, US-1971-2 Nixon shock, US-1971-3 NASDAQ, US-1971-4
+FedEx; CN-1972-1 artemisinin, CN-1972-2 Nixon visit/Shanghai Communiqué,
+US-1972-1 Pioneer 10, US-1972-2 Atari/Pong, US-1972-3 C language; CN-1973-1
+hybrid rice, US-1973-1 recombinant DNA, US-1973-2 Ethernet, US-1973-3 first
+mobile call; CN-1974-1 Terracotta Army; CN-1975-1 first recoverable satellite.
+
+**Disciplines exercised (event/magnitude split):**
+- **Red Flag Canal (CN-1969-1):** the mythologized official narrative was checked
+  against **independent scholarship** (Springer *Socio-Ecological Practice
+  Research*; IWA *Water Policy*) — the **completion event (1969) is established**,
+  while the "tenfold food production" magnitude and "Eighth Wonder / self-reliance
+  spirit" framing are state-mythologized and caveated in notes, not asserted. Era
+  context (hand-built through the hard post-Great-Leap years) recorded plainly.
+- **Hybrid rice (CN-1973-1):** event (first three-line hybrid, 1973) established;
+  the ~20% yield-gain magnitude is independently corroborated (IRRI, Wiley) and
+  noted.
+
+### Missed-achievement candidates — PROPOSALS ONLY (freeze: need author sign-off)
+
+1. **China's first nuclear-powered submarine (Type 091 / Long March 1, 1974)** — a
+   major indigenous engineering achievement (peer to the USS Nautilus already in the
+   ledger); `science`, with a plain military-context note if approved.
+2. **First networked email (Ray Tomlinson, US, 1971)** — the "@"-addressed message
+   across ARPANET; `innovation`.
+3. **UPC barcode first commercial scan (US, 1974)** — inaugurated automated retail
+   scanning; `innovation`, `commercial-deployment`.
