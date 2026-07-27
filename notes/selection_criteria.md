@@ -322,3 +322,57 @@ both `innovation`.
 *Selection layer v0.2. The recode touches only the `category` field of existing
 rows; no row is added or removed by the recode itself. Newly-surfaced omissions
 are added as separate OPEN-UNVERIFIED rows and logged in `notes/`.*
+
+---
+
+## Amendment 3 — event-anchoring rule (v0.3)
+
+**Why:** the cross-validation against the author's spreadsheet
+(`notes/crossvalidation_report.md` §D) surfaced repeated *date conflicts* that
+were really *anchor* disagreements — the same technology dated to its discovery in
+one source and its commercial deployment in another (penicillin 1928 vs 1943;
+xerography 1938 vs 1959; the pill 1950 vs 1960). A ledger row's year and its
+country attribution are only well-defined once the **event it anchors to** is
+named. This amendment makes the anchor explicit.
+
+**The rule:** every achievement anchors to exactly one **event type**, and *that
+anchor decides both the `year` and the `country`.* A new `event_type` column
+records it. The seven values:
+
+| event_type | the datable moment it anchors to |
+|---|---|
+| `discovery` | an empirical finding of something that already existed (a fossil, an oilfield, a physical phenomenon) |
+| `invention` | first creation/demonstration of a new device, technique, material, or theory (often in a lab) |
+| `founding` | a named company, institution, agency, or state comes into existence |
+| `first-flight/launch` | first flight, launch, or crewed/robotic space mission (incl. landings and sample-return missions) |
+| `commercial-deployment` | a product ships / a service launches / a system enters public operation / a treatment is approved |
+| `completion` | a discrete built work (dam, bridge, railway, building, telescope, station, standalone machine) is finished and operational |
+| `milestone` | a law, policy, reform, treaty, ranking, prize, threshold, or in-mission first that is none of the above |
+
+**Attribution follows the anchor.** The country is whoever performed *the anchored
+event*, not whoever is associated with the broader technology. Worked example
+(the one that motivated this): **penicillin** — the *discovery* anchor (1928) is
+Alexander Fleming's, British, and therefore out of scope; the in-scope achievement
+is the US **commercial-deployment** anchor (1943 deep-tank mass production). The
+existing row `US-1943-1` is verified to be anchored that way. Likewise xerography
+anchors to Carlson's 1938 *invention* (the row's year), not the 1959 Xerox 914
+*commercial-deployment*.
+
+**One achievement, at most one row — with a single exception.** The same
+underlying technology or program may occupy **two** rows only if **two distinct
+anchors each independently clear the notability bar**. Canonical case: Tiangong —
+the **first space lab** (Tiangong-1, a `first-flight/launch` anchor, 2011) and the
+**completed station** (a `completion` anchor, 2022) are two separate achievements,
+not a date conflict. Absent two independently-notable anchors, pick the single
+anchor that best captures the achievement's significance and record only that.
+
+**Consequence for "date conflicts":** most apparent conflicts dissolve — the two
+sources simply anchored to different event types (discovery vs deployment;
+founding vs product; first-lab vs completed-station). The resolution is to state
+each anchor's type and country, keep the in-scope one, and add a second row only
+under the two-anchor rule above. The nine conflicts in the cross-validation report
+are resolved this way in that report's §D addendum.
+
+*Selection layer v0.3. Adds the `event_type` column (backfilled for all existing
+rows; the backfill changes no `year`, `country`, or `category`). Rows added from
+the cross-validation adjudication are logged in `notes/additions_log.md`.*
