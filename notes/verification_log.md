@@ -126,3 +126,64 @@ sources via web search this session; dates confirmed to each row's event anchor.
    Note: it is partly a China–Britain (Burma) joint effort — attribution to be
    judged if approved. Flagged for author review; **not** added.
 
+
+---
+
+## Batch 3 — next 25 unprocessed chronological rows (1938 straggler + 1949–1957) · processed 2026-07-27
+
+The first PRC-era batch. Independent-academic PRC scholarship (JAS/Cambridge,
+Project MUSE, LSE, Business History Conference, Taylor & Francis, Springer) was
+required; PRC-official sources alone were treated as insufficient. **Outcome:
+22 PROMOTED, 1 REPORTED, 2 remain OPEN-UNVERIFIED, 0 REMOVED.**
+
+### Promoted → ESTABLISHED (22)
+
+US (10): US-1949-1 NATO (Apr 1949), US-1951-1 UNIVAC I (1951), US-1952-1 Ivy Mike
+(Nov 1952), US-1953-1 NTSC color TV (Dec 1953), US-1954-1 USS Nautilus (Sep 1954),
+US-1954-2 silicon solar cell (Apr 1954), US-1955-1 Salk vaccine (Apr 1955),
+US-1955-2 McDonald's franchise (Apr 1955), US-1956-1 Interstate Highway Act (Jun
+1956), US-1956-2 IBM RAMAC (1956) — all canonical, verified to their anchors via
+official + independent sources.
+
+China (12), each with ≥1 independent-academic or two independent sources:
+- CN-1949-1 PRC founded 1 Oct 1949 (Taylor & Francis; State Dept).
+- CN-1950-1 Marriage Law, 1 May 1950 (LSE; UC Press).
+- CN-1950-2 Land Reform (Agrarian Reform Law, Jun 1950) (Britannica; ChinaKnowledge)
+  — magnitude (~700M mu / ~46.7M ha) recorded in the ledger, not re-measured.
+- CN-1950-3 hyperinflation stabilized by 1950 (Springer; Tooze).
+- CN-1952-3 Patriotic Health Campaign launched 1952 (Frontiers; BU/Perry).
+- CN-1953-1 First Five-Year Plan launched 1953 (BHC; Britannica) — **event
+  established; the 156-project/output magnitudes noted as official, not
+  independently measured** (the task's event-vs-magnitude split).
+- CN-1953-2 first national census, 1953 (Cambridge JAS; Wikipedia) — **event
+  established; first use of the conflicting-figures rule: official 582.6M vs the
+  prior ~450M (1933 League of Nations) estimate, with Cressey's inflation critique,
+  both recorded.**
+- CN-1954-1 first PRC Constitution, Sep 1954 (Cornell eCommons; ChinaKnowledge).
+- CN-1955-1 Qian Xuesen returns, 1955 (Britannica; USNI).
+- CN-1956-1 Jiefang truck, Jul 1956 (Wikipedia; CarNewsChina; Truck Encyclopedia).
+- CN-1956-2 socialist transformation completed 1956 (Project MUSE; Britannica).
+- CN-1957-1 Wuhan Yangtze Bridge, Oct 1957 (Structurae; Taylor & Francis) — Soviet
+  assistance noted in-row.
+
+### Reclassified → REPORTED (1) — the first REPORTED
+
+| id | yr | why REPORTED |
+|---|---|---|
+| CN-1952-2 | 1952 | The claim "output recovers to **pre-1937 peak levels**" is a **magnitude** whose only support is **PRC official output statistics** (interested party: the PRC State Statistical Bureau), which carry documented reliability disputes. Independent economic historians (e.g. Eckstein, *The Economy of Communist China, 1949–1969*) report ~25% above prewar by 1952 but **rely on the same official data**, not independent measurement. Mundane caveat stated: early-PRC statistics are affected by over-reporting and definitional shifts. The *rehabilitation* by 1952 is broadly accepted; the label describes the evidence for the specific magnitude. Not ESTABLISHED, not removed. |
+
+### Remain OPEN-UNVERIFIED (2) — logged reasons
+
+| id | yr | why |
+|---|---|---|
+| CN-1938-3 (Burma Road) | 1938 | Two problems surfaced at verification: **(1) date dispute** — Britannica gives completion 1939, others 1938/"by 1938" (both recorded; row anchors 1938); **(2) attribution** — built by ~200,000 **Chinese and Burmese** laborers with British/American engineering, so "primarily Chinese" is clean only for the Yunnan (Kunming-to-border) section. Flagged for the author (narrow to Yunnan section, or keep the joint framing). |
+| CN-1952-1 (Chengyu Railway) | 1952 | The July 1952 opening is uncontested, but the sources found are PRC-official/state (SASAC, CGTN, china.org.cn) plus a **single** independent encyclopedic entry (Wikipedia). The standard needs a **second** independent (or academic) source for a PRC claim — the discipline biting even on a true fact. Re-eligible once a second source is consulted. |
+
+### Missed-achievement candidates — PROPOSALS ONLY (freeze: need author sign-off)
+
+1. **Simplified Chinese characters scheme (1956)** — the first official simplification
+   list, a distinct literacy achievement from Pinyin (CN-1958-1). `social`, `milestone`.
+2. **Shippingport Atomic Power Station (US, 1957)** — first full-scale commercial
+   nuclear power plant. `infrastructure`/`science`, `completion`.
+3. **Boeing 707 first flight (US, 1957)** — inaugurated the mass jet-airliner age;
+   the US ledger has DC-3 and 747 but not the jet-age 707. `innovation`, `first-flight/launch`.
