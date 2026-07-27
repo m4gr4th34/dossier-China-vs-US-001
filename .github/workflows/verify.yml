@@ -1,0 +1,30 @@
+name: verify-claims
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Recompute every quantitative claim in the manuscript
+        run: python verification/verify_numbers.py
+      - name: Edition round-trip gate
+        run: node verify_edition.js
+      - name: Markdown projection gate
+        run: node verify_markdown.js
+      - name: Content-equivalence gate (prose)
+        run: node verify_projection.js
+      # Back-catalog byte-sync gate RESTORED: write-time guarantees are only sound if write-time
+      # FAILURES are visible. A silent reskin-workflow failure once left live/ stale while ordinary
+      # pushes stayed green — the staleness only surfaced at seal time. This per-push gate makes a
+      # stale or missing live/<tag> (incl. an unsealed verdict.json) red on EVERY push. Renders in
+      # memory; cheap at any realistic chapter count.
+      - name: Back-catalog byte-sync gate
+        run: node verify_backcatalog.js
