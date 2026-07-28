@@ -305,3 +305,31 @@ ritual (same standard, no leniency); originals tombstoned in `removed_rows.md`.
 | CN-1930-1 → **CN-1932-1** @1932 (circa) | Shenxin = China's largest industrial employer, ~1932 | independent-academic | ESTABLISHED |
 
 **Net:** row count unchanged (270). Census 266/3/1 → **268/1/1** (China count unchanged, 127).
+
+---
+
+## Batch 11 — tail-and-stack pass (2026-07-27, author-sanctioned)
+
+Thirteen new rows added through the full promotion ritual (see
+`verification_log.md` Batch 11 for the per-row rulings, sources, and held items).
+
+| id | year | row | one-line reason for adding |
+|---|---|---|---|
+| CN-2010-4 | 2010 | China solar-PV manufacturing dominance | Defining fact of the global energy transition; IEA international-body series (>80% capacity every stage). |
+| CN-2024-2 | 2024 | Rare-earth PROCESSING dominance | Geopolitically central; the processing-vs-mining separation (USGS + IEA) is the point. |
+| CN-1978-4 | 1978 | Xu Guangxian separation chemistry | The innovation behind China's rare-earth processing dominance; China's top science award (2008). |
+| CN-2013-3 | 2013 | China world's largest robot market | World's #1 in installations since 2013 (USITC); 54% of 2024 installs (IFR). |
+| CN-2020-4 | 2020 | BYD Blade battery | Cell-to-pack LFP milestone; first mass-produced vehicle (Han EV) on the pack. |
+| CN-2025-2 | 2025 | CATL Naxtra sodium-ion | First sodium-ion power battery to pass China's national safety standard, from the #1 maker. |
+| CN-2017-2 | 2017 | CATL world's #1 battery maker | Own milestone anchor (distinct from 2011 founding); the gap this pass was asked to check. |
+| US-2023-1 | 2023 | US largest LNG exporter | Official EIA ranking milestone; US physical-stack parallel, distinct from the shale row. |
+| US-2024-3 | 2024 | First US-soil 4 nm fabrication (TSMC Arizona) | First leading-edge production on US soil; reshoring milestone (US Commerce confirmation). |
+| US-2025-1 | 2025 | OpenAI GPT-5 | Flagship 2025 US frontier model; corrects the DeepSeek asymmetry (independent benchmarks). |
+| US-2025-2 | 2025 | Starship Flight 10 | First successful Starship payload deploy + splashdown. |
+| US-2024-4 | 2024 | NIF fusion repeatability | Distinct second anchor from Dec-2022 first ignition: repeatability + record 5.2 MJ. |
+| CN-2025-3 | 2025 | Chinese EUV-lithography claim (**REPORTED**) | Interested-party sourced, uncorroborated; recorded with party named + mundane wall. |
+
+**Net:** +13 rows (12 ESTABLISHED, 1 REPORTED). Corpus 270 → **283** (US 143 → **148**,
+China 127 → **135**). Census 268/1/1 → **280/1/2**. Held items (Blade 2.0, CATL Na-ion
+mass-deployment, Linglong-One SMR, Kimi K3, Stargate, Gemini 3, dark-factory) were NOT
+filed — logged with revisit dates in `verification_log.md`.

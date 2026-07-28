@@ -593,3 +593,88 @@ prose, and the verify_numbers.py census check; both pipelines re-rendered; all g
 None. With the chronological corpus complete, any further additions belong to a
 deliberate coverage-gap pass (e.g. the early-century China floor, or the open 2025-H2/2026
 tail as it becomes corroborable), not to a chronological batch.
+
+---
+
+## Batch 11 — the tail-and-stack pass (2026-07-27, author-sanctioned adjudication)
+
+A per-row addition pass through the freeze rules: author sign-off given for
+adjudication, but every candidate still faced the notability rule, event anchoring,
+and the full promotion standard — no leniency for being author-proposed. Sourcing was
+gathered by independent web research (IEA, USGS, IFR/USITC/ITIF, EIA, LLNL, IAEA PRIS,
+independent trade press + benchmark leaderboards) and the load-bearing legs
+(EIA LNG, US Commerce/TSMC, LLNL NIF, Xu Guangxian) were re-verified against primary
+sources before promotion.
+
+**12 rows promoted to ESTABLISHED** (China 7, US 5):
+
+| id | year | row | qualifying source(s) |
+|---|---|---|---|
+| CN-2010-4 | 2010 (range→2023) | China's solar-PV manufacturing capacity dominance (>80% every stage, 97% wafers) | IEA 2022 + IEA 2024 (international-body); Wood Mackenzie 2023 corrob. |
+| CN-2024-2 | 2024 | Rare-earth PROCESSING dominance distinct from mining (~69% mining; refining more concentrated) | USGS MCS 2025 (official-national) + IEA Critical Minerals Outlook (international-body) |
+| CN-1978-4 | 1978 (circa) | Xu Guangxian cascade solvent-extraction separation theory (1970s); 2008 State S&T Award | scholarly biography (independent-academic) + encyclopedic |
+| CN-2013-3 | 2013 | China world's largest industrial-robot market (#1 since 2013; 54% of 2024 installs) | USITC (official-national) for the #1 anchor; IFR magnitude; ITIF density corrob. |
+| CN-2020-4 | 2020 | BYD Blade battery launch + Han EV deployment | The Driven + Reuters/Autoblog (two independent journalistic) |
+| CN-2025-2 | 2025 | CATL Naxtra sodium-ion brand launch + GB 38031-2025 safety cert | Reuters + CarNewsChina (two independent journalistic) |
+| CN-2017-2 | 2017 | CATL becomes world's #1 EV-battery maker (own anchor, distinct from 2011 founding) | SNE Research via CnEVPost/electrive; TIME + Quartz |
+| US-2023-1 | 2023 | US becomes world's largest LNG exporter (11.9 Bcf/d) | EIA (official-national) |
+| US-2024-3 | 2024 | First US-soil leading-edge (4 nm) chip fabrication (TSMC Arizona) | US Commerce Dept (official-national) + Silicon UK |
+| US-2025-1 | 2025 | OpenAI GPT-5 release + independent benchmarks | Artificial Analysis + LLM-Stats (independent) |
+| US-2025-2 | 2025 | Starship Flight 10 first successful payload deploy | Spaceflight Now + PBS (two independent journalistic) |
+| US-2024-4 | 2024 | NIF fusion repeatability + record 5.2 MJ (10 Feb 2024) | LLNL (official-national) + Nature |
+
+**1 row filed REPORTED** (ritual "reclassify REPORTED": interested-party only, no
+independent corroboration):
+- **CN-2025-3** — Chinese domestic-EUV-lithography prototype claim (late 2025).
+  Interested party named (Chinese state media / Huawei–SMIC-linked industry reports);
+  mundane-explanation wall stated at equal prominence (no independent verification, no
+  domestic-EUV-produced chip demonstrated, confirmed Chinese progress is DUV not EUV).
+  Provenance tag, never a premise for a higher-status claim.
+
+**Held — NO ROW, revisit dates logged** (outcomes reported, not presumed):
+- **BYD Blade 2.0** (launched 5 Mar 2026): launch event independently reported, but
+  performance specs (~190–210 Wh/kg, 5-min charge, 1,006 km) are manufacturer-stated
+  with no independent teardown; notability rests on the unverified leap. **Revisit 2026-10-01.**
+- **CATL sodium-ion mass-deployment / first Na-ion EV** (Changan Nevo A06, due mid-2026):
+  announced/scheduled, not independently confirmed on-market. The *launch+certification*
+  anchor was filed (CN-2025-2); the mass-deployment anchor is held. **Revisit 2026-10-01.**
+- **Linglong-One SMR (ACP100, Changjiang, Hainan):** IAEA PRIS lists it "Under
+  Construction" (late-Jul-2026); first criticality / grid connection / commercial
+  operation all blank. Cold-functional test Oct 2025, non-nuclear steam test Dec 2025 —
+  pre-fuel-load commissioning, not an occurred grid event. A row keys on first grid
+  connection when it occurs. **Revisit Q4 2026.**
+- **Kimi K3 (Moonshot AI, released 16 Jul 2026):** has the DeepSeek evidentiary shape
+  (datable release + independent benchmarks: Artificial Analysis, Frontend Code Arena),
+  but is 11 days old at pass time — durability/impact unestablished. Held on recency
+  discipline (the same bar that keeps a hypothetical US 2026 frontier model out this
+  pass). **Revisit 2026-10-01.**
+- **US "Stargate" $500B AI-datacenter buildout:** the headline figure is an
+  announcement, not an achievement (the mirror of over-crediting an announced Chinese
+  megaproject); the occurred Abilene first-phase (~0.3 GW, Sep 2025) is thin vs the
+  notability bar. Held. **Revisit 2026-Q4.**
+- **Gemini 3 (Google, Nov 2025):** eligible in shape, but not added — one US 2025
+  flagship AI row (GPT-5) matches the one China 2025 AI row (DeepSeek); adding Gemini 3
+  would over-weight US AI 2025. Held for symmetry discipline.
+- **"Dark factory" exemplar (Xiaomi Changping):** no row — company marketing, ~81%
+  automation (not true lights-out), inconsistent opening dates. Macro robotics data
+  (CN-2013-3) is the defensible spine; the anecdote is not laundered into it.
+
+**Symmetry note (standing rule).** The pass added what cleared the rule, not what served
+a thesis. China's 3 physical-stack manufacturing-dominance rows (solar / rare-earth /
+robotics) reflect documented IEA/USGS/IFR reality; the US side gets LNG-export leadership
+and first US-soil leading-edge fabrication. GPT-5 was added specifically to CORRECT a
+pre-existing asymmetry (China had a 2025 frontier-AI row via DeepSeek; the US had none).
+Recency discipline was applied country-blind: 2026 frontier-AI models (Kimi K3) held on
+both sides.
+
+**Data-integrity flags carried onto the rows:** IFR robotics data is industry-federation
+self-reported (China domestic-maker share 57% in 2024 — the 2013 #1 anchor rests on the
+independent USITC leg); all battery performance/safety numbers are overwhelmingly
+manufacturer-stated (asserted the deployment/market-position facts, labeled the perf
+figures as manufacturer-stated); solar shares are CAPACITY-basis (kept explicit).
+
+**Front-door lockstep:** census 268/1/1 → **280/1/2** across avenues.json (2 theses),
+the source prose (abstract + §02 + §03 ledger + §05 live-status + the momentum
+exclusion clause), and the verify_numbers.py census check; momentum/spine/panel/silhouette
+recomputed (the new REPORTED row CN-2025-3 is excluded from the 2016–2025 bar and named
+in the caption); all editions re-rendered to fixpoint; all gates + npm test green.
