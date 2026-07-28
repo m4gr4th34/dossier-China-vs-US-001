@@ -888,3 +888,54 @@ endpoint), so the endpoint year has a year-dossier anchor and a momentum bar.
 
 **Front-door lockstep:** census 292/1/3 → **294/1/3**; corpus 296 → **298** (US 154, China 144). All
 five figures regenerated to fixpoint; verifier 33/33; all gates + npm test green. Batch 15 closed.
+
+---
+
+## Batch 16 — synthesis, the FORECAST rung, and a census reconciliation (2026-07-28)
+
+**Census reconciliation (item 0).** The live census is **294 ESTABLISHED / 1 OPEN-UNVERIFIED /
+3 REPORTED**, and that is correct. The strategy-room record of **292 after batch 14** is also
+correct — for batch 14. The delta is **batch 15** (executed in Claude Code earlier this session,
+not yet synced to the strategy room), which added exactly two ESTABLISHED rows: **CN-2024-3**
+(Big Fund III) and **CN-2026-1** (Kimi K3). So 292 → 294 is the two batch-15 rows, not a slip in
+the Fig-Vb report and not an unreported mystery adjudication. Every surface (abstract, §02, the
+verification-in-progress card, avenues.json theses, the `_EXPECTED_CENSUS` tuple, the baked
+console verdict) already reads 294 and agrees.
+
+**Three adjudications (item 1) — outcomes, already executed in batch 15, re-confirmed here:**
+- **Big Fund III (2024, ~$47.5B): ESTABLISHED** — `CN-2024-3`. Independent corroboration of an
+  occurred close event (Bloomberg 27 May 2024 + Reuters + Global Trade Alert / SAMR registration),
+  so it clears the bar as ESTABLISHED, not merely state-media REPORTED.
+- **Kimi K3 (release 2026-07-16): ESTABLISHED** — `CN-2026-1`. Past the recency hold, and it meets
+  the DeepSeek precedent: datable release + independent benchmark corroboration (Artificial
+  Analysis + LMArena). Filed narrowly (explicitly trailing the US closed frontier).
+- **2025 national VC guidance fund (¥1T): HELD — NO ROW.** Announced-vs-established discipline: an
+  announcement with no independently-verified capitalization is not a row. No disclosed paid-in
+  capital; corroboration mainly Chinese/HK-origin. Recorded as Figure Va state-capital annotation
+  context only. **Revisit 2027-03-01** (two years post-announcement, when paid-in capital or an
+  audited close would be expected to surface).
+
+**Synthesis section (item 2).** New front-door §04 "What we make of it" — OPEN-CAVEATED, five
+numbered claims each citing its rows/figures inline. Matching OPEN-CAVEATED avenue card added.
+The walled `notes/synthesis_frame_CANDIDATE.md` is marked **superseded** (banner added) and kept
+only as provenance history.
+
+**The FORECAST rung (item 3) — first use of the constitution's third claim type.** New front-door
+§05 "The dated bets" + three FORECAST avenue cards (the forecast-signpost gate now has real
+objects). Each names owner, probability, dated signposts (all future-dated), and its falsification:
+- **F1** (authorial bet, ~75%): China majority of global annual industrial-robot installs AND ≥3
+  dark-capable Chinese automaker lines by end-2030. Signposts IFR 2027, IFR 2029. **Revisit
+  2027-11-01, 2029-11-01** (IFR World Robotics release windows).
+- **F2** (dossier forecast, neutral, ~50%): ≥1 independently-verified frontier outcome from
+  state-guided capital by end-2030 (EUV-class litho in production, OR a Chinese frontier model
+  leading independent benchmarks ≥6 months, OR ≥3 operating SMR units). Signposts: annual reviews
+  **revisit 2027-07-01, 2028-07-01, 2029-07-01**; tracking hooks are the EUV REPORTED row
+  (`CN-2025-3`) and the Linglong-One SMR revisit.
+- **F3** (dossier forecast, ~70%): Chinese private VC stays below half its 2021 real peak AND the
+  US remains the primary venue for non-Chinese high-tech founders through 2030. Signpost: annual
+  VC-series checks, **revisit 2027-04-01** then annually. Falsification rewrites the judgment box.
+
+No new ledger rows this batch (synthesis is interpretation; forecasts are avenue cards, not
+achievement rows) — census stays **294 / 1 / 3**. Verifier's forecast-signpost checks now bind on
+three real FORECAST objects; every signpost is future-dated and every forecast names its
+falsification. Batch 16 closed.

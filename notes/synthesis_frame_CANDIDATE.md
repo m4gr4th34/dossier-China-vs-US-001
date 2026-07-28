@@ -1,6 +1,14 @@
 # Candidate synthesis frame — the physical-stack / frontier-stack bifurcation
 
-**Status: CANDIDATE ANALYTIC LENS — NOT ASSERTED ANYWHERE READER-FACING.** This note
+> **SUPERSEDED (batch 16, 2026-07-28).** The physical-stack/frontier-stack observation is
+> now a public, reader-facing claim — front-door §04 "What we make of it," claim (i), and the
+> matching OPEN-CAVEATED "What we make of it" avenue card. It is no longer walled: it wears an
+> OPEN-CAVEATED label and cites its rows and figures inline. This note is retained **only as
+> provenance history** — the record of how the idea was kept before it earned reader-facing use,
+> and of the confirm/refute tests it had to survive. Nothing downstream should cite this note as
+> the live statement; cite §04 instead.
+
+**Status (original): CANDIDATE ANALYTIC LENS — NOT ASSERTED ANYWHERE READER-FACING.** This note
 records an author observation as a possible framing for the *index* layer and the future
 *projections* rung. It is not a claim, not a finding, not a ledger row, and it appears in
 no reader-facing surface (front door, audit trail, abstract, momentum caption). It is a
