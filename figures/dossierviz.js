@@ -370,8 +370,7 @@
     var foundKick = 108, cy = 146, decY = 184;           // ZONE 2 foundings
     var vcKick = 200, sTop = 214, sBot = 264, H = 292;   // ZONE 3 VC
     var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="The Founder&#39;s Century in three labelled layers: a founder-regime band (open, constrained or closed) per country; the company-founding ledger rows US above / China below; and annual venture-capital investment on a log axis.">'];
-    p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fti{font:12.5px sans-serif;fill:#2d3748}.fcl{font:9.5px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}.fkick{font:10px sans-serif;font-weight:700;letter-spacing:0.05em}.fin{font:8.5px sans-serif;fill:#2d3748;font-weight:600}.fvl{font:8.5px sans-serif;font-weight:700}</style>');
-    p.push('<text class="fti lf-scale-with-art" x="' + FO.padL + '" y="13">The Founder’s Century — three layers on one century axis</text>');
+    p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fti{font:12.5px sans-serif;fill:#2d3748}.fcl{font:9.5px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}.fkick{font:13px sans-serif;font-weight:700;letter-spacing:0.04em}.fin{font:8.5px sans-serif;fill:#2d3748;font-weight:600}.fvl{font:8.5px sans-serif;font-weight:700}</style>');
     // shared decade gridlines (regime + foundings zones)
     for (var yr = 1930; yr <= 2026; yr += 10) {
       var xx = fxf(yr);
@@ -379,7 +378,7 @@
       p.push('<text class="ftk lf-scale-with-art" x="' + xx.toFixed(1) + '" y="' + decY + '" text-anchor="middle">' + yr + '</text>');
     }
     // ===== ZONE 1 — REGIME =====
-    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="30" fill="#2b6cb0">FOUNDER REGIME — CAN A PRIVATE FOUNDER LEGALLY OPERATE?</text>');
+    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="26" fill="#2b6cb0">FOUNDER REGIME — CAN A PRIVATE FOUNDER LEGALLY OPERATE?</text>');
     ["open", "constrained", "closed"].forEach(function (st, i) {
       var lxx = FO.W - 300 + i * 100;
       p.push('<rect x="' + lxx + '" y="22" width="9" height="9" fill="' + REGIME_COL[st] + '" opacity="0.6"/><text class="fcl lf-scale-with-art" x="' + (lxx + 12) + '" y="30">' + st + '</text>');
