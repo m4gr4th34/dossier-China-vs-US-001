@@ -454,10 +454,12 @@ for _c in ("US", "China"):
 check("Index I25: Figure V founding envelope recomputes exactly from event_type=founding rows",
       _f_sil_bad, 0, 0)
 
-# (I26) Figure V exits (IPO-proceeds) strip == committed ipo_proceeds.csv EXACTLY, and the
-#       state-capital estimate annotation == committed state_capital.csv EXACTLY.
+# (I26) Figure Va exits (IPO-proceeds) strip == committed ipo_proceeds.csv EXACTLY, and the
+#       state-guided-capital band + ticks == their committed context_series CSVs EXACTLY
+#       (the drawn est.-range band replaced the old text annotation; I11 pattern).
 _ipo_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "ipo_proceeds.csv"))
-_sc_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "state_capital.csv"))
+_scb_csv = _read_csv(os.path.join(_ROOT, "data", "context_series", "state_capital_cn.csv"))
+_sct_csv = _read_csv(os.path.join(_ROOT, "data", "context_series", "state_capital_ticks.csv"))
 
 
 def _ipocol(_c):
@@ -468,11 +470,19 @@ _ex = _committed["founder_spec"]["exits"]
 _exits_ok = (_ex.get("us") == _ipocol("us_proceeds_usd_bn")
              and _ex.get("onshore") == _ipocol("china_onshore_usd_bn")
              and _ex.get("us_listed") == _ipocol("china_us_listed_usd_bn"))
-_sc_exp = {r["metric"]: {"value": float(r["value"]), "unit": r["unit"],
-                         "label": r["label"], "class": r["source_class"]} for r in _sc_csv}
-_sc_ok = (_committed["founder_spec"]["state_capital"] == _sc_exp)
-check("Index I26: Figure V exits strip == ipo_proceeds.csv and state capital == state_capital.csv exactly",
+_scap = _committed["founder_spec"]["state_capital"]
+_band_exp = [[int(r["year"]), float(r["announced_usd_bn"]), float(r["paidin_usd_bn"])] for r in _scb_csv]
+_ticks_exp = [{"label": r["label"], "year": int(r["year"]), "usd_bn": float(r["usd_bn"]),
+               "side": r["side"]} for r in _sct_csv]
+_sc_ok = (_scap.get("band") == _band_exp and _scap.get("ticks") == _ticks_exp)
+check("Index I26: Figure Va exits strip == ipo_proceeds.csv and state-capital band/ticks == context_series CSVs exactly",
       0 if (_exits_ok and _sc_ok) else 1, 0, 0)
+
+# (I26b) the retired state-capital TEXT annotation is absent from the baked page — the band
+#        replaced it, so its old wording must not survive anywhere in index.html.
+_retired = "STATE GUIDANCE FUNDS, est."
+check("Index I26b: retired state-capital text annotation absent from index.html (replaced by the drawn band)",
+      1 if _retired in _index_html else 0, 0, 0)
 
 # (I27) Figure Vb (velocity) — each plotted panel series == its committed CSV EXACTLY.
 _vel = _committed["velocity_spec"]

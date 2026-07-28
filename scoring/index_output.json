@@ -11857,30 +11857,56 @@
       "source": "Renaissance Capital (US, ex-SPAC) / EY, KPMG, HKEX, Refinitiv (China by venue)"
     },
     "state_capital": {
-      "guidance_target": {
-        "value": 1.5,
-        "unit": "USD_T",
-        "label": "state guidance-fund aggregate TARGET",
-        "class": "chinese-origin"
-      },
-      "guidance_paidin": {
-        "value": 0.67,
-        "unit": "USD_T",
-        "label": "state guidance-fund PAID-IN (<50% of target; 26% of funds met target)",
-        "class": "chinese-origin"
-      },
-      "big_fund_iii": {
-        "value": 47.5,
-        "unit": "USD_B",
-        "label": "Big Fund III registered capital (24 May 2024)",
-        "class": "independent"
-      },
-      "national_vc_fund_target": {
-        "value": 138.0,
-        "unit": "USD_B",
-        "label": "2025 National VC Guidance Fund mobilization TARGET (¥1T; launched Dec 2025)",
-        "class": "chinese-origin"
-      }
+      "band": [
+        [
+          2018,
+          1400.0,
+          585.0
+        ],
+        [
+          2020,
+          1550.0,
+          672.0
+        ],
+        [
+          2022,
+          1860.0,
+          940.0
+        ]
+      ],
+      "ticks": [
+        {
+          "label": "Big Fund I",
+          "year": 2014,
+          "usd_bn": 19.2,
+          "side": "CN"
+        },
+        {
+          "label": "Big Fund II",
+          "year": 2019,
+          "usd_bn": 28.2,
+          "side": "CN"
+        },
+        {
+          "label": "Big Fund III",
+          "year": 2024,
+          "usd_bn": 47.5,
+          "side": "CN"
+        },
+        {
+          "label": "SBIR+STTR",
+          "year": 2022,
+          "usd_bn": 4.73,
+          "side": "US"
+        },
+        {
+          "label": "CHIPS Act",
+          "year": 2022,
+          "usd_bn": 52.7,
+          "side": "US"
+        }
+      ],
+      "source": "Zero2IPO/清科 (Chinese-origin, single vendor); CSET / China Quarterly corroborate by citation"
     },
     "unicorns": [
       {
@@ -11900,7 +11926,7 @@
     ],
     "count": 46,
     "stage": "#ffffff",
-    "caption": "Figure V - the Founder's Century, in layers (descriptive). --- REGIME BAND: whether a private founder could legally operate - the US open throughout (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 (private enterprise abolished), reopening 1978, open 1992-2020, and constrained since the 2020 tech crackdown (a band annotation, not a ledger row - a crackdown is not an achievement). --- FOUNDINGS: the 46 company-founding rows from the verified ledger (event_type=founding, US 26 / China 20; foundings, not patents or IP), US above / China below, over a 15-year rolling founding-density envelope; click any block for its cards. --- VC STRIP: annual PRIVATE venture-capital investment (PitchBook, log US$B) - China peaks $146B (2021) and collapses to $38B (2024, ~74%); the US falls ~41%. --- EXITS STRIP: annual IPO proceeds (Renaissance / EY / KPMG, log US$B) - Chinese-company US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings onshored to the A-share market and Hong Kong. --- STATE CAPITAL (an estimate annotation, NOT a line): government guidance funds target ~$1.5T but paid-in is under $0.7T (Chinese-origin data; only 26% met target), and Big Fund III added $47.5B (2024). The substitution, plainly: private VC collapsed; state capital partly replaced it - but the strip measures the former, not the latter. Sourcing: notes/founder_series_selection.md and notes/regime_band_rationale.md."
+    "caption": "Figure V - the Founder's Century, in layers (descriptive). --- REGIME BAND: whether a private founder could legally operate - the US open throughout (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 (private enterprise abolished), reopening 1978, open 1992-2020, and constrained since the 2020 tech crackdown (a band annotation, not a ledger row - a crackdown is not an achievement). --- FOUNDINGS: the 46 company-founding rows from the verified ledger (event_type=founding, US 26 / China 20; foundings, not patents or IP), US above / China below, over a 15-year rolling founding-density envelope; click any block for its cards. --- VC STRIP: annual PRIVATE venture-capital investment (PitchBook, log US$B) - China peaks $146B (2021) and collapses to $38B (2024, ~74%); the US falls ~41%. --- EXITS STRIP: annual IPO proceeds (Renaissance / EY / KPMG, log US$B) - Chinese-company US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings onshored to the A-share market and Hong Kong. --- STATE-GUIDED CAPITAL (a drawn est. range, not a line): the China band's WIDTH is the gap between announced guidance-fund target (upper edge) and estimated paid-in (lower edge) - ~$1.4T / $585B in 2018 rising to ~$1.86T / $940B in 2022, only ~43-51% of target actually paid in (Zero2IPO / 清科, a single Chinese-origin vendor; CSET and China Quarterly corroborate by citation, not independent count). China's Big Fund phases and the US SBIR / CHIPS comparators are discrete ticks - the US has no guidance-fund equivalent, so no US band is invented. Private VC collapsed after 2021 while state-guided capital swelled; the band's width is the measurement uncertainty, drawn not asserted. Sourcing: notes/founder_series_selection.md and notes/regime_band_rationale.md."
   },
   "velocity_spec": {
     "type": "velocity",

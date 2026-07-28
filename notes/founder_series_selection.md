@@ -36,29 +36,51 @@ Log scale (the combined range spans ~$0.2B to ~$142B). Independent/professional-
 (Renaissance, EY, KPMG, PwC, Refinitiv, Bloomberg, HKEX-official). The venue split is defensible: the
 ADR-freeze line is cleanly retrieved and is the point; the onshore line carries the documented-FX flag.
 
-## State-capital annotation — `state_capital.csv` (NOT a committed line)
+## State-guided-capital strip — `data/context_series/state_capital_cn.csv` + `state_capital_ticks.csv`
 
-Rendered on the VC strip as a **labeled estimate annotation**, deliberately **not a confident data
-line**, because the numbers are Chinese-origin and target≫paid-in:
-- **Government guidance funds (政府引导基金):** ~2,000 funds, aggregate **TARGET ~$1.5T** (~¥10–11T) but
-  **PAID-IN <$0.7T** (~$672bn) — only **26% of funds met their target** (China Quarterly 2023; CSET;
-  PIIE). Underlying fund data is **Zero2IPO/ChinaVenture — Chinese-origin (flagged)**; Western analyses
-  (CSET, PIIE, China Quarterly, Rhodium) re-report and critique rather than independently generate it.
-- **Big Fund III:** $47.5B (¥344bn) registered capital, incorporated 24 May 2024 — **independently
-  corroborated** (Bloomberg, Reuters, Global Trade Alert / SAMR registration). This one is a committed
-  ledger row (`CN-2024-3`), not just an annotation figure.
-- **2025 National VC Guidance Fund:** ¥1T (~$138B) **mobilization TARGET** over ~20 years; announced
-  Mar 2025 (Reuters), launched as a vehicle Dec 2025 (Chinese/HK-origin sources). **No committed/paid-in
-  capital disclosed** → HELD as a ledger row, used here only as annotation context.
+Replaces the earlier one-line text annotation (superseded; the old
+`data/founder_series/state_capital.csv` is removed). The point that annotation made in words —
+*targets are not deployed capital* — is now **drawn as geometry**: a shaded China band whose WIDTH is
+the gap between announced target (upper edge) and estimated paid-in (lower edge). The band form is the
+honest form precisely because the two edges are far apart and the underlying data is single-vendor.
 
-**Why no committed state-capital line:** target figures overstate deployed capital by ~2× or more,
-the annual paid-in path is not published, and the underlying data is Chinese-origin — a confident
-line would imply a precision the record does not support. The substitution the figure states plainly:
-**private VC collapsed; state capital partly replaced it — but the VC strip measures the former, not
-the latter.** State capital is abundant for nationally-aligned hard tech (chips, AI, quantum) and
-scarce/closed for the misaligned, foreign, or consumer — see the judgment box.
+**Why a band, not a line.** The headline "China is deploying $1.5–1.9T of guidance-fund capital" is a
+target/mobilization ceiling, not money on the table. Across the anchor years the aggregate **paid-in
+runs ~43–51% of announced target** — so a single confident line would fake a precision the record does
+not have. The band draws the uncertainty instead of asserting a point.
+
+**China band — `state_capital_cn.csv` (cumulative $B; announced vs paid-in):** anchor-year estimates of
+government guidance funds (政府引导基金), the two columns being announced/target and estimated paid-in.
+- 2018 — target ~$1.4T / paid-in ~$585B (¥4.05T raised, ~43%); 2020 — ~$1.55T / ~$672B (¥4.76T, ~43%;
+  CSET corroborates by citation); 2022 — ~$1.86T / ~$940B (¥6.51T, ~51% aggregate).
+- **Single-vendor caveat (the key data-integrity flag):** every fund aggregate traces to **one
+  Chinese-origin commercial tracker, Zero2IPO / 清科**. Western sources (CSET, China Quarterly, PIIE,
+  Rhodium) corroborate *by citing* it, not by independent count — so this is a single-source dependency,
+  not triangulation. Flagged on the strip's kicker.
+- **Definitional caveats:** "target," "raised/paid-in," and "deployed into companies" are used
+  inconsistently across sources; paid-in here means *capital paid into the funds* (still overstates
+  capital reaching companies). A 2021 anchor was omitted from the band edges because its target and
+  paid-in figures wobble on source/definition changes (¥10.18T target, ~¥4T paid-in) rather than real
+  movement — noted here rather than drawn as a misleading dip. An earlier "26% of funds met target"
+  (China Quarterly) is a **share-of-funds** metric, NOT the aggregate ¥-ratio — dropped from the figure
+  to avoid the conflation the old annotation made.
+
+**Big Fund ticks (CN) — `state_capital_ticks.csv`:** the National IC Industry Investment Fund phases, as
+discrete points (these are ledger-anchorable state vehicles, not guidance-fund aggregate): Phase I 2014
+$19.2B (¥138.7bn), Phase II 2019 $28.2B (¥204.15bn), Phase III 2024 $47.5B (¥344bn; committed ledger row
+`CN-2024-3`, gov.cn/SCMP).
+
+**US comparator ticks — same file, `side=US`:** the US has **no guidance-fund equivalent**, so the US
+side is discrete ticks only, never an invented band: SBIR+STTR FY2022 **$4.73B** annual obligation (SBA
+official) and the CHIPS &amp; Science Act 2022 **$52.7B** appropriation (CRS R47523). Both sit one-to-two
+orders of magnitude below the Chinese band — which is the honest scale contrast.
+
+**The 2025 ¥1T national VC guidance fund stays HELD, not drawn** — an announced mobilization target with
+no disclosed paid-in capital and mainly Chinese-origin corroboration; it earns no band edge and no tick.
 
 ## Verification
 
-`verify_numbers.py`: the VC and exits strips and the state-capital annotation each equal their
-committed CSV exactly; the founding envelope recomputes from `event_type = founding` rows.
+`verify_numbers.py`: the VC and exits strips equal their committed CSVs exactly; the state-guided-capital
+band equals `state_capital_cn.csv` and its ticks equal `state_capital_ticks.csv` exactly; the retired
+text-annotation string is absent from the baked page; the founding envelope recomputes from
+`event_type = founding` rows.

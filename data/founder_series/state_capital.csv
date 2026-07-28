@@ -1,5 +1,0 @@
-metric,value,unit,label,source_class
-guidance_target,1.5,USD_T,state guidance-fund aggregate TARGET,chinese-origin
-guidance_paidin,0.67,USD_T,state guidance-fund PAID-IN (<50% of target; 26% of funds met target),chinese-origin
-big_fund_iii,47.5,USD_B,Big Fund III registered capital (24 May 2024),independent
-national_vc_fund_target,138,USD_B,2025 National VC Guidance Fund mobilization TARGET (¥1T; launched Dec 2025),chinese-origin

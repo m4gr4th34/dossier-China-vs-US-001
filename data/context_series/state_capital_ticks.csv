@@ -1,0 +1,6 @@
+label,year,usd_bn,side,source
+Big Fund I,2014,19.2,CN,SCMP/EE Times (¥138.7bn registered capital)
+Big Fund II,2019,28.2,CN,SCMP/EE Times (¥204.15bn registered capital)
+Big Fund III,2024,47.5,CN,gov.cn / SCMP (¥344bn registered; ledger row CN-2024-3)
+SBIR+STTR,2022,4.73,US,SBA FY22 SBIR/STTR Annual Report (US official; annual obligation)
+CHIPS Act,2022,52.7,US,CRS R47523 / Congress.gov (US official; 2022 appropriation FY23-27)

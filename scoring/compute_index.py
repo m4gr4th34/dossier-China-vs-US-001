@@ -53,7 +53,8 @@ REGIME_TICKS = os.path.join(ROOT, "data", "founder_series", "regime_ticks.csv")
 VC_SERIES = os.path.join(ROOT, "data", "founder_series", "vc_investment.csv")
 UNICORNS = os.path.join(ROOT, "data", "founder_series", "unicorns.csv")
 IPO_SERIES = os.path.join(ROOT, "data", "founder_series", "ipo_proceeds.csv")
-STATE_CAPITAL = os.path.join(ROOT, "data", "founder_series", "state_capital.csv")
+STATE_CAPITAL_CN = os.path.join(ROOT, "data", "context_series", "state_capital_cn.csv")
+STATE_CAPITAL_TICKS = os.path.join(ROOT, "data", "context_series", "state_capital_ticks.csv")
 VEL_DEPLOY = os.path.join(ROOT, "data", "velocity_series", "deploy_ev.csv")
 VEL_ITERATE = os.path.join(ROOT, "data", "velocity_series", "iterate.csv")
 VEL_TIMESCALE = os.path.join(ROOT, "data", "velocity_series", "timescale.csv")
@@ -564,10 +565,14 @@ def build_founder_caption(founds, vc, uni):
             "--- EXITS STRIP: annual IPO proceeds (Renaissance / EY / KPMG, log US$B) - Chinese-company "
             "US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings "
             "onshored to the A-share market and Hong Kong. "
-            "--- STATE CAPITAL (an estimate annotation, NOT a line): government guidance funds target "
-            "~$1.5T but paid-in is under $0.7T (Chinese-origin data; only 26%% met target), and Big Fund III "
-            "added $47.5B (2024). The substitution, plainly: private VC collapsed; state capital partly "
-            "replaced it - but the strip measures the former, not the latter. Sourcing: "
+            "--- STATE-GUIDED CAPITAL (a drawn est. range, not a line): the China band's WIDTH is the "
+            "gap between announced guidance-fund target (upper edge) and estimated paid-in (lower edge) "
+            "- ~$1.4T / $585B in 2018 rising to ~$1.86T / $940B in 2022, only ~43-51%% of target "
+            "actually paid in (Zero2IPO / 清科, a single Chinese-origin vendor; CSET and China Quarterly "
+            "corroborate by citation, not independent count). China's Big Fund phases and the US "
+            "SBIR / CHIPS comparators are discrete ticks - the US has no guidance-fund equivalent, so no "
+            "US band is invented. Private VC collapsed after 2021 while state-guided capital swelled; the "
+            "band's width is the measurement uncertainty, drawn not asserted. Sourcing: "
             "notes/founder_series_selection.md and notes/regime_band_rationale.md." % (
             len(founds), us_n, cn_n))
 
@@ -583,9 +588,18 @@ def build_exits_strip():
 
 
 def build_state_capital():
-    rows = _read_csv(STATE_CAPITAL)
-    return {r["metric"]: {"value": float(r["value"]), "unit": r["unit"],
-                          "label": r["label"], "class": r["source_class"]} for r in rows}
+    """State-guided-capital strip: a China band (announced target vs estimated paid-in,
+    cumulative $B) drawn as a range because targets are not deployed capital, plus discrete
+    ticks (China Big Fund phases; US SBIR/CHIPS comparators — no invented US band). Single
+    Chinese-origin vendor (Zero2IPO/清科) flagged. Full rubric: notes/founder_series_selection.md."""
+    band = _read_csv(STATE_CAPITAL_CN)
+    ticks = _read_csv(STATE_CAPITAL_TICKS)
+    return {
+        "band": [[int(r["year"]), float(r["announced_usd_bn"]), float(r["paidin_usd_bn"])] for r in band],
+        "ticks": [{"label": r["label"], "year": int(r["year"]), "usd_bn": float(r["usd_bn"]),
+                   "side": r["side"]} for r in ticks],
+        "source": "Zero2IPO/清科 (Chinese-origin, single vendor); CSET / China Quarterly corroborate by citation",
+    }
 
 
 # ============================================================
