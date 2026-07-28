@@ -201,8 +201,8 @@
   // a distinct amber ring. Blocks are lf-year anchors, so the year panel is
   // reused verbatim (document-level delegation from the spine figure).
   // =====================================================================
-  var NA = { W: 1120, H: 250, padL: 44, padR: 14, YLO: 1926, YHI: 2026 };
-  NA.cy = 112; NA.bot = 196; NA.plotW = NA.W - NA.padL - NA.padR;
+  var NA = { W: 1120, H: 450, padL: 44, padR: 14, YLO: 1926, YHI: 2026 };
+  NA.cy = 132; NA.bot = 268; NA.plotW = NA.W - NA.padL - NA.padR;
   function nxf(y) { return NA.padL + (y - NA.YLO) / (NA.YHI - NA.YLO) * NA.plotW; }
   var DUAL_RING = "#d69e2e";
 
@@ -210,11 +210,32 @@
     var rows = spec.rows.slice().sort(function (a, b) {
       return (a.y - b.y) || ((a.c === "US" ? 0 : 1) - (b.c === "US" ? 0 : 1)) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
     });
-    var bh = 6, gap = 1.4, bw = 7.5;
-    var p = ['<svg viewBox="0 0 ' + NA.W + ' ' + NA.H + '" width="100%" class="lf-svg" role="img" aria-label="The national-security ledger: one block per natsec-tagged achievement 1926-2026, US above the centreline and China below, coloured by category, textured by verification label, with dual-use rows ringed in amber. A count under the published tagging rule, not a military-balance assessment.">'];
+    var bh = 6, gap = 1.4, bw = 7.5, sil = spec.silhouette, win = spec.window || 15, maxDens = spec.silhouette_max || 1;
+    var p = ['<svg viewBox="0 0 ' + NA.W + ' ' + NA.H + '" width="100%" class="lf-svg" role="img" aria-label="The national-security ledger: one block per natsec-tagged achievement 1926-2026, US above the centreline and China below, coloured by category, textured by verification label, dual-use rows ringed in amber, with a ' + win + '-year rolling density envelope and a SIPRI military-expenditure strip beneath. A count under the published tagging rule, not a military-balance assessment.">'];
     p.push('<defs><pattern id="ns-hatch" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="4" stroke="#ffffff" stroke-width="1.4" opacity="0.9"/></pattern></defs>');
     p.push('<style>.nax{stroke:#9aa5b1;stroke-width:1}.ntk{font:9px sans-serif;fill:#718096}.nti{font:13px sans-serif;fill:#2d3748}.ncl{font:10px sans-serif;fill:#4a5568}</style>');
-    p.push('<text class="nti lf-scale-with-art" x="' + NA.padL + '" y="15">The National-Security Ledger — ' + rows.length + ' natsec-tagged achievements (Amendment 5), US above / China below</text>');
+    p.push('<text class="nti lf-scale-with-art" x="' + NA.padL + '" y="15">The National-Security Ledger — ' + rows.length + ' natsec-tagged achievements (Amendment 5), US above / China below (' + win + '-yr density) — NOT a capability assessment</text>');
+    // --- density envelope (behind blocks): mirrored filled areas, scaled to a shared max ---
+    var silH = NA.cy - 30;
+    function nsilPath(pts, up) {
+      var d = "M" + nxf(pts[0][0]).toFixed(1) + "," + NA.cy.toFixed(1);
+      pts.forEach(function (pt) {
+        var yy = up ? (NA.cy - pt[1] / maxDens * silH) : (NA.cy + pt[1] / maxDens * silH);
+        d += " L" + nxf(pt[0]).toFixed(1) + "," + yy.toFixed(1);
+      });
+      d += " L" + nxf(pts[pts.length - 1][0]).toFixed(1) + "," + NA.cy.toFixed(1) + " Z";
+      return d;
+    }
+    if (sil && sil.US && sil.China) {
+      p.push('<path d="' + nsilPath(sil.US, true) + '" fill="#2b6cb0" opacity="0.13"/>');
+      p.push('<path d="' + nsilPath(sil.China, false) + '" fill="#c53030" opacity="0.13"/>');
+      var net = "M" + nxf(sil.US[0][0]).toFixed(1) + "," + NA.cy.toFixed(1);
+      for (var q = 0; q < sil.US.length; q++) {
+        var diff = (sil.US[q][1] - sil.China[q][1]) / maxDens;
+        net += " L" + nxf(sil.US[q][0]).toFixed(1) + "," + (NA.cy - diff * 12).toFixed(1);
+      }
+      p.push('<path d="' + net + '" fill="none" stroke="#4a5568" stroke-width="1" opacity="0.45"/>');
+    }
     // centreline + decade ticks
     p.push('<line class="nax" x1="' + NA.padL + '" y1="' + NA.cy + '" x2="' + (NA.W - NA.padR) + '" y2="' + NA.cy + '"/>');
     for (var yr = 1930; yr <= 2026; yr += 10) {
@@ -223,7 +244,7 @@
       p.push('<text class="ntk lf-scale-with-art" x="' + xx.toFixed(1) + '" y="' + (NA.bot + 12) + '" text-anchor="middle">' + yr + '</text>');
     }
     p.push('<text class="ntk lf-scale-with-art" x="' + NA.padL + '" y="30">US ↑</text>');
-    p.push('<text class="ntk lf-scale-with-art" x="' + NA.padL + '" y="' + (NA.cy + 66) + '">China ↓</text>');
+    p.push('<text class="ntk lf-scale-with-art" x="' + NA.padL + '" y="' + (NA.cy + silH + 10) + '">China ↓</text>');
     // blocks
     var stack = {};
     rows.forEach(function (r) {
@@ -241,12 +262,42 @@
       p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '"><title>' + title + '</title>' + rect + ring + '</a>');
     });
     // legend
-    var lx = NA.padL, ly = NA.bot + 28;
+    var lx = NA.padL, ly = NA.bot + 30;
     CATS.forEach(function (cat, i) {
       var cxx = lx + i * 118;
       p.push('<rect x="' + cxx.toFixed(1) + '" y="' + (ly - 8) + '" width="9" height="9" fill="' + CATEGORY_COLORS[cat] + '"/><text class="ncl lf-scale-with-art" x="' + (cxx + 12).toFixed(1) + '" y="' + ly + '">' + CATEGORY_SHORT[cat] + '</text>');
     });
-    p.push('<rect x="' + lx + '" y="' + (ly + 6) + '" width="9" height="9" fill="none" stroke="' + DUAL_RING + '" stroke-width="1.1" rx="1.4"/><text class="ncl lf-scale-with-art" x="' + (lx + 14) + '" y="' + (ly + 14) + '">amber ring = dual-use (defense-origin, civilian-transformative) · solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · a COUNT under the tagging rule, NOT a capability assessment</text>');
+    p.push('<rect x="' + lx + '" y="' + (ly + 6) + '" width="9" height="9" fill="none" stroke="' + DUAL_RING + '" stroke-width="1.1" rx="1.4"/><text class="ncl lf-scale-with-art" x="' + (lx + 14) + '" y="' + (ly + 14) + '">amber ring = dual-use · solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · shaded = ' + win + '-yr rolling density · line = US−China net · a COUNT under the tagging rule, NOT a capability assessment</text>');
+    // --- military-expenditure context strip (SIPRI, constant 2023 US$, log) ---
+    var strip = spec.strip;
+    if (strip && strip.years && strip.years.length) {
+      var yrs = strip.years, us = strip.us, cn = strip.cn, n = yrs.length;
+      var sSep = ly + 33, sTitle = sSep + 15, sTop = sSep + 30, sBot = sSep + 92;
+      var allv = us.concat(cn), minV = Math.min.apply(null, allv), maxV = Math.max.apply(null, allv);
+      var lo = Math.log10(minV * 0.8), hi = Math.log10(maxV * 1.15);
+      function mlx(y) { return NA.padL + (y - yrs[0]) / (yrs[n - 1] - yrs[0]) * (NA.W - NA.padL - NA.padR); }
+      function mly(v) { return sBot - (Math.log10(v) - lo) / (hi - lo) * (sBot - sTop); }
+      p.push('<line x1="' + NA.padL + '" y1="' + sSep + '" x2="' + (NA.W - NA.padR) + '" y2="' + sSep + '" stroke="#cbd5e0"/>');
+      p.push('<text class="nti lf-scale-with-art" x="' + NA.padL + '" y="' + sTitle + '">Measured military expenditure — SIPRI, constant 2023 US$B, <tspan font-weight="700">log scale</tspan> · ' + yrs[0] + '–' + yrs[n - 1] + ' · China’s line is a SIPRI ESTIMATE</text>');
+      [100, 1000].forEach(function (g) {
+        if (g > minV * 0.8 && g < maxV * 1.15) {
+          var yy = mly(g);
+          p.push('<line x1="' + NA.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (NA.W - NA.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/>');
+          p.push('<text class="ntk lf-scale-with-art" x="' + (NA.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>');
+        }
+      });
+      function mpoly(vals) { return vals.map(function (v, i) { return mlx(yrs[i]).toFixed(1) + ',' + mly(v).toFixed(1); }).join(' '); }
+      [['US', us, '#2b6cb0'], ['China', cn, '#c53030']].forEach(function (t) {
+        var vals = t[1], col = t[2];
+        p.push('<polygon points="' + mlx(yrs[0]).toFixed(1) + ',' + sBot + ' ' + mpoly(vals) + ' ' + mlx(yrs[n - 1]).toFixed(1) + ',' + sBot + '" fill="' + col + '" opacity="0.08"/>');
+        p.push('<polyline points="' + mpoly(vals) + '" fill="none" stroke="' + col + '" stroke-width="1.7"/>');
+        vals.forEach(function (v, i) { p.push('<circle cx="' + mlx(yrs[i]).toFixed(1) + '" cy="' + mly(v).toFixed(1) + '" r="2" fill="' + col + '"/>'); });
+      });
+      p.push('<text class="ncl lf-scale-with-art" x="' + (NA.W - NA.padR) + '" y="' + (mly(us[n - 1]) - 5).toFixed(1) + '" text-anchor="end" fill="#2b6cb0" font-weight="600">US</text>');
+      p.push('<text class="ncl lf-scale-with-art" x="' + (NA.W - NA.padR) + '" y="' + (mly(cn[n - 1]) + 12).toFixed(1) + '" text-anchor="end" fill="#c53030" font-weight="600">China (est.)</text>');
+      yrs.forEach(function (y) { p.push('<text class="ntk lf-scale-with-art" x="' + mlx(y).toFixed(1) + '" y="' + (sBot + 12) + '" text-anchor="middle">' + y + '</text>'); });
+      p.push('<text class="ncl lf-scale-with-art" x="' + NA.padL + '" y="' + (sBot + 26) + '">China is a SIPRI ESTIMATE (official ~$231B vs SIPRI ~$318B vs IISS ~$325B for 2024); the US spent ~3× China. TOP = capability arrivals under the tag rule; BOTTOM = what spending did.</text>');
+    }
     p.push('</svg>');
     return p.join("");
   }

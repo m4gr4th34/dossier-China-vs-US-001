@@ -42,8 +42,10 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I13: national-security figure blocks == natsec-tagged rows exactly (ids + dual-use)
 - [PASS] Index I14: national-security data-figure spec present verbatim in index.html
 - [PASS] Index I15: every dual_use row is also natsec (dual_use is a subset of natsec)
+- [PASS] Index I16: national-security density envelope recomputes exactly from natsec-tagged rows
+- [PASS] Index I17: military-expenditure strip series == data/context_series/milex_sipri.csv exactly
 
-**TOTAL: 22 checks · 22 pass · 0 fail** — All checks pass — the survey is internally consistent.
+**TOTAL: 24 checks · 24 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
 **THE LEDGER · NARRATIVE**
 
@@ -103,7 +105,7 @@ One more view, for a question readers keep asking: which of these achievements a
 
 III. The national-security ledger — one tag, made explicit
 
-*(figure: The national-security ledger: one block per natsec-tagged achievement 1926-2026, US above the centreline and China below, coloured by category, textured by verification label, with dual-use rows ringed in amber. A count under the published tagging rule, not a military-balance assessment. — Figure III - the national-security ledger: 27 achievements tagged NATSEC under the published, country-blind tagging rule (notes/selection_criteria.md Amendment 5) - 14 pure defense capabilities and 13 dual-use (defense-origin but civilian-transformative, e.g. GPS, ARPANET, first satellites; drawn with an amber ring). US 15 / China 12. --- This is a COUNT of defense-tagged rows under THIS rule - explicitly NOT a military-balance or capability assessment, and NOT a claim about who is ahead or stronger. --- Label textures matter MOST here: defense claims are where interested-party sourcing concentrates (BOTH PLA media and US defense assessments are interested parties), so REPORTED rows are hatched and their interested party is named in the year dossier - the 2021 hypersonic-test row is REPORTED for exactly that reason. Click a year for its cards.)*
+*(figure: The national-security ledger: one block per natsec-tagged achievement 1926-2026, US above the centreline and China below, coloured by category, textured by verification label, dual-use rows ringed in amber, with a 15-year rolling density envelope and a SIPRI military-expenditure strip beneath. A count under the published tagging rule, not a military-balance assessment. — Figure III - the national-security ledger. FIRST, plainly: this is NOT a military-balance or capability assessment and settles nothing about who is stronger or ahead. --- TOP = notable defense-capability ARRIVALS under the published, country-blind tagging rule (notes/selection_criteria.md Amendment 5): 27 natsec-tagged achievements (14 pure defense, 13 dual-use - defense-origin but civilian-transformative like GPS, ARPANET and the first satellites, drawn with an amber ring; US 15 / China 12), behind them a mirrored 15-year rolling-count density envelope (wider than the main spine's 7-year window because this set is ~10x sparser). REPORTED rows are hatched and their interested party is named in the year dossier - defense is exactly where interested-party sourcing (BOTH PLA media and US defense assessments) concentrates; the 2021 hypersonic-test row is REPORTED for that reason. --- BOTTOM = what measured MILITARY EXPENDITURE did: SIPRI, constant 2023 US$, LOG scale, 1990-2024. China's line is a SIPRI ESTIMATE (higher than its official budget; SIPRI calls the R&D component 'educated guesswork') - the US spent roughly 3x China across the recent decade. Click a year for its cards.)*
 
 ### Early-century China floor — OPEN
 

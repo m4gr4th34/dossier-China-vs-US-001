@@ -44,6 +44,7 @@ LEDGER = os.path.join(ROOT, "claim_ledger.csv")
 DRAFT = os.path.join(ROOT, "data", "achievements_draft.csv")
 WEIGHTS = os.path.join(HERE, "weights.json")
 CONTEXT = os.path.join(ROOT, "data", "context_series.csv")
+MILEX_CONTEXT = os.path.join(ROOT, "data", "context_series", "milex_sipri.csv")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
 DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
@@ -330,13 +331,19 @@ def build_year_dossiers(est_rows):
 # portrait), NOT a weighting. verify_numbers.py recomputes these exactly.
 # ============================================================
 SILHOUETTE_WINDOW = 7
+# The natsec set (~27 rows) is ~10x sparser than the full corpus (~290), so a 7-yr
+# window would render as isolated spikes; widen to 15 yr to expose the era-shape
+# (the Cold-War capability cluster vs the recent one). Stated on the figure.
+NATSEC_WINDOW = 15
 
 
-def _silhouette(draft_rows):
-    half = SILHOUETTE_WINDOW // 2
+def _rolling_silhouette(draft_rows, window, pred):
+    """Mirrored rolling-count density per country over [YEAR_LO, YEAR_HI], counting
+    only rows for which pred(r) is true, with a centred window of `window` years."""
+    half = window // 2
     per_year = {c: {} for c in COUNTRIES}
     for r in draft_rows:
-        if r["country"] in COUNTRIES:
+        if r["country"] in COUNTRIES and pred(r):
             y = int(r["year"])
             per_year[r["country"]][y] = per_year[r["country"]].get(y, 0) + 1
     out = {c: [] for c in COUNTRIES}
@@ -347,6 +354,14 @@ def _silhouette(draft_rows):
             out[c].append([y, dens])
             mx = max(mx, dens)
     return out, mx
+
+
+def _silhouette(draft_rows):
+    return _rolling_silhouette(draft_rows, SILHOUETTE_WINDOW, lambda r: True)
+
+
+def _silhouette_natsec(draft_rows):
+    return _rolling_silhouette(draft_rows, NATSEC_WINDOW, lambda r: r.get("natsec") == "true")
 
 
 # ============================================================
@@ -421,18 +436,41 @@ def build_spine_spec(result, draft_rows, est_rows):
     }
 
 
-def build_natsec_caption(n, npure, ndual, us, cn):
-    return ("Figure III - the national-security ledger: %d achievements tagged NATSEC under the "
-            "published, country-blind tagging rule (notes/selection_criteria.md Amendment 5) - "
-            "%d pure defense capabilities and %d dual-use (defense-origin but civilian-transformative, "
-            "e.g. GPS, ARPANET, first satellites; drawn with an amber ring). US %d / China %d. "
-            "--- This is a COUNT of defense-tagged rows under THIS rule - explicitly NOT a military-"
-            "balance or capability assessment, and NOT a claim about who is ahead or stronger. "
-            "--- Label textures matter MOST here: defense claims are where interested-party sourcing "
-            "concentrates (BOTH PLA media and US defense assessments are interested parties), so "
-            "REPORTED rows are hatched and their interested party is named in the year dossier - the "
-            "2021 hypersonic-test row is REPORTED for exactly that reason. Click a year for its cards." % (
-            n, npure, ndual, us, cn))
+def build_natsec_caption(n, npure, ndual, us, cn, window):
+    return ("Figure III - the national-security ledger. FIRST, plainly: this is NOT a military-"
+            "balance or capability assessment and settles nothing about who is stronger or ahead. "
+            "--- TOP = notable defense-capability ARRIVALS under the published, country-blind tagging "
+            "rule (notes/selection_criteria.md Amendment 5): %d natsec-tagged achievements (%d pure "
+            "defense, %d dual-use - defense-origin but civilian-transformative like GPS, ARPANET and "
+            "the first satellites, drawn with an amber ring; US %d / China %d), behind them a mirrored "
+            "%d-year rolling-count density envelope (wider than the main spine's 7-year window because "
+            "this set is ~10x sparser). REPORTED rows are hatched and their interested party is named "
+            "in the year dossier - defense is exactly where interested-party sourcing (BOTH PLA media "
+            "and US defense assessments) concentrates; the 2021 hypersonic-test row is REPORTED for "
+            "that reason. --- BOTTOM = what measured MILITARY EXPENDITURE did: SIPRI, constant 2023 "
+            "US$, LOG scale, 1990-2024. China's line is a SIPRI ESTIMATE (higher than its official "
+            "budget; SIPRI calls the R&D component 'educated guesswork') - the US spent roughly 3x "
+            "China across the recent decade. Click a year for its cards." % (
+            n, npure, ndual, us, cn, window))
+
+
+def build_milex_strip():
+    """Military-expenditure context strip: SIPRI constant-2023 US$ series, read verbatim
+    from data/context_series/milex_sipri.csv; verify_numbers.py checks the spec against it.
+    China's line is a SIPRI ESTIMATE - stated on the figure."""
+    rows = _read_csv(MILEX_CONTEXT)
+    return {
+        "years": [int(r["year"]) for r in rows],
+        "us": [float(r["us_milex_const2023_usd_bn"]) for r in rows],
+        "cn": [float(r["cn_milex_const2023_usd_bn"]) for r in rows],
+        "measure": "Military expenditure, constant 2023 US$B",
+        "source": "SIPRI Military Expenditure Database",
+        "log": True,
+        "note": "China's line is a SIPRI ESTIMATE (higher than the official budget; SIPRI says "
+                "some elements - 'most importantly R&D spending' - 'can at present only be the "
+                "subject of educated guesswork'). Conflicting 2024 figures: official ~$231B, SIPRI "
+                "~$318B, IISS ~$325B. The US spent roughly 3x China across the recent decade.",
+    }
 
 
 def build_natsec_spec(draft_rows):
@@ -445,10 +483,13 @@ def build_natsec_spec(draft_rows):
     npure = len(rows) - ndual
     us = sum(1 for x in rows if x["c"] == "US")
     cn = sum(1 for x in rows if x["c"] == "China")
+    sil, mx = _silhouette_natsec(draft_rows)
     return {
         "type": "natsec", "version": 1, "rows": rows,
         "count": len(rows), "dual_count": ndual, "pure_count": npure,
-        "stage": "#ffffff", "caption": build_natsec_caption(len(rows), npure, ndual, us, cn),
+        "silhouette": sil, "silhouette_max": mx, "window": NATSEC_WINDOW,
+        "strip": build_milex_strip(),
+        "stage": "#ffffff", "caption": build_natsec_caption(len(rows), npure, ndual, us, cn, NATSEC_WINDOW),
     }
 
 

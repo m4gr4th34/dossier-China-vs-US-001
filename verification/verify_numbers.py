@@ -323,6 +323,35 @@ _du_bad = [r.get("id") for r in _draft_rows2
 check("Index I15: every dual_use row is also natsec (dual_use is a subset of natsec)",
       len(_du_bad), 0, 0)
 
+# (I16) Figure III density envelope recomputes EXACTLY from the natsec-tagged rows: a
+#       NATSEC_WINDOW-year centred rolling count per country, independently recomputed here.
+_ns_win = _committed["natsec_spec"]["window"]
+_ns_half = _ns_win // 2
+_ns_yr = {"US": {}, "China": {}}
+for _r in _draft_rows2:
+    if _r.get("natsec") == "true" and _r.get("country") in ("US", "China"):
+        _y = int(_r["year"])
+        _ns_yr[_r["country"]][_y] = _ns_yr[_r["country"]].get(_y, 0) + 1
+_ns_sil_bad = 0
+for _c in ("US", "China"):
+    for _pt in _committed["natsec_spec"]["silhouette"][_c]:
+        _exp = sum(_ns_yr[_c].get(_k, 0) for _k in range(_pt[0] - _ns_half, _pt[0] + _ns_half + 1))
+        if _pt[1] != _exp:
+            _ns_sil_bad += 1
+check("Index I16: national-security density envelope recomputes exactly from natsec-tagged rows",
+      _ns_sil_bad, 0, 0)
+
+# (I17) military-expenditure strip series == data/context_series/milex_sipri.csv, EXACTLY
+#       (the SIPRI constant-2023 series; I11 pattern for the second context strip).
+_milex = _read_csv(os.path.join(_ROOT, "data", "context_series", "milex_sipri.csv"))
+_mx_years = [int(_r["year"]) for _r in _milex]
+_mx_us = [float(_r["us_milex_const2023_usd_bn"]) for _r in _milex]
+_mx_cn = [float(_r["cn_milex_const2023_usd_bn"]) for _r in _milex]
+_mstrip = _committed["natsec_spec"].get("strip", {})
+check("Index I17: military-expenditure strip series == data/context_series/milex_sipri.csv exactly",
+      0 if (_mstrip.get("years") == _mx_years and _mstrip.get("us") == _mx_us
+            and _mstrip.get("cn") == _mx_cn) else 1, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)
