@@ -456,7 +456,7 @@
         arr.forEach(function (d) { p.push('<circle cx="' + vx(d[0]).toFixed(1) + '" cy="' + vy(d[1]).toFixed(1) + '" r="2" fill="' + col + '"/>'); });
       });
       var cnLast = cn[cn.length - 1], usLast = us[us.length - 1];
-      if (cnPeak) { p.push('<text class="fvl lf-scale-with-art" x="' + vx(2021).toFixed(1) + '" y="' + (vy(cnPeak[1]) - 5).toFixed(1) + '" text-anchor="middle" fill="#c53030">$' + Math.round(cnPeak[1]) + 'B</text>'); p.push('<text class="ftick lf-scale-with-art" x="' + (vx(2021) + 3).toFixed(1) + '" y="' + (sTop + 9) + '" fill="#c53030">crackdown ↓</text>'); }
+      if (cnPeak) { p.push('<text class="fvl lf-scale-with-art" x="' + (vx(2021) - 4).toFixed(1) + '" y="' + (vy(cnPeak[1]) - 5).toFixed(1) + '" text-anchor="end" fill="#c53030">$' + Math.round(cnPeak[1]) + 'B</text>'); p.push('<text class="ftick lf-scale-with-art" x="' + (vx(2021) + 3).toFixed(1) + '" y="' + (sTop + 9) + '" fill="#c53030">crackdown ↓</text>'); }
       if (cnLast) p.push('<text class="fvl lf-scale-with-art" x="' + (vx(cnLast[0]) + 3).toFixed(1) + '" y="' + (vy(cnLast[1]) + 11).toFixed(1) + '" text-anchor="end" fill="#c53030">China $' + Math.round(cnLast[1]) + 'B</text>');
       if (usLast) p.push('<text class="fvl lf-scale-with-art" x="' + (vx(usLast[0]) + 3).toFixed(1) + '" y="' + (vy(usLast[1]) - 5).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US $' + Math.round(usLast[1]) + 'B</text>');
       [y0, 2018, 2021, y1].forEach(function (y) { if (y >= y0 && y <= y1) p.push('<text class="ftk lf-scale-with-art" x="' + vx(y).toFixed(1) + '" y="' + (sBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
@@ -491,7 +491,7 @@
       });
       // end-labels
       var onL = exOn[exOn.length - 1], usL2 = exUS[exUS.length - 1], adL = exAdr[exAdr.length - 1];
-      if (onL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(onL[0]) - 2).toFixed(1) + '" y="' + (ex_y(onL[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#c05621">China onshore</text>');
+      if (onL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(onL[0]) - 2).toFixed(1) + '" y="' + (ex_y(onL[1]) + 10).toFixed(1) + '" text-anchor="end" fill="#c05621">China onshore</text>');
       if (usL2) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(usL2[0]) - 2).toFixed(1) + '" y="' + (ex_y(usL2[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US</text>');
       if (adL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(adL[0]) - 2).toFixed(1) + '" y="' + (ex_y(adL[1]) + 9).toFixed(1) + '" text-anchor="end" fill="#c53030">China US-listed $' + adL[1].toFixed(1) + 'B</text>');
       p.push('<text class="ftick lf-scale-with-art" x="' + (ex_x(2021) + 3).toFixed(1) + '" y="' + (eTop + 8) + '" fill="#c53030">DiDi → ADR freeze</text>');
