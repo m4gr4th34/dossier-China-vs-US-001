@@ -219,6 +219,12 @@ The defensible spine is three rungs kept rigorously apart: a documented **achiev
 
 *Three rungs, three labels, never blurred — and until the ledger is done, no number gets to call the race.*
 
+## 08 HOW THIS WAS MADE
+
+This dossier was **researched, built, verified, and rendered by AI** — Claude, working as two instances: a strategy instance that designed and drafted it, and a Claude Code instance that edited the repository, ran the checks, and deployed it — over roughly a day and a half of working sessions. It was made under **continuous human editorial direction**: the author set the questions, ruled on every adjudication, rejected figures until they passed his read, and owns the judgments. The machine did the work; the human directed it and is accountable for it.
+
+Every claim carries its sources **per row**; the verification was performed against those sources in-session, not merely asserted; and **36 automated checks** bind this page to the underlying data, so nothing on it can drift from the ledger. This is a methods statement, not a guarantee — so don't take it on trust, check it: **click any block** to open that year's verified cards, **run the verifier** (`python verification/verify_numbers.py`), and **re-weight the momentum index** with its own sliders. If any of it fails to hold up, that is the finding.
+
 ## References
 
 - **Beckley '18** — Michael Beckley (2018). Argues the United States' lead in economic and military power is larger and more durable than declinist accounts hold — one pole of the momentum debate this dossier maps rather than joins. *Unrivaled: Why America Will Remain the World's Sole Superpower, Cornell University Press (2018).*
