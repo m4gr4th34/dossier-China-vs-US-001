@@ -10645,37 +10645,49 @@
       {
         "years": [
           1950,
+          1960,
+          1970,
+          1980,
+          1990,
           2000,
           2010,
           2020,
           2022
         ],
         "us": [
-          64.2,
+          64.0,
+          70.0,
+          73.5,
+          73.8,
+          75.3,
           79.1,
-          82.1,
-          82.7,
-          82.9
+          80.7,
+          80.0,
+          80.0
         ],
         "cn": [
           11.2,
-          36.1,
-          47.5,
-          63.9,
-          65.5
+          19.7,
+          17.4,
+          19.4,
+          26.2,
+          36.4,
+          49.2,
+          63.5,
+          65.2
         ],
         "label": "Urbanization",
         "unit": "% urban",
         "log": false,
         "fmtkind": "pct",
-        "source": "UN World Urbanization Prospects (international-body)",
-        "caveat": "China 11% (1950) to 66% (2022); clean paired endpoints (interior mid-century omitted)"
+        "source": "UN World Urbanization Prospects 2025 revision (international-body)",
+        "caveat": "China flat/suppressed under hukou 1960-78 (Cultural-Revolution dip) then steep post-reform; US 2010-20 dip = a 2025-revision definition change"
       }
     ],
     "title": "A century of living standards — what the systems delivered · US above / China below · own scale per strip",
     "aria": "Figure VI, A century of living standards: five human-development series (life expectancy, GDP per capita, infant mortality, schooling, urbanization) as thin US-above / China-below strips on the shared 1926-2026 axis, each on its own scale. Convergence is real and large, but the income level gap remains; every Chinese value before ~1980 is estimate-class.",
     "stage": "#ffffff",
-    "caption": "Figure VI - a century of living standards (context-class; no corpus rows). Five human-development outcomes, US above / China below, each on its own scale. --- THE CONVERGENCE IS REAL AND LARGE: China closed a gap that in 1950 was civilizational - life expectancy 43.8 to ~78 years, infant mortality ~195 to ~5 per 1,000, mean schooling ~1.8 to ~9 years, urbanization ~11%% to ~66%% - and on two health measures China has now edged PAST the US (life expectancy since ~2021; infant mortality below the US by 2022, ~4.8 vs ~5.5). --- BUT IT IS NOT A RISE POSTER: the income LEVEL gap remains large - US real GDP per capita is ~3x China's on the Maddison basis drawn here (~4x on current-price PPP), schooling still trails ~4 years, and the US shows a genuine reversal, not merely China catching up. --- TWO DATED DIPS, the same no-silent-dips rule both ways: China's 1959-61 Great Leap famine (life-expectancy trough 33.4 in 1960; excess deaths carried as a range with both classes named - ~15M official vs ~30-45M demographic reconstructions - adjudicating neither), and the US 2015-2023 decline (opioid epidemic + COVID-19, CDC-documented; life expectancy ~78.8 to 76.4 by 2021, partial recovery to 77.5 in 2022). --- Every Chinese value before ~1980 is ESTIMATE-CLASS (reconstruction, not measurement), flagged per strip. Sources: UN WPP / IGME / WUP, Maddison, Barro-Lee. Selection: notes/living_series_selection.md."
+    "caption": "Figure VI - a century of living standards (context-class; no corpus rows). Five human-development outcomes, US above / China below, each on its own scale. --- THE CONVERGENCE IS REAL AND LARGE: China closed a gap that in 1950 was civilizational - life expectancy 43.8 to ~78 years, infant mortality ~195 to ~5 per 1,000, mean schooling ~1.8 to ~9 years, urbanization ~11%% to ~65%% - and on two health measures China has now edged PAST the US (life expectancy since ~2021; infant mortality below the US by 2022, ~4.8 vs ~5.5). --- BUT IT IS NOT A RISE POSTER: the income LEVEL gap remains large - US real GDP per capita is ~3x China's on the Maddison basis drawn here (~4x on current-price PPP), schooling still trails ~4 years, and the US shows a genuine reversal, not merely China catching up. --- TWO DATED DIPS, the same no-silent-dips rule both ways: China's 1959-61 Great Leap famine (life-expectancy trough 33.4 in 1960; excess deaths carried as a range with both classes named - ~15M official vs ~30-45M demographic reconstructions - adjudicating neither), and the US 2015-2023 decline (opioid epidemic + COVID-19, CDC-documented; life expectancy ~78.8 to 76.4 by 2021, partial recovery to 77.5 in 2022). --- Every Chinese value before ~1980 is ESTIMATE-CLASS (reconstruction, not measurement), flagged per strip. Sources: UN WPP / IGME / WUP, Maddison, Barro-Lee. Selection: notes/living_series_selection.md."
   },
   "founder_spec": {
     "type": "founder",

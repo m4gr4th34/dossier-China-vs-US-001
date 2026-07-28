@@ -578,8 +578,8 @@ def build_living_spec():
                       "Barro-Lee / Lee-Lee via OWID (independent-academic)",
                       "China pre-1980 estimate-class; gap ~7yr (1950) to ~4.3yr (2020), not closed"),
         _living_strip("urbanization.csv", "Urbanization", "% urban", False, "pct",
-                      "UN World Urbanization Prospects (international-body)",
-                      "China 11% (1950) to 66% (2022); clean paired endpoints (interior mid-century omitted)"),
+                      "UN World Urbanization Prospects 2025 revision (international-body)",
+                      "China flat/suppressed under hukou 1960-78 (Cultural-Revolution dip) then steep post-reform; US 2010-20 dip = a 2025-revision definition change"),
     ]
     return {"type": "living", "version": 1, "dims": dims,
             "title": "A century of living standards — what the systems delivered · US above / China below · own scale per strip",
@@ -592,7 +592,7 @@ def build_living_caption():
             "human-development outcomes, US above / China below, each on its own scale. "
             "--- THE CONVERGENCE IS REAL AND LARGE: China closed a gap that in 1950 was "
             "civilizational - life expectancy 43.8 to ~78 years, infant mortality ~195 to ~5 per "
-            "1,000, mean schooling ~1.8 to ~9 years, urbanization ~11%% to ~66%% - and on two health "
+            "1,000, mean schooling ~1.8 to ~9 years, urbanization ~11%% to ~65%% - and on two health "
             "measures China has now edged PAST the US (life expectancy since ~2021; infant mortality "
             "below the US by 2022, ~4.8 vs ~5.5). "
             "--- BUT IT IS NOT A RISE POSTER: the income LEVEL gap remains large - US real GDP per "

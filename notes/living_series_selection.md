@@ -11,7 +11,7 @@ equals its committed CSV exactly (verifier **I18c**); the label-discipline gate
 The figure must read as **neither a rise poster nor a decline poster.** Two things are stated
 plainly, together, in the caption:
 - **Convergence is real and large.** China closed a gap that in 1950 was civilizational — life
-  expectancy 43.8→~78, infant mortality ~195→~5, schooling ~1.8→~9, urbanization ~11%→~66% — and on
+  expectancy 43.8→~78, infant mortality ~195→~5, schooling ~1.8→~9, urbanization ~11%→~65% — and on
   two health measures it has edged *past* the US (life expectancy since ~2021; infant mortality below
   the US by 2022, 4.8 vs 5.5).
 - **The level gap remains.** US real GDP per capita is **~3× China's on the Maddison basis drawn
@@ -35,8 +35,13 @@ silently reconciled: **US 2022 life expectancy** (UN WPP 76.4 vs CDC/NCHS 77.5 �
 different maintainer; the strip plots the UN value for cross-country comparability and names CDC in
 the annotation), and the **famine death toll** (below). GDP/capita uses Maddison real 2011-int$; its
 pre-reform China series is the most-contested part of the database — carried with wide error bars.
-Urbanization omits the China 1960–1990 interior points (a read artifact in the pull) and plots only
-the clean paired endpoints.
+Urbanization now uses the **full UN WUP 2025 revision** (interior filled, batch 18b) — one revision
+for the whole strip rather than splicing 2025 interiors onto 2018 endpoints (the never-silently-splice
+rule): US 1950 64.0 → 2022 80.0; China 1950 11.2 → 2022 65.2. The **China 1960–78 hukou flatline** is
+visible in the data (1960 19.7, Cultural-Revolution dip to 17.4 in 1970, 19.4 in 1980) before the
+steep post-reform climb — no annotation needed; the shape carries it. The small **US 2010→2020 dip**
+(80.7 → 80.0) is a 2025-revision national-definition change, noted in the strip caveat, not a real
+urbanization reversal.
 
 ## The two mandatory annotations — symmetric no-silent-dips discipline
 
