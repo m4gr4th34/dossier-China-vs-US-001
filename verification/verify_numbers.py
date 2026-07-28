@@ -372,6 +372,14 @@ for _lbl, _path in [("GDP", os.path.join(_ROOT, "data", "power_series", "gdp_sha
         _dim_bad += 1
 check("Index I18: Figure IV percent-share strips == data/power_series CSVs exactly", _dim_bad, 0, 0)
 
+# (I18b) Figure IV STEM-talent strip (sixth dimension, absolute counts) == stem_talent.csv EXACTLY.
+_tal = _read_csv(os.path.join(_ROOT, "data", "power_series", "stem_talent.csv"))
+_tal_d = _dims.get("STEM degree output", {})
+_tal_ok = (_tal_d.get("years") == [int(_x["year"]) for _x in _tal]
+           and _tal_d.get("us") == [float(_x["us_millions"]) for _x in _tal]
+           and _tal_d.get("cn") == [float(_x["cn_millions"]) for _x in _tal])
+check("Index I18b: Figure IV STEM-talent strip == stem_talent.csv exactly", 0 if _tal_ok else 1, 0, 0)
+
 # (I19) Figure IV military & R&D strips REUSE the committed SIPRI/GERD series (single source
 #       of truth - no duplicate CSV): they must equal the milex strip and the spine's GERD strip.
 _mil = _dims.get("Military spending", {})

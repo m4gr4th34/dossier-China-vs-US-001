@@ -32,7 +32,7 @@ IV. Dimensions of power — what the measured series say
 
 Five independently-measured series — GDP, military spending, manufacturing, R&D, trade — as US-above / China-below strips, each on its own scale, with deliberately no single combined line.
 
-*(figure: Dimensions of power: 5 independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line. — Figure IV - dimensions of power: 5 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO.)*
+*(figure: Dimensions of power: 6 independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line. — Figure IV - dimensions of power: 6 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports, stem degree output), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO.)*
 
 Va. The Founder's Century — regime and foundings
 
@@ -125,6 +125,7 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I16: national-security density envelope recomputes exactly from natsec-tagged rows
 - [PASS] Index I17: military-expenditure strip series == data/context_series/milex_sipri.csv exactly
 - [PASS] Index I18: Figure IV percent-share strips == data/power_series CSVs exactly
+- [PASS] Index I18b: Figure IV STEM-talent strip == stem_talent.csv exactly
 - [PASS] Index I19: Figure IV military/R&D strips reuse the committed SIPRI/GERD series (single source)
 - [PASS] Index I20: dimensions (Figure IV) data-figure spec present verbatim in index.html
 - [PASS] Index I21: Figure V founding blocks == event_type=founding rows exactly
@@ -137,7 +138,7 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I27: Figure Vb velocity panels == committed velocity_series CSVs exactly
 - [PASS] Index I28: velocity (Figure Vb) data-figure spec present verbatim in index.html
 
-**TOTAL: 36 checks · 36 pass · 0 fail** — All checks pass — the survey is internally consistent.
+**TOTAL: 37 checks · 37 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
 ## 03 THE AVENUES, ONE BY ONE
 
@@ -225,7 +226,7 @@ The defensible spine is three rungs kept rigorously apart: a documented **achiev
 
 This dossier was **researched, built, verified, and rendered by AI** — Claude, working as two instances: a strategy instance that designed and drafted it, and a Claude Code instance that edited the repository, ran the checks, and deployed it — over roughly a day and a half of working sessions. It was made under **continuous human editorial direction**: the author set the questions, ruled on every adjudication, rejected figures until they passed his read, and owns the judgments. The machine did the work; the human directed it and is accountable for it.
 
-Every claim carries its sources **per row**; the verification was performed against those sources in-session, not merely asserted; and **36 automated checks** bind this page to the underlying data, so nothing on it can drift from the ledger. This is a methods statement, not a guarantee — so don't take it on trust, check it: **click any block** to open that year's verified cards, **run the verifier** (`python verification/verify_numbers.py`), and **re-weight the momentum index** with its own sliders. If any of it fails to hold up, that is the finding.
+Every claim carries its sources **per row**; the verification was performed against those sources in-session, not merely asserted; and **37 automated checks** bind this page to the underlying data, so nothing on it can drift from the ledger. This is a methods statement, not a guarantee — so don't take it on trust, check it: **click any block** to open that year's verified cards, **run the verifier** (`python verification/verify_numbers.py`), and **re-weight the momentum index** with its own sliders. If any of it fails to hold up, that is the finding.
 
 ## References
 

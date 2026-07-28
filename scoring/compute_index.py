@@ -48,6 +48,7 @@ MILEX_CONTEXT = os.path.join(ROOT, "data", "context_series", "milex_sipri.csv")
 GDP_SHARE = os.path.join(ROOT, "data", "power_series", "gdp_share.csv")
 MFG_SHARE = os.path.join(ROOT, "data", "power_series", "manufacturing_share.csv")
 TRADE_SHARE = os.path.join(ROOT, "data", "power_series", "trade_share.csv")
+STEM_TALENT = os.path.join(ROOT, "data", "power_series", "stem_talent.csv")
 REGIME_BAND = os.path.join(ROOT, "data", "founder_series", "regime_band.csv")
 REGIME_TICKS = os.path.join(ROOT, "data", "founder_series", "regime_ticks.csv")
 VC_SERIES = os.path.join(ROOT, "data", "founder_series", "vc_investment.csv")
@@ -524,6 +525,24 @@ def build_dimensions_caption(dims):
             len(dims), names))
 
 
+def build_talent_strip():
+    """Figure IV sixth dimension — STEM talent production. S&E first-university-degree
+    output per year, US vs China (millions), plus the US foreign-born-graduate
+    dependence as an on-strip annotation. Definitional caveats on the Chinese count
+    stated on-strip. Full rubric: notes/power_series_selection.md."""
+    rows = _read_csv(STEM_TALENT)
+    return {
+        "years": [int(r["year"]) for r in rows],
+        "us": [float(r["us_millions"]) for r in rows],
+        "cn": [float(r["cn_millions"]) for r in rows],
+        "label": "STEM degree output (S&E first degrees)", "unit": "millions/yr", "log": False,
+        "source": "NSF SEIND 2024 / NSB-2023-32 HED-29 (international-body, OECD basis)",
+        "caveat": "China = 4-yr benke only (sub-degree zhuanke excluded); NSF folds CS into engineering",
+        "annot": "US advanced STEM is import-dependent: international students are 72% of CS / 74% of EE "
+                 "graduate enrolment (NFAP/NSF 2019) and 39% of S&E doctorates awarded (NSF SED 2022).",
+    }
+
+
 def build_dimensions_spec():
     milex = build_milex_strip()
     gerd = build_strip()
@@ -545,8 +564,9 @@ def build_dimensions_spec():
         _pct_series(TRADE_SHARE, "Merchandise exports (share of world)", "World Bank / WTO (international-body)",
                     "gross exports (processing / re-exports)",
                     "Gross exports overstate China's domestic value-added (processing trade; HK re-exports)."),
+        build_talent_strip(),
     ]
-    return {"type": "dimensions", "version": 1, "dims": dims,
+    return {"type": "dimensions", "version": 2, "dims": dims,
             "stage": "#ffffff", "caption": build_dimensions_caption(dims)}
 
 

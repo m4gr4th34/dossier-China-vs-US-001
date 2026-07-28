@@ -348,6 +348,9 @@
       p.push('<text class="dsm lf-scale-with-art" x="6" y="' + (cY - 3) + '">' + esc(d.unit) + (d.log ? ' · log' : ' · linear') + ' · ' + yrs[0] + '–' + yrs[n - 1] + '</text>');
       p.push('<text class="dcv lf-scale-with-art" x="6" y="' + (cY + 9) + '">⚠ ' + esc(d.caveat || '') + '</text>');
       p.push('<text class="dsm lf-scale-with-art" x="6" y="' + (cY + 20) + '">' + esc(d.source) + '</text>');
+      // optional on-strip annotation (e.g. the US foreign-born dependence), placed in the
+      // strip's empty pre-data region so it never overprints the plotted lines.
+      if (d.annot) p.push('<text class="dcv lf-scale-with-art" x="' + dxf(1932).toFixed(1) + '" y="' + (cY - 3) + '">' + esc(d.annot) + '</text>');
     });
     p.push('</svg>');
     return p.join("");

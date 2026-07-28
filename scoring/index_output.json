@@ -10267,7 +10267,7 @@
   },
   "dimensions_spec": {
     "type": "dimensions",
-    "version": 1,
+    "version": 2,
     "dims": [
       {
         "years": [
@@ -10443,10 +10443,39 @@
         "source": "World Bank / WTO (international-body)",
         "caveat": "gross exports (processing / re-exports)",
         "note": "Gross exports overstate China's domestic value-added (processing trade; HK re-exports)."
+      },
+      {
+        "years": [
+          2011,
+          2014,
+          2016,
+          2018,
+          2020
+        ],
+        "us": [
+          0.653,
+          0.734,
+          0.768,
+          0.811,
+          0.899
+        ],
+        "cn": [
+          1.387,
+          1.654,
+          1.773,
+          1.822,
+          1.976
+        ],
+        "label": "STEM degree output (S&E first degrees)",
+        "unit": "millions/yr",
+        "log": false,
+        "source": "NSF SEIND 2024 / NSB-2023-32 HED-29 (international-body, OECD basis)",
+        "caveat": "China = 4-yr benke only (sub-degree zhuanke excluded); NSF folds CS into engineering",
+        "annot": "US advanced STEM is import-dependent: international students are 72% of CS / 74% of EE graduate enrolment (NFAP/NSF 2019) and 39% of S&E doctorates awarded (NSF SED 2022)."
       }
     ],
     "stage": "#ffffff",
-    "caption": "Figure IV - dimensions of power: 5 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO."
+    "caption": "Figure IV - dimensions of power: 6 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports, stem degree output), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO."
   },
   "founder_spec": {
     "type": "founder",

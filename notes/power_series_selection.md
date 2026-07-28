@@ -49,7 +49,36 @@ side and leaves the weighting to the reader. The caption states this refusal exp
 - **Manufacturing** committed span is the World-Bank-verified window 2005–2020 (US MVA series ends
   2021); UNIDO reports ~6% (2000) → ~28% (2023) for China consistent with this, noted not committed.
 
+## STEM-talent strip (Figure IV sixth dimension) — `stem_talent.csv`
+
+Added batch 17. STEM talent production: **S&E first-university (bachelor's) degrees per year, US vs
+China, in millions** — the "pipeline" the other five strips do not carry. Five fully-paired anchor
+years 2011–2020 (2011 US 0.653M / China 1.387M → 2020 US 0.899M / China 1.976M), a ~2× Chinese lead
+that widens slowly. Source: **NSF Science &amp; Engineering Indicators 2024 / NSB-2023-32, figure HED-29**
+(international-body / OECD-comparable basis), verified against the NSF figure-data page. Linear scale
+(both series within ~3× of each other).
+
+**Why S&E first degrees, and the definitional caveats stated on-strip.** The author asked for
+engineering+CS output; a clean *paired time series* for engineering-only does not exist (NSF publishes
+a single 2020 engineering point, ~656K China on the benke basis vs ~1.38M on the Chinese-MoE basis that
+silently includes sub-degree zhuanke — a ~2× definitional split). So the strip plots the broader S&E
+first-degree series (engineering+CS is the bulk of it and the bulk of the gap), and the strip's own
+caveat line states the two load-bearing definitional facts: **China is 4-year benke only (sub-degree
+zhuanke excluded)**, and **NSF folds computer science into engineering for China**. Pre-2011 paired
+counts are not published on HED-29 (only a growth-rate line exists), so nothing before 2011 is plotted.
+
+**US foreign-born-graduate dependence (on-strip annotation).** The mirror-image US fact is dependence,
+not volume: **international students are 72% of computer-science and 74% of electrical-engineering
+graduate enrolment (NFAP analysis of NSF GSS, 2019), and 39% of all S&E doctorates awarded went to
+temporary-visa holders (NSF Survey of Earned Doctorates, 2022).** Rendered as an annotation in the
+strip's empty pre-2011 region so it never overprints the plotted lines (the label-discipline gate,
+`check_figure_labels.py`, enforces this).
+
+**What the strip does NOT show:** raw graduate *count* is not quality, research productivity, or where
+graduates end up working — three separate, non-interchangeable things the count alone cannot resolve.
+
 ## Verification
 
 `verify_numbers.py` recomputes each committed strip from its CSV and asserts a match (I11 pattern;
-new checks for GDP / manufacturing / trade; milex and GERD are already checked by I17 / I11).
+GDP / manufacturing / trade by I18; the STEM-talent strip by **I18b** — `stem_talent.csv` exactly;
+milex and GERD are already checked by I17 / I11).

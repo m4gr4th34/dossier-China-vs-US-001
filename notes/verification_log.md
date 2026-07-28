@@ -961,7 +961,16 @@ to escape (Big Fund III `CN-2024-3`, EUV chase `CN-2025-3`; TSMC Arizona `US-202
 leverage bites. Trend labeled OPEN-CAVEATED direction, not fact: atoms-leverage erodes slower than
 bits. §04 intro updated five→six claims; avenue thesis updated in lockstep.
 
-**3. Talent strip (Figure IV sixth dimension).** [see the batch-17 close below once committed.]
+**3. Talent strip (Figure IV sixth dimension).** Added a STEM-talent strip: S&E first-university
+degrees/yr, US vs China (millions), five fully-paired NSF anchor years 2011–2020 (2020: US 0.9M vs
+China 2.0M, a ~2× lead), NSF SEIND 2024 / NSB-2023-32 HED-29 (international-body / OECD basis). The two
+definitional caveats are on-strip (China = 4-yr benke only, zhuanke excluded; NSF folds CS into
+engineering), and the US foreign-born dependence is an on-strip annotation (intl students = 72% CS /
+74% EE grad enrolment, NFAP/NSF 2019; 39% of S&E doctorates to temp-visa, NSF SED 2022). Committed
+`data/power_series/stem_talent.csv`; verifier **I18b** asserts strip == CSV; the label-discipline gate
+confirms the annotation does not overprint the lines. Figure IV stays ONE figure (now 6 dimensions, not
+seven page-figures — the "seven figures" count is unchanged). Check count 36 → **37** (I18b added); the
+§08 colophon "automated checks" figure updated in lockstep.
 
 **4. F4 — DRAFT, NOT PUBLISHED; awaiting the author's direction + probability.**
 Offered for author review ONLY. This is NOT a card, is NOT in avenues.json, and appears on no
