@@ -48,6 +48,10 @@ MILEX_CONTEXT = os.path.join(ROOT, "data", "context_series", "milex_sipri.csv")
 GDP_SHARE = os.path.join(ROOT, "data", "power_series", "gdp_share.csv")
 MFG_SHARE = os.path.join(ROOT, "data", "power_series", "manufacturing_share.csv")
 TRADE_SHARE = os.path.join(ROOT, "data", "power_series", "trade_share.csv")
+REGIME_BAND = os.path.join(ROOT, "data", "founder_series", "regime_band.csv")
+REGIME_TICKS = os.path.join(ROOT, "data", "founder_series", "regime_ticks.csv")
+VC_SERIES = os.path.join(ROOT, "data", "founder_series", "vc_investment.csv")
+UNICORNS = os.path.join(ROOT, "data", "founder_series", "unicorns.csv")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
 DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
@@ -230,6 +234,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["spine_spec"] = build_spine_spec(result, draft_rows, est)
     result["natsec_spec"] = build_natsec_spec(draft_rows)
     result["dimensions_spec"] = build_dimensions_spec()
+    result["founder_spec"] = build_founder_spec(draft_rows)
     return result
 
 
@@ -526,6 +531,57 @@ def build_dimensions_spec():
             "stage": "#ffffff", "caption": build_dimensions_caption(dims)}
 
 
+def build_founder_caption(founds, vc, uni):
+    us_n = sum(1 for f in founds if f["c"] == "US")
+    cn_n = len(founds) - us_n
+    ucr = next((u for u in uni if u["class"] == "independent"), None)
+    uhu = next((u for u in uni if u["class"] == "chinese-origin"), None)
+    return ("Figure V - the Founder's Century (descriptive). Backdrop: the founder-regime band "
+            "(open / constrained / closed) per country, 1926-2026 - the US continuously open "
+            "(ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed at the 1956 socialist "
+            "transformation, reopening from 1978 (reform, SEZs), open from the 1992 Southern Tour "
+            "(WTO 2001), constrained again from the 2020 tech crackdown - a band annotation, NOT a "
+            "ledger row, because a crackdown is not an achievement. Blocks: the %d company-founding "
+            "rows (event_type=founding), US above / China below, click any for its cards (US %d, "
+            "China %d). Strip: annual venture-capital investment (PitchBook, log US$B) - the China "
+            "line peaks at $146B (2021) and collapses to $38B (2024), the US line falls far less. "
+            "Unicorns (snapshot): US %s / China %s (%s, independent); Hurun (Chinese-origin) counts "
+            "China %s - conflicting figures, both shown. Sourcing: notes/regime_band_rationale.md. "
+            "The grey years speak for themselves." % (
+            len(founds), us_n, cn_n,
+            ucr["us"] if ucr else "?", ucr["cn"] if ucr else "?", ucr["source"].split(" (")[0] if ucr else "?",
+            uhu["cn"] if uhu else "?"))
+
+
+def build_founder_spec(draft_rows):
+    band = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]),
+             "state": r["state"], "anchor": r.get("anchor_row", "")} for r in _read_csv(REGIME_BAND)]
+    ticks = [{"c": r["country"], "y": int(r["year"]), "label": r["label"],
+              "anchor": r.get("anchor_row", "")} for r in _read_csv(REGIME_TICKS)]
+    founds = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"], "st": r["status"]}
+              for r in draft_rows if r.get("event_type") == "founding" and r["country"] in COUNTRIES]
+    founds.sort(key=lambda x: (x["y"], x["id"]))
+    vcrows = _read_csv(VC_SERIES)
+
+    def _col(rows, c):
+        out = []
+        for r in rows:
+            v = (r.get(c) or "").strip()
+            if v:
+                out.append([int(r["year"]), float(v)])
+        return out
+    vc = {"us": _col(vcrows, "us_vc_usd_bn"), "cn": _col(vcrows, "cn_vc_usd_bn"),
+          "unit": "US$B", "log": True,
+          "source": "PitchBook-NVCA (US) / KPMG Venture Pulse-PitchBook (China)",
+          "note": "China VC peaks $146B (2021) -> $38B (2024), a ~74% collapse vs the US's ~41%. "
+                  "China column summed from KPMG quarterly bars (authorial aggregation)."}
+    uni = [{"source": r["source"], "as_of": r["as_of"], "us": int(r["us"]), "cn": int(r["cn"]),
+            "class": r["source_class"]} for r in _read_csv(UNICORNS)]
+    return {"type": "founder", "version": 1, "band": band, "ticks": ticks, "founds": founds,
+            "vc": vc, "unicorns": uni, "count": len(founds),
+            "stage": "#ffffff", "caption": build_founder_caption(founds, vc, uni)}
+
+
 def build_natsec_spec(draft_rows):
     ns = [r for r in draft_rows if r.get("natsec") == "true" and r["country"] in COUNTRIES]
     rows = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"],
@@ -613,6 +669,9 @@ if __name__ == "__main__":
     if _inject(SOURCE, "<!--dimensions:start-->", "<!--dimensions:end-->",
                _living_figure("living-figure chart wide dimensions-fig", result["dimensions_spec"])):
         changed.append("dimensions")
+    if _inject(SOURCE, "<!--founder:start-->", "<!--founder:end-->",
+               _living_figure("living-figure chart wide founder-fig", result["founder_spec"])):
+        changed.append("founder")
     if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
         changed.append("dossiers")
     print("compute_index: wrote %s; injected: %s" %

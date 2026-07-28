@@ -391,6 +391,49 @@ check("Index I19: Figure IV military/R&D strips reuse the committed SIPRI/GERD s
 check("Index I20: dimensions (Figure IV) data-figure spec present verbatim in index.html",
       0 if _ci._attr_json(_committed["dimensions_spec"]) in _index_html else 1, 0, 0)
 
+# (I21) Figure V founding blocks == the event_type=founding corpus rows EXACTLY.
+_found_ids = {r["id"] for r in _draft_rows2
+              if r.get("event_type") == "founding" and r.get("country") in ("US", "China")}
+_fig_found_ids = {f["id"] for f in _committed["founder_spec"]["founds"]}
+check("Index I21: Figure V founding blocks == event_type=founding rows exactly",
+      len(_found_ids ^ _fig_found_ids), 0, 0)
+
+# (I22) regime band + ticks: every claimed anchor row resolves to a real corpus row, AND the
+#       figure's band/ticks equal the committed rationale CSVs (transitions == documented rationale).
+_all_ids2 = {r["id"] for r in _draft_rows2}
+_band_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "regime_band.csv"))
+_tick_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "regime_ticks.csv"))
+_anchor_bad = sum(1 for r in (_band_csv + _tick_csv)
+                  if (r.get("anchor_row") or "").strip() and (r["anchor_row"].strip() not in _all_ids2))
+_band_exp = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]),
+              "state": r["state"], "anchor": r.get("anchor_row", "")} for r in _band_csv]
+_tick_exp = [{"c": r["country"], "y": int(r["year"]), "label": r["label"],
+              "anchor": r.get("anchor_row", "")} for r in _tick_csv]
+_band_ok = (_committed["founder_spec"]["band"] == _band_exp
+            and _committed["founder_spec"]["ticks"] == _tick_exp)
+check("Index I22: regime band/ticks anchors resolve and match the committed rationale CSVs",
+      _anchor_bad + (0 if _band_ok else 1), 0, 0)
+
+# (I23) Figure V venture-capital + unicorn series == committed CSVs, EXACTLY.
+_vc_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "vc_investment.csv"))
+_uni_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "unicorns.csv"))
+
+
+def _vccol(_c):
+    return [[int(r["year"]), float(r[_c])] for r in _vc_csv if (r.get(_c) or "").strip()]
+
+
+_uni_exp = [{"source": r["source"], "as_of": r["as_of"], "us": int(r["us"]), "cn": int(r["cn"]),
+             "class": r["source_class"]} for r in _uni_csv]
+_fvc = _committed["founder_spec"]["vc"]
+check("Index I23: Figure V venture-capital + unicorn series == committed CSVs exactly",
+      0 if (_fvc.get("us") == _vccol("us_vc_usd_bn") and _fvc.get("cn") == _vccol("cn_vc_usd_bn")
+            and _committed["founder_spec"]["unicorns"] == _uni_exp) else 1, 0, 0)
+
+# (I24) the founder (Figure V) data-figure spec appears verbatim in the baked front door.
+check("Index I24: founder (Figure V) data-figure spec present verbatim in index.html",
+      0 if _ci._attr_json(_committed["founder_spec"]) in _index_html else 1, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)

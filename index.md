@@ -47,8 +47,12 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I18: Figure IV percent-share strips == data/power_series CSVs exactly
 - [PASS] Index I19: Figure IV military/R&D strips reuse the committed SIPRI/GERD series (single source)
 - [PASS] Index I20: dimensions (Figure IV) data-figure spec present verbatim in index.html
+- [PASS] Index I21: Figure V founding blocks == event_type=founding rows exactly
+- [PASS] Index I22: regime band/ticks anchors resolve and match the committed rationale CSVs
+- [PASS] Index I23: Figure V venture-capital + unicorn series == committed CSVs exactly
+- [PASS] Index I24: founder (Figure V) data-figure spec present verbatim in index.html
 
-**TOTAL: 27 checks · 27 pass · 0 fail** — All checks pass — the survey is internally consistent.
+**TOTAL: 31 checks · 31 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
 **THE LEDGER · NARRATIVE**
 
@@ -117,6 +121,16 @@ The ledger and its figures so far are a *curated* record. This last figure steps
 IV. Dimensions of power — what the measured series say
 
 *(figure: Dimensions of power: 5 independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line. — Figure IV - dimensions of power: 5 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO.)*
+
+### The Founder's Century — regime, foundings, and capital
+
+A different question the corpus can answer: across this century, **where and when could you start a company at all** — and where did the capital go? Figure V lays three things on the shared axis. A categorical **founder-regime band** per country — open, constrained, or closed — with every China transition tied to a ledger row (the 1956 socialist transformation, the 1978/1980/1988 reform openings, the 1992 Southern Tour, WTO 2001) and the 2020–21 tech crackdown marked as a band annotation, *not* a ledger row, because a crackdown is not an achievement. The corpus's **company-founding blocks** (every `event_type = founding` row), US above / China below, each clickable for its cards — and note the grey gap: China founds almost no companies during the closed 1956–1978 decades. And a **venture-capital strip** beneath (log dollars), where the China line peaks at $146B in 2021 and collapses to $38B by 2024. Band classifications and their historical sourcing are in `notes/regime_band_rationale.md`; the caption is descriptive — the grey years speak for themselves.
+
+V. The Founder's Century — regime, foundings, and capital
+
+*(figure: The Founder's Century: a founder-regime band (open, constrained or closed) per country 1926-2026, company-founding blocks US above / China below, and a venture-capital strip on a log axis. — Figure V - the Founder's Century (descriptive). Backdrop: the founder-regime band (open / constrained / closed) per country, 1926-2026 - the US continuously open (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed at the 1956 socialist transformation, reopening from 1978 (reform, SEZs), open from the 1992 Southern Tour (WTO 2001), constrained again from the 2020 tech crackdown - a band annotation, NOT a ledger row, because a crackdown is not an achievement. Blocks: the 44 company-founding rows (event_type=founding), US above / China below, click any for its cards (US 25, China 19). Strip: annual venture-capital investment (PitchBook, log US$B) - the China line peaks at $146B (2021) and collapses to $38B (2024), the US line falls far less. Unicorns (snapshot): US 793 / China 284 (Crunchbase, independent); Hurun (Chinese-origin) counts China 343 - conflicting figures, both shown. Sourcing: notes/regime_band_rationale.md. The grey years speak for themselves.)*
+
+> **AUTHORIAL JUDGMENT · 2026-07-27** — **If you were a founder choosing where to build, the author's judgment is the United States — for most founders, most sectors, most of the time.** This is a *labeled authorial judgment*, not a caption fact and not a verified claim; it is conditioned on three legs, each tied to the figure's own evidence. **(1) Nationality and openness.** China's founder ecosystem is effectively closed to non-Chinese founders and, since 2020, constrained even for its own (the regime band; the VC collapse from $146B to $38B in the strip); the US ecosystem remains open, including to immigrant founders. **(2) Sector.** In *bits* — software, internet, frontier AI — the US leads decisively (the recent US founding cluster and GPT-5, `US-2025-1`); in *atoms* — hardware, EVs, batteries, solar — the honest answer is a hybrid, a US cap table riding a Chinese supply chain (China's manufacturing and battery dominance, `CN-2010-4`, `CN-2017-2`). **(3) Regime risk.** The 2020–21 crackdown, the venture-capital collapse, and high-profile founder retreat are a standing risk a founder must price in — each leg is the band annotation and the committed VC series, not rhetoric. A reader who weighs openness, sector, and risk differently can reach a different judgment; the figure gives them the same evidence to do so.
 
 ### Early-century China floor — OPEN
 

@@ -353,11 +353,99 @@
     return p.join("");
   }
 
+  // =====================================================================
+  // FOUNDER (Figure V) — the Founder's Century: a founder-regime band
+  // (open/constrained/closed) per country, company-founding blocks mirrored on
+  // top (clickable, panel-reused), and a venture-capital strip (log) beneath.
+  // =====================================================================
+  var FO = { W: 1120, padL: 48, padR: 14, YLO: 1926, YHI: 2026 };
+  FO.plotW = FO.W - FO.padL - FO.padR;
+  function fxf(y) { return FO.padL + (y - FO.YLO) / (FO.YHI - FO.YLO) * FO.plotW; }
+  var REGIME_COL = { open: "#2f855a", constrained: "#d69e2e", closed: "#a0aec0" };
+
+  function founderSvgString(spec) {
+    var band = spec.band || [], ticks = spec.ticks || [], founds = spec.founds || [], vc = spec.vc || {}, uni = spec.unicorns || [];
+    var bh = 6, gap = 1.4, bw = 7;
+    var usBandY = 30, cnBandY = 192, bandH = 12, usBase = 48, cnBase = 186;
+    var decY = cnBandY + bandH + 27, legY = cnBandY + bandH + 41, H = 366;
+    var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="The Founder&#39;s Century: a founder-regime band (open, constrained or closed) per country 1926-2026, company-founding blocks US above / China below, and a venture-capital strip on a log axis.">'];
+    p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fti{font:13px sans-serif;fill:#2d3748}.fcl{font:10px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}</style>');
+    p.push('<text class="fti lf-scale-with-art" x="' + FO.padL + '" y="15">The Founder’s Century — regime band · foundings US ↑ / China ↓ · venture capital below</text>');
+    // decade gridlines
+    for (var yr = 1930; yr <= 2026; yr += 10) {
+      var xx = fxf(yr);
+      p.push('<line x1="' + xx.toFixed(1) + '" y1="' + usBandY + '" x2="' + xx.toFixed(1) + '" y2="' + (cnBandY + bandH) + '" stroke="#f0f2f5"/>');
+      p.push('<text class="ftk lf-scale-with-art" x="' + xx.toFixed(1) + '" y="' + decY + '" text-anchor="middle">' + yr + '</text>');
+    }
+    // regime bands
+    band.forEach(function (seg) {
+      var x1 = fxf(seg.start), x2 = fxf(seg.end), y = (seg.c === "US" ? usBandY : cnBandY);
+      p.push('<rect x="' + x1.toFixed(1) + '" y="' + y + '" width="' + (x2 - x1).toFixed(1) + '" height="' + bandH + '" fill="' + (REGIME_COL[seg.state] || "#ccc") + '" opacity="0.55"/>');
+    });
+    p.push('<text class="ftk lf-scale-with-art" x="' + (FO.W - FO.padR) + '" y="' + (cnBandY - 3) + '" text-anchor="end">China regime ↓ — closed 1956–78, open 1992–2020, constrained since</text>');
+    // ticks (enabling events / crackdown) — US labels above the band, China labels below it
+    ticks.forEach(function (t) {
+      var x = fxf(t.y), y = (t.c === "US" ? usBandY : cnBandY);
+      p.push('<line x1="' + x.toFixed(1) + '" y1="' + y + '" x2="' + x.toFixed(1) + '" y2="' + (y + bandH) + '" stroke="#1a202c" stroke-width="1"/>');
+      var lyt = (t.c === "US" ? y - 3 : y + bandH + 11);
+      p.push('<text class="ftick lf-scale-with-art" x="' + (x + 2).toFixed(1) + '" y="' + lyt + '">' + t.y + ' ' + esc(t.label) + '</text>');
+    });
+    // founding blocks (clickable, panel-reused)
+    var stack = {};
+    founds.forEach(function (f) {
+      var col = CATEGORY_COLORS[f.cat] || "#888";
+      var key = f.y + "|" + f.c, k = stack[key] || 0; stack[key] = k + 1;
+      var x = fxf(f.y) - bw / 2, y;
+      if (f.c === "US") y = usBase + k * (bh + gap); else y = cnBase - (k + 1) * bh - k * gap;
+      var rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="' + col + '"/>';
+      var title = esc(f.id + " " + f.y + " " + f.cat + " founding");
+      p.push('<a href="dossier.html#y-' + f.y + '" class="lf-year" data-year="' + f.y + '"><title>' + title + '</title>' + rect + '</a>');
+    });
+    // legend
+    var lx = FO.padL, ly = legY;
+    ["open", "constrained", "closed"].forEach(function (st, i) {
+      var cxx = lx + i * 92;
+      p.push('<rect x="' + cxx + '" y="' + (ly - 8) + '" width="9" height="9" fill="' + REGIME_COL[st] + '" opacity="0.55"/><text class="fcl lf-scale-with-art" x="' + (cxx + 12) + '" y="' + ly + '">' + st + '</text>');
+    });
+    p.push('<text class="fcl lf-scale-with-art" x="' + (lx + 300) + '" y="' + ly + '">blocks = company foundings (event_type=founding), colour = category, click for cards · ticks = enabling events / 2020 crackdown</text>');
+    // VC strip (own x-axis over the VC year range, log)
+    var us = vc.us || [], cn = vc.cn || [];
+    if (us.length) {
+      var allY = us.concat(cn).map(function (d) { return d[0]; });
+      var y0 = Math.min.apply(null, allY), y1 = Math.max.apply(null, allY);
+      var allV = us.concat(cn).map(function (d) { return d[1]; });
+      var mn = Math.min.apply(null, allV), mx = Math.max.apply(null, allV);
+      var lo = Math.log10(mn * 0.8), hi = Math.log10(mx * 1.15);
+      var sSep = ly + 12, sTitle = sSep + 14, sTop = sSep + 28, sBot = sSep + 78;
+      function vx(y) { return FO.padL + (y - y0) / (y1 - y0) * (FO.W - FO.padL - FO.padR); }
+      function vy(v) { return sBot - (Math.log10(v) - lo) / (hi - lo) * (sBot - sTop); }
+      p.push('<line x1="' + FO.padL + '" y1="' + sSep + '" x2="' + (FO.W - FO.padR) + '" y2="' + sSep + '" stroke="#cbd5e0"/>');
+      p.push('<text class="fti lf-scale-with-art" x="' + FO.padL + '" y="' + sTitle + '">Annual venture-capital investment — <tspan font-weight="700">log</tspan> US$B · ' + y0 + '–' + y1 + ' · ' + esc(vc.source) + '</text>');
+      [100, 1000].forEach(function (g) {
+        if (g > mn * 0.8 && g < mx * 1.15) { var yy = vy(g); p.push('<line x1="' + FO.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (FO.W - FO.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/><text class="ftk lf-scale-with-art" x="' + (FO.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>'); }
+      });
+      function vpoly(arr) { return arr.map(function (d) { return vx(d[0]).toFixed(1) + ',' + vy(d[1]).toFixed(1); }).join(' '); }
+      [[us, '#2b6cb0', 'US'], [cn, '#c53030', 'China']].forEach(function (t) {
+        var arr = t[0], col = t[1];
+        p.push('<polyline points="' + vpoly(arr) + '" fill="none" stroke="' + col + '" stroke-width="1.7"/>');
+        arr.forEach(function (d) { p.push('<circle cx="' + vx(d[0]).toFixed(1) + '" cy="' + vy(d[1]).toFixed(1) + '" r="2" fill="' + col + '"/>'); });
+      });
+      p.push('<text class="fcl lf-scale-with-art" x="' + (FO.W - FO.padR) + '" y="' + (vy(us[us.length - 1][1]) - 5).toFixed(1) + '" text-anchor="end" fill="#2b6cb0" font-weight="600">US $' + Math.round(us[us.length - 1][1]) + 'B</text>');
+      p.push('<text class="fcl lf-scale-with-art" x="' + (FO.W - FO.padR) + '" y="' + (vy(cn[cn.length - 1][1]) + 12).toFixed(1) + '" text-anchor="end" fill="#c53030" font-weight="600">China $' + Math.round(cn[cn.length - 1][1]) + 'B</text>');
+      [y0, 2018, 2021, y1].forEach(function (y) { if (y >= y0 && y <= y1) p.push('<text class="ftk lf-scale-with-art" x="' + vx(y).toFixed(1) + '" y="' + (sBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
+      var u0 = uni[0] || {}, u1 = uni[1] || {};
+      p.push('<text class="fcl lf-scale-with-art" x="' + FO.padL + '" y="' + (sBot + 25) + '">China VC $146B (2021) → $38B (2024), a ~74% collapse; US fell ~41%. Unicorns ' + (u0.as_of || '') + ': US ' + (u0.us || '?') + ' / China ' + (u0.cn || '?') + ' (' + esc((u0.source || '').split(' (')[0]) + ', indep.); Hurun (Chinese-origin) counts China ' + (u1.cn || '?') + '.</text>');
+    }
+    p.push('</svg>');
+    return p.join("");
+  }
+
   // ---- registrations: poster (Node string floor) + live renderer (lightbox) ----
   function renderMomentumPosterSVG(spec) { return momentumSvgString(spec); }
   function renderSpinePosterSVG(spec) { return spineSvgString(spec); }
   function renderNatsecPosterSVG(spec) { return natsecSvgString(spec); }
   function renderDimensionsPosterSVG(spec) { return dimensionsSvgString(spec); }
+  function renderFounderPosterSVG(spec) { return founderSvgString(spec); }
   function mount(container, spec, drawFn) {
     if (!container) return null;
     if (spec == null && container.getAttribute) { try { spec = JSON.parse(container.getAttribute("data-figure")); } catch (e) { return null; } }
@@ -371,12 +459,15 @@
   DF.renderSpinePosterSVG = renderSpinePosterSVG;
   DF.renderNatsecPosterSVG = renderNatsecPosterSVG;
   DF.renderDimensionsPosterSVG = renderDimensionsPosterSVG;
+  DF.renderFounderPosterSVG = renderFounderPosterSVG;
   DF.registerPoster("momentum", renderMomentumPosterSVG);
   DF.registerPoster("spine", renderSpinePosterSVG);
   DF.registerPoster("natsec", renderNatsecPosterSVG);
   DF.registerPoster("dimensions", renderDimensionsPosterSVG);
+  DF.registerPoster("founder", renderFounderPosterSVG);
   DF.registerRenderer("momentum", function (c, s) { return mount(c, s, momentumSvgString); });
   DF.registerRenderer("spine", function (c, s) { return mount(c, s, spineSvgString); });
   DF.registerRenderer("natsec", function (c, s) { return mount(c, s, natsecSvgString); });
   DF.registerRenderer("dimensions", function (c, s) { return mount(c, s, dimensionsSvgString); });
+  DF.registerRenderer("founder", function (c, s) { return mount(c, s, founderSvgString); });
 })(typeof window !== "undefined" ? window : null);
