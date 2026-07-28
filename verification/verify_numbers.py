@@ -380,6 +380,23 @@ _tal_ok = (_tal_d.get("years") == [int(_x["year"]) for _x in _tal]
            and _tal_d.get("cn") == [float(_x["cn_millions"]) for _x in _tal])
 check("Index I18b: Figure IV STEM-talent strip == stem_talent.csv exactly", 0 if _tal_ok else 1, 0, 0)
 
+# (I18c) Figure VI (living standards) — every strip == its committed living_series CSV EXACTLY.
+_liv = {_d["label"]: _d for _d in _committed["living_spec"]["dims"]}
+_liv_map = [("Life expectancy at birth", "life_expectancy.csv"),
+            ("GDP per capita (PPP, real)", "gdp_per_capita.csv"),
+            ("Infant mortality", "infant_mortality.csv"),
+            ("Mean years of schooling (25+)", "schooling.csv"),
+            ("Urbanization", "urbanization.csv")]
+_liv_bad = 0
+for _lbl, _fname in _liv_map:
+    _r = _read_csv(os.path.join(_ROOT, "data", "living_series", _fname))
+    _d = _liv.get(_lbl, {})
+    if not (_d.get("years") == [int(_x["year"]) for _x in _r]
+            and _d.get("us") == [float(_x["us"]) for _x in _r]
+            and _d.get("cn") == [float(_x["cn"]) for _x in _r]):
+        _liv_bad += 1
+check("Index I18c: Figure VI living-standards strips == living_series CSVs exactly", _liv_bad, 0, 0)
+
 # (I19) Figure IV military & R&D strips REUSE the committed SIPRI/GERD series (single source
 #       of truth - no duplicate CSV): they must equal the milex strip and the spine's GERD strip.
 _mil = _dims.get("Military spending", {})

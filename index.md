@@ -4,11 +4,11 @@ An Open Dossier · **China-vs-US-001**
 
 *Irfan Ali Khan — Independent Researcher*
 
-A century of US-China momentum in seven figures (with words in between, if you really want them).
+A century of US-China momentum in eight figures (with words in between, if you really want them).
 
-This dossier is a two-country **achievement ledger** told in seven figures: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer is computed only as an explicitly **OPEN-CAVEATED** constructed index — shown with its full sensitivity bands and named exclusions, never as a measured verdict. The honest state today: 298 candidate rows, 294 ESTABLISHED, the rest one open challenge (OPEN-UNVERIFIED) and three provenance-flagged REPORTED items. The dossier now carries three layers, each labeled: the **record** (the ledger and figures), an **interpretation** of it (OPEN-CAVEATED, re-weightable), and dated **bets** (FORECASTs with falsifiable signposts). **Don't trust this paper — run it.**
+This dossier is a two-country **achievement ledger** told in eight figures: a per-row-verified record of American and Chinese innovation, infrastructure, and social achievements from 1926 to 2026, built under a published selection rule and a published promotion standard. It is deliberately neither a triumphalist nor a declinist account — every row wears an honest status label, and the momentum layer is computed only as an explicitly **OPEN-CAVEATED** constructed index — shown with its full sensitivity bands and named exclusions, never as a measured verdict. The honest state today: 298 candidate rows, 294 ESTABLISHED, the rest one open challenge (OPEN-UNVERIFIED) and three provenance-flagged REPORTED items. The dossier now carries three layers, each labeled: the **record** (the ledger and figures), an **interpretation** of it (OPEN-CAVEATED, re-weightable), and dated **bets** (FORECASTs with falsifiable signposts). **Don't trust this paper — run it.**
 
-**READING THE FIGURES** — the decoder, so the seven figures below stand on their own without any prose. **US is blue, China is red.** Texture is verification status: solid = ESTABLISHED, outlined = OPEN, hatched = REPORTED. An amber ring marks a dual-use row (defense and civilian). Click any block to open that year's verified cards in place.
+**READING THE FIGURES** — the decoder, so the eight figures below stand on their own without any prose. **US is blue, China is red.** Texture is verification status: solid = ESTABLISHED, outlined = OPEN, hatched = REPORTED. An amber ring marks a dual-use row (defense and civilian). Click any block to open that year's verified cards in place.
 
 I. The ledger — what happened
 
@@ -33,6 +33,12 @@ IV. Dimensions of power — what the measured series say
 Five independently-measured series — GDP, military spending, manufacturing, R&D, trade — as US-above / China-below strips, each on its own scale, with deliberately no single combined line.
 
 *(figure: Dimensions of power: 6 independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line. — Figure IV - dimensions of power: 6 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports, stem degree output), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO.)*
+
+VI. Living standards — what the systems delivered
+
+Five human-development outcomes — life expectancy, GDP per capita, infant mortality, schooling, and urbanization — US above and China below on the shared century axis, each on its own scale, with China's pre-1980 values flagged as estimate-class.
+
+*(figure: Figure VI, A century of living standards: five human-development series (life expectancy, GDP per capita, infant mortality, schooling, urbanization) as thin US-above / China-below strips on the shared 1926-2026 axis, each on its own scale. Convergence is real and large, but the income level gap remains; every Chinese value before ~1980 is estimate-class. — Figure VI - a century of living standards (context-class; no corpus rows). Five human-development outcomes, US above / China below, each on its own scale. --- THE CONVERGENCE IS REAL AND LARGE: China closed a gap that in 1950 was civilizational - life expectancy 43.8 to ~78 years, infant mortality ~195 to ~5 per 1,000, mean schooling ~1.8 to ~9 years, urbanization ~11%% to ~66%% - and on two health measures China has now edged PAST the US (life expectancy since ~2021; infant mortality below the US by 2022, ~4.8 vs ~5.5). --- BUT IT IS NOT A RISE POSTER: the income LEVEL gap remains large - US real GDP per capita is ~3x China's on the Maddison basis drawn here (~4x on current-price PPP), schooling still trails ~4 years, and the US shows a genuine reversal, not merely China catching up. --- TWO DATED DIPS, the same no-silent-dips rule both ways: China's 1959-61 Great Leap famine (life-expectancy trough 33.4 in 1960; excess deaths carried as a range with both classes named - ~15M official vs ~30-45M demographic reconstructions - adjudicating neither), and the US 2015-2023 decline (opioid epidemic + COVID-19, CDC-documented; life expectancy ~78.8 to 76.4 by 2021, partial recovery to 77.5 in 2022). --- Every Chinese value before ~1980 is ESTIMATE-CLASS (reconstruction, not measurement), flagged per strip. Sources: UN WPP / IGME / WUP, Maddison, Barro-Lee. Selection: notes/living_series_selection.md.)*
 
 Va. The Founder's Century — regime and foundings
 
@@ -126,6 +132,7 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I17: military-expenditure strip series == data/context_series/milex_sipri.csv exactly
 - [PASS] Index I18: Figure IV percent-share strips == data/power_series CSVs exactly
 - [PASS] Index I18b: Figure IV STEM-talent strip == stem_talent.csv exactly
+- [PASS] Index I18c: Figure VI living-standards strips == living_series CSVs exactly
 - [PASS] Index I19: Figure IV military/R&D strips reuse the committed SIPRI/GERD series (single source)
 - [PASS] Index I20: dimensions (Figure IV) data-figure spec present verbatim in index.html
 - [PASS] Index I21: Figure V founding blocks == event_type=founding rows exactly
@@ -138,7 +145,7 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I27: Figure Vb velocity panels == committed velocity_series CSVs exactly
 - [PASS] Index I28: velocity (Figure Vb) data-figure spec present verbatim in index.html
 
-**TOTAL: 37 checks · 37 pass · 0 fail** — All checks pass — the survey is internally consistent.
+**TOTAL: 38 checks · 38 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
 ## 03 THE AVENUES, ONE BY ONE
 
@@ -226,7 +233,7 @@ The defensible spine is three rungs kept rigorously apart: a documented **achiev
 
 This dossier was **researched, built, verified, and rendered by AI** — Claude, working as two instances: a strategy instance that designed and drafted it, and a Claude Code instance that edited the repository, ran the checks, and deployed it — over roughly a day and a half of working sessions. It was made under **continuous human editorial direction**: the author set the questions, ruled on every adjudication, rejected figures until they passed his read, and owns the judgments. The machine did the work; the human directed it and is accountable for it.
 
-Every claim carries its sources **per row**; the verification was performed against those sources in-session, not merely asserted; and **37 automated checks** bind this page to the underlying data, so nothing on it can drift from the ledger. This is a methods statement, not a guarantee — so don't take it on trust, check it: **click any block** to open that year's verified cards, **run the verifier** (`python verification/verify_numbers.py`), and **re-weight the momentum index** with its own sliders. If any of it fails to hold up, that is the finding.
+Every claim carries its sources **per row**; the verification was performed against those sources in-session, not merely asserted; and **38 automated checks** bind this page to the underlying data, so nothing on it can drift from the ledger. This is a methods statement, not a guarantee — so don't take it on trust, check it: **click any block** to open that year's verified cards, **run the verifier** (`python verification/verify_numbers.py`), and **re-weight the momentum index** with its own sliders. If any of it fails to hold up, that is the finding.
 
 ## References
 

@@ -313,9 +313,11 @@
   function dimensionsSvgString(spec) {
     var dims = spec.dims || [], N = dims.length;
     var H = DM.top + N * DM.stripH + DM.botAx;
-    var p = ['<svg viewBox="0 0 ' + DM.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Dimensions of power: ' + N + ' independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line.">'];
+    var aria = spec.aria || ('Dimensions of power: ' + N + ' independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line.');
+    var title = spec.title || ('Dimensions of power — ' + N + ' measured series, US above / China below · own scale per strip · NO aggregate line');
+    var p = ['<svg viewBox="0 0 ' + DM.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="' + aria + '">'];
     p.push('<style>.dtk{font:9px sans-serif;fill:#718096}.dti{font:13px sans-serif;fill:#2d3748}.dlb{font:10.5px sans-serif;fill:#2d3748;font-weight:600}.dsm{font:8.5px sans-serif;fill:#718096}.dcv{font:8.5px sans-serif;fill:#b7791f}.dvl{font:9px sans-serif;font-weight:600}</style>');
-    p.push('<text class="dti lf-scale-with-art" x="' + DM.padL + '" y="15">Dimensions of power — ' + N + ' measured series, US above / China below · own scale per strip · NO aggregate line</text>');
+    p.push('<text class="dti lf-scale-with-art" x="' + DM.padL + '" y="15">' + title + '</text>');
     // shared decade gridlines + bottom labels
     var gridBot = DM.top + N * DM.stripH;
     for (var yr = 1930; yr <= 2026; yr += 10) {
@@ -330,7 +332,13 @@
       var lo = Math.log10(mn * 0.8), hi = Math.log10(mx * 1.15);
       function sc(v) { return d.log ? (Math.log10(v) - lo) / (hi - lo) * amp : v / mx * amp; }
       var pct = /%/.test(d.unit || ""), perM = /grad|\bM\b|million/i.test(d.unit || "");
-      function fmt(v) { return pct ? Math.round(v) + "%" : perM ? v.toFixed(1) + "M" : "$" + Math.round(v) + "B"; }
+      function fmt(v) {
+        var k = d.fmtkind;
+        if (k === "yr") return String(Math.round(v));
+        if (k === "per1k") return v >= 20 ? String(Math.round(v)) : v.toFixed(1);
+        if (k === "$cap") return "$" + (v >= 1000 ? Math.round(v / 1000) + "k" : Math.round(v));
+        return pct ? Math.round(v) + "%" : perM ? v.toFixed(1) + "M" : "$" + Math.round(v) + "B";
+      }
       // baseline
       p.push('<line x1="' + DM.padL + '" y1="' + cY + '" x2="' + (DM.W - DM.padR) + '" y2="' + cY + '" stroke="#cbd5e0"/>');
       function poly(vals, up) { return vals.map(function (v, k) { return dxf(yrs[k]).toFixed(1) + ',' + (up ? cY - sc(v) : cY + sc(v)).toFixed(1); }).join(' '); }
@@ -340,9 +348,13 @@
         p.push('<polyline points="' + poly(vals, up) + '" fill="none" stroke="' + col + '" stroke-width="1.6"/>');
         vals.forEach(function (v, k) { p.push('<circle cx="' + dxf(yrs[k]).toFixed(1) + '" cy="' + (up ? cY - sc(v) : cY + sc(v)).toFixed(1) + '" r="1.8" fill="' + col + '"/>'); });
       });
-      // end-value labels (give the scale) at the last point
-      p.push('<text class="dvl lf-scale-with-art" x="' + (dxf(yrs[n - 1]) + 4).toFixed(1) + '" y="' + (cY - sc(us[n - 1]) + 1).toFixed(1) + '" fill="#2b6cb0">' + fmt(us[n - 1]) + '</text>');
-      p.push('<text class="dvl lf-scale-with-art" x="' + (dxf(yrs[n - 1]) + 4).toFixed(1) + '" y="' + (cY + sc(cn[n - 1]) + 3).toFixed(1) + '" fill="#c53030">' + fmt(cn[n - 1]) + '</text>');
+      // end-value labels (give the scale) at the last point — US above its point, China below
+      // its point, with enough separation that near-equal endpoints (e.g. the infant-mortality
+      // crossover) do not collide.
+      var _uy = cY - sc(us[n - 1]) - 2, _cy = cY + sc(cn[n - 1]) + 8;
+      if (_cy - _uy < 11) { _uy -= 3; _cy += 3; }
+      p.push('<text class="dvl lf-scale-with-art" x="' + (dxf(yrs[n - 1]) + 4).toFixed(1) + '" y="' + _uy.toFixed(1) + '" fill="#2b6cb0">' + fmt(us[n - 1]) + '</text>');
+      p.push('<text class="dvl lf-scale-with-art" x="' + (dxf(yrs[n - 1]) + 4).toFixed(1) + '" y="' + _cy.toFixed(1) + '" fill="#c53030">' + fmt(cn[n - 1]) + '</text>');
       // left gutter: label, unit/scale, caveat, source
       p.push('<text class="dlb lf-scale-with-art" x="6" y="' + (cY - 14) + '">' + esc(d.label) + '</text>');
       p.push('<text class="dsm lf-scale-with-art" x="6" y="' + (cY - 3) + '">' + esc(d.unit) + (d.log ? ' · log' : ' · linear') + ' · ' + yrs[0] + '–' + yrs[n - 1] + '</text>');
@@ -351,6 +363,13 @@
       // optional on-strip annotation (e.g. the US foreign-born dependence), placed in the
       // strip's empty pre-data region so it never overprints the plotted lines.
       if (d.annot) p.push('<text class="dcv lf-scale-with-art" x="' + dxf(1932).toFixed(1) + '" y="' + (cY - 3) + '">' + esc(d.annot) + '</text>');
+      // optional point marks (dated dips/events, one per side max by discipline): ring the point + label
+      (d.marks || []).forEach(function (m) {
+        var idx = yrs.indexOf(m.year); if (idx < 0) return;
+        var mv = (m.up ? us : cn)[idx], mx = dxf(m.year), my = m.up ? cY - sc(mv) : cY + sc(mv);
+        p.push('<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="2.6" fill="none" stroke="' + (m.up ? '#2b6cb0' : '#c53030') + '" stroke-width="1.1"/>');
+        p.push('<text class="dcv lf-scale-with-art" x="' + (mx + (m.lx == null ? 5 : m.lx)).toFixed(1) + '" y="' + (my + (m.dy == null ? (m.up ? -5 : 10) : m.dy)).toFixed(1) + '"' + (m.anchor ? ' text-anchor="' + m.anchor + '"' : '') + '>' + esc(m.label) + '</text>');
+      });
     });
     p.push('</svg>');
     return p.join("");
@@ -658,6 +677,7 @@
   DF.registerPoster("spine", renderSpinePosterSVG);
   DF.registerPoster("natsec", renderNatsecPosterSVG);
   DF.registerPoster("dimensions", renderDimensionsPosterSVG);
+  DF.registerPoster("living", renderDimensionsPosterSVG);
   DF.registerPoster("founder", renderFounderPosterSVG);
   DF.registerPoster("capital", renderCapitalPosterSVG);
   DF.registerPoster("velocity", renderVelocityPosterSVG);
@@ -665,6 +685,7 @@
   DF.registerRenderer("spine", function (c, s) { return mount(c, s, spineSvgString); });
   DF.registerRenderer("natsec", function (c, s) { return mount(c, s, natsecSvgString); });
   DF.registerRenderer("dimensions", function (c, s) { return mount(c, s, dimensionsSvgString); });
+  DF.registerRenderer("living", function (c, s) { return mount(c, s, dimensionsSvgString); });
   DF.registerRenderer("founder", function (c, s) { return mount(c, s, founderSvgString); });
   DF.registerRenderer("capital", function (c, s) { return mount(c, s, capitalSvgString); });
   DF.registerRenderer("velocity", function (c, s) { return mount(c, s, velocitySvgString); });

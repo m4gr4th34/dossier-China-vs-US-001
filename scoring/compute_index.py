@@ -49,6 +49,7 @@ GDP_SHARE = os.path.join(ROOT, "data", "power_series", "gdp_share.csv")
 MFG_SHARE = os.path.join(ROOT, "data", "power_series", "manufacturing_share.csv")
 TRADE_SHARE = os.path.join(ROOT, "data", "power_series", "trade_share.csv")
 STEM_TALENT = os.path.join(ROOT, "data", "power_series", "stem_talent.csv")
+LIVING_DIR = os.path.join(ROOT, "data", "living_series")
 REGIME_BAND = os.path.join(ROOT, "data", "founder_series", "regime_band.csv")
 REGIME_TICKS = os.path.join(ROOT, "data", "founder_series", "regime_ticks.csv")
 VC_SERIES = os.path.join(ROOT, "data", "founder_series", "vc_investment.csv")
@@ -247,6 +248,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["spine_spec"] = build_spine_spec(result, draft_rows, est)
     result["natsec_spec"] = build_natsec_spec(draft_rows)
     result["dimensions_spec"] = build_dimensions_spec()
+    result["living_spec"] = build_living_spec()
     result["founder_spec"] = build_founder_spec(draft_rows)
     result["capital_spec"] = build_capital_spec()
     result["velocity_spec"] = build_velocity_spec()
@@ -543,6 +545,70 @@ def build_talent_strip():
     }
 
 
+def _living_strip(fname, label, unit, log, fmtkind, source, caveat, marks=None, annot=None):
+    rows = _read_csv(os.path.join(LIVING_DIR, fname))
+    d = {"years": [int(r["year"]) for r in rows], "us": [float(r["us"]) for r in rows],
+         "cn": [float(r["cn"]) for r in rows], "label": label, "unit": unit, "log": log,
+         "fmtkind": fmtkind, "source": source, "caveat": caveat}
+    if marks:
+        d["marks"] = marks
+    if annot:
+        d["annot"] = annot
+    return d
+
+
+def build_living_spec():
+    """Figure VI — A century of living standards. Context-class human-development
+    outcomes, US vs China, small-multiples per Figure IV's pattern. Every Chinese
+    value before ~1980 is estimate-class (reconstruction), flagged per strip. Full
+    rubric: notes/living_series_selection.md."""
+    dims = [
+        _living_strip("life_expectancy.csv", "Life expectancy at birth", "years", False, "yr",
+                      "UN WPP 2024 (international-body); pre-1950 = academic reconstruction",
+                      "China pre-1980 estimate-class (census back-projection); US 2022 UN 76.4 vs CDC 77.5",
+                      marks=[{"year": 1960, "up": False, "label": "1959-61 famine · excess deaths ~15M (official) vs ~30-45M (reconstructions)", "dy": 13, "lx": -8, "anchor": "start"},
+                             {"year": 2021, "up": True, "label": "2015-23 US decline (opioids + COVID, CDC)", "dy": -5, "lx": 5, "anchor": "end"}]),
+        _living_strip("gdp_per_capita.csv", "GDP per capita (PPP, real)", "int$ (2011)", True, "$cap",
+                      "Maddison Project Database 2023 (independent-academic)",
+                      "China pre-1980 estimate-class (most-contested Maddison back-cast); level gap ~3x"),
+        _living_strip("infant_mortality.csv", "Infant mortality", "per 1,000 births", True, "per1k",
+                      "UN IGME (international-body)",
+                      "China pre-1980 estimate-class; China (4.8) fell BELOW the US (5.5) by 2022"),
+        _living_strip("schooling.csv", "Mean years of schooling (25+)", "years", False, "yr",
+                      "Barro-Lee / Lee-Lee via OWID (independent-academic)",
+                      "China pre-1980 estimate-class; gap ~7yr (1950) to ~4.3yr (2020), not closed"),
+        _living_strip("urbanization.csv", "Urbanization", "% urban", False, "pct",
+                      "UN World Urbanization Prospects (international-body)",
+                      "China 11% (1950) to 66% (2022); clean paired endpoints (interior mid-century omitted)"),
+    ]
+    return {"type": "living", "version": 1, "dims": dims,
+            "title": "A century of living standards — what the systems delivered · US above / China below · own scale per strip",
+            "aria": "Figure VI, A century of living standards: five human-development series (life expectancy, GDP per capita, infant mortality, schooling, urbanization) as thin US-above / China-below strips on the shared 1926-2026 axis, each on its own scale. Convergence is real and large, but the income level gap remains; every Chinese value before ~1980 is estimate-class.",
+            "stage": "#ffffff", "caption": build_living_caption()}
+
+
+def build_living_caption():
+    return ("Figure VI - a century of living standards (context-class; no corpus rows). Five "
+            "human-development outcomes, US above / China below, each on its own scale. "
+            "--- THE CONVERGENCE IS REAL AND LARGE: China closed a gap that in 1950 was "
+            "civilizational - life expectancy 43.8 to ~78 years, infant mortality ~195 to ~5 per "
+            "1,000, mean schooling ~1.8 to ~9 years, urbanization ~11%% to ~66%% - and on two health "
+            "measures China has now edged PAST the US (life expectancy since ~2021; infant mortality "
+            "below the US by 2022, ~4.8 vs ~5.5). "
+            "--- BUT IT IS NOT A RISE POSTER: the income LEVEL gap remains large - US real GDP per "
+            "capita is ~3x China's on the Maddison basis drawn here (~4x on current-price PPP), "
+            "schooling still trails ~4 years, and the US shows a genuine reversal, not merely China "
+            "catching up. "
+            "--- TWO DATED DIPS, the same no-silent-dips rule both ways: China's 1959-61 Great Leap "
+            "famine (life-expectancy trough 33.4 in 1960; excess deaths carried as a range with both "
+            "classes named - ~15M official vs ~30-45M demographic reconstructions - adjudicating "
+            "neither), and the US 2015-2023 decline (opioid epidemic + COVID-19, CDC-documented; "
+            "life expectancy ~78.8 to 76.4 by 2021, partial recovery to 77.5 in 2022). "
+            "--- Every Chinese value before ~1980 is ESTIMATE-CLASS (reconstruction, not measurement), "
+            "flagged per strip. Sources: UN WPP / IGME / WUP, Maddison, Barro-Lee. Selection: "
+            "notes/living_series_selection.md.")
+
+
 def build_dimensions_spec():
     milex = build_milex_strip()
     gerd = build_strip()
@@ -804,6 +870,9 @@ if __name__ == "__main__":
     if _inject(SOURCE, "<!--dimensions:start-->", "<!--dimensions:end-->",
                _living_figure("living-figure chart wide dimensions-fig", result["dimensions_spec"])):
         changed.append("dimensions")
+    if _inject(SOURCE, "<!--living:start-->", "<!--living:end-->",
+               _living_figure("living-figure chart wide living-fig", result["living_spec"])):
+        changed.append("living")
     if _inject(SOURCE, "<!--founder:start-->", "<!--founder:end-->",
                _living_figure("living-figure chart wide founder-fig", result["founder_spec"])):
         changed.append("founder")
