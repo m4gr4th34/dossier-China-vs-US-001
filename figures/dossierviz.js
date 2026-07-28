@@ -508,12 +508,107 @@
     return p.join("");
   }
 
+  // ===== FIGURE Vb — VELOCITY (2x2 small-multiples: four ways to be fast) =====
+  function velocitySvgString(spec) {
+    var W = 1120, H = 560, US = "#2b6cb0", CN = "#c53030", INK = "#2d3748", MUT = "#718096";
+    var p = ['<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Figure Vb, Velocity: four small-multiple panels comparing US and China on deployment speed, iteration cadence, time-to-scale, and competitive intensity. The overall finding: China leads velocity in atoms (deployment, hardware iteration, cutthroat selection); the US leads in bits and at the technology frontier.">'];
+    p.push('<style>.vt{font:13px sans-serif;font-weight:700;fill:#1a202c;letter-spacing:.02em}.vtag{font:10px sans-serif;font-weight:700}.vlab{font:9px sans-serif;fill:#4a5568}.vval{font:9px sans-serif;font-weight:700}.vfoot{font:8.5px sans-serif;fill:#718096}.vax{stroke:#9aa5b1;stroke-width:1}.vgl{stroke:#eef2f6}</style>');
+    // headline
+    p.push('<text class="vt lf-scale-with-art" x="40" y="20" style="font-size:15px">VELOCITY — FOUR WAYS TO BE FAST</text>');
+    p.push('<text class="vlab lf-scale-with-art" x="40" y="36"><tspan fill="' + CN + '" font-weight="700">China leads in ATOMS</tspan> (deployment · hardware iteration · cutthroat selection)  ·  <tspan fill="' + US + '" font-weight="700">the US leads in BITS &amp; at the FRONTIER</tspan>  —  a constructed, OPEN-CAVEATED comparison; re-weight it and it shifts.</text>');
+    var pw = 505, ph = 230;
+    function frame(x0, y0, title, tag, tagcol) {
+      p.push('<rect x="' + x0 + '" y="' + y0 + '" width="' + pw + '" height="' + ph + '" fill="none" stroke="#e2e8f0"/>');
+      p.push('<text class="vt lf-scale-with-art" x="' + (x0 + 12) + '" y="' + (y0 + 20) + '">' + title + '</text>');
+      p.push('<text class="vtag lf-scale-with-art" x="' + (x0 + pw - 12) + '" y="' + (y0 + 20) + '" text-anchor="end" fill="' + tagcol + '">' + tag + '</text>');
+    }
+    function foot(x0, y0, lines) {
+      lines.forEach(function (t, i) { p.push('<text class="vfoot lf-scale-with-art" x="' + (x0 + 12) + '" y="' + (y0 + ph - 16 + i * 11) + '">' + t + '</text>'); });
+    }
+    // ---------- PANEL 1: DEPLOYMENT (top-left) ----------
+    (function () {
+      var x0 = 40, y0 = 58; frame(x0, y0, "① DEPLOYMENT — lab → mass market", "ATOMS → CHINA", CN);
+      var d = spec.deploy || {}, us = d.us || [], cn = d.cn || [];
+      var px = x0 + 46, py = y0 + 34, plw = pw - 70, plh = 118;
+      function vx(yr) { return px + (yr - 2020) / 4 * plw; }
+      function vy(v) { return py + plh - v / 50 * plh; }
+      [0, 25, 50].forEach(function (g) { var yy = vy(g); p.push('<line class="vgl" x1="' + px + '" y1="' + yy.toFixed(1) + '" x2="' + (px + plw) + '" y2="' + yy.toFixed(1) + '"/><text class="vlab lf-scale-with-art" x="' + (px - 5) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + g + '%</text>'); });
+      [2020, 2022, 2024].forEach(function (yr) { p.push('<text class="vlab lf-scale-with-art" x="' + vx(yr).toFixed(1) + '" y="' + (py + plh + 12) + '" text-anchor="middle">' + yr + '</text>'); });
+      [[us, US, "US"], [cn, CN, "China"]].forEach(function (t) {
+        var a = t[0]; p.push('<polyline points="' + a.map(function (r) { return vx(r[0]).toFixed(1) + ',' + vy(r[1]).toFixed(1); }).join(' ') + '" fill="none" stroke="' + t[1] + '" stroke-width="1.9"/>');
+        a.forEach(function (r) { p.push('<circle cx="' + vx(r[0]).toFixed(1) + '" cy="' + vy(r[1]).toFixed(1) + '" r="2.1" fill="' + t[1] + '"/>'); });
+        var L = a[a.length - 1]; p.push('<text class="vval lf-scale-with-art" x="' + (vx(L[0]) - 3).toFixed(1) + '" y="' + (vy(L[1]) + (t[2] === "US" ? 12 : -5)).toFixed(1) + '" text-anchor="end" fill="' + t[1] + '">' + t[2] + ' ' + Math.round(L[1]) + '%</text>');
+      });
+      foot(x0, y0, ["EV share of new-car sales (IEA). China also +277GW solar/yr, ~48,000km HSR (US ~0).",
+        "But BITS invert → US: ChatGPT ~100M users in 2mo; AI capex ~$350B vs China AI-cloud ~$7B."]);
+    })();
+    // ---------- PANEL 2: ITERATION CADENCE (top-right) ----------
+    (function () {
+      var x0 = 575, y0 = 58; frame(x0, y0, "② ITERATION CADENCE — how often you ship", "SPLIT", MUT);
+      var it = spec.iterate || [];
+      var px = x0 + 46, py = y0 + 34, plw = pw - 70, plh = 118, maxV = 44;
+      [0, 20, 40].forEach(function (g) { var yy = py + plh - g / maxV * plh; p.push('<line class="vgl" x1="' + px + '" y1="' + yy.toFixed(1) + '" x2="' + (px + plw) + '" y2="' + yy.toFixed(1) + '"/><text class="vlab lf-scale-with-art" x="' + (px - 5) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + g + '</text>'); });
+      var gw = plw / it.length, bw = 26;
+      it.forEach(function (m, i) {
+        var gx = px + gw * (i + 0.5);
+        [[m.us, US, "US", -1], [m.cn, CN, "CN", 1]].forEach(function (b) {
+          var bx = gx + b[3] * (bw / 2 + 2) - bw / 2, bh = b[0] / maxV * plh, by = py + plh - bh;
+          if (bh > 0.5) p.push('<rect x="' + bx.toFixed(1) + '" y="' + by.toFixed(1) + '" width="' + bw + '" height="' + bh.toFixed(1) + '" fill="' + b[1] + '" opacity="0.85"/>');
+          p.push('<text class="vval lf-scale-with-art" x="' + (bx + bw / 2).toFixed(1) + '" y="' + (b[0] > 0.5 ? by - 3 : py + plh - 3).toFixed(1) + '" text-anchor="middle" fill="' + b[1] + '">' + b[2] + ' ' + Math.round(b[0]) + '</text>');
+        });
+        p.push('<text class="vlab lf-scale-with-art" x="' + gx.toFixed(1) + '" y="' + (py + plh + 12) + '" text-anchor="middle">' + esc(m.label) + ' (' + esc(m.unit) + ')</text>');
+        p.push('<text class="vlab lf-scale-with-art" x="' + gx.toFixed(1) + '" y="' + (py + plh + 23) + '" text-anchor="middle" fill="' + (m.leader === "US" ? US : CN) + '" font-weight="700">' + (m.leader === "US" ? "US leads" : "China leads") + '</text>');
+      });
+      foot(x0, y0, ["New-model dev cycle ~20mo (China) vs ~40mo (legacy) — AlixPartners/McKinsey.",
+        "Frontier lag: open models trail the US closed frontier ~4–8mo (Epoch/AISI/NIST)."]);
+    })();
+    // ---------- PANEL 3: TIME-TO-SCALE (bottom-left) ----------
+    (function () {
+      var x0 = 40, y0 = 310; frame(x0, y0, "③ TIME-TO-SCALE — founding → $1B", "NO CLEAR WINNER", MUT);
+      var ts = spec.timescale || [];
+      var px = x0 + 30, py = y0 + 36, plw = pw - 54, plh = 116;
+      function tx(yr) { return px + yr / 12 * plw; }
+      var laneCN = py + 34, laneUS = py + 88;
+      [0, 3, 6, 9, 12].forEach(function (g) { p.push('<line class="vgl" x1="' + tx(g).toFixed(1) + '" y1="' + py + '" x2="' + tx(g).toFixed(1) + '" y2="' + (py + plh) + '"/><text class="vlab lf-scale-with-art" x="' + tx(g).toFixed(1) + '" y="' + (py + plh + 11) + '" text-anchor="middle">' + g + 'y</text>'); });
+      p.push('<text class="vlab lf-scale-with-art" x="' + px + '" y="' + (laneCN - 20) + '" fill="' + CN + '" font-weight="700">China</text>');
+      p.push('<text class="vlab lf-scale-with-art" x="' + px + '" y="' + (laneUS - 20) + '" fill="' + US + '" font-weight="700">US</text>');
+      ts.forEach(function (c, i) {
+        var col = c.country === "US" ? US : CN, lane = c.country === "US" ? laneUS : laneCN;
+        var jitter = (i % 2 === 0 ? -9 : 9);
+        p.push('<circle cx="' + tx(c.years).toFixed(1) + '" cy="' + (lane + jitter).toFixed(1) + '" r="2.6" fill="' + col + '"/>');
+        p.push('<text class="vlab lf-scale-with-art" x="' + (tx(c.years) + 5).toFixed(1) + '" y="' + (lane + jitter + 3).toFixed(1) + '" fill="' + INK + '">' + esc(c.company) + '</text>');
+      });
+      foot(x0, y0, ["Exemplar dots, NOT a median — no honest paired US-vs-China figure exists (vendor stats).",
+        "China's 2010s cohort fast; but SHEIN ~11y, and the US AI cohort now scales fastest (xAI ~14mo)."]);
+    })();
+    // ---------- PANEL 4: CUTTHROAT (bottom-right) ----------
+    (function () {
+      var x0 = 575, y0 = 310; frame(x0, y0, "④ CUTTHROAT — selection intensity", "CHINA (both ways)", CN);
+      var ct = spec.cutthroat || [];
+      var px = x0 + 46, py = y0 + 34, plw = pw - 70, plh = 116, maxV = 500;
+      [0, 250, 500].forEach(function (g) { var yy = py + plh - g / maxV * plh; p.push('<line class="vgl" x1="' + px + '" y1="' + yy.toFixed(1) + '" x2="' + (px + plw) + '" y2="' + yy.toFixed(1) + '"/><text class="vlab lf-scale-with-art" x="' + (px - 5) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + g + '</text>'); });
+      var n = ct.length, bw = 46;
+      ct.forEach(function (r, i) {
+        var cx = px + plw * ((i + 0.5) / n), bh = r[1] / maxV * plh, by = py + plh - bh, fc = (r[2] === "forecast");
+        p.push('<rect x="' + (cx - bw / 2).toFixed(1) + '" y="' + by.toFixed(1) + '" width="' + bw + '" height="' + bh.toFixed(1) + '" fill="' + (fc ? "none" : CN) + '" opacity="' + (fc ? 1 : 0.8) + '" stroke="' + CN + '"' + (fc ? ' stroke-dasharray="4,2"' : '') + '/>');
+        p.push('<text class="vval lf-scale-with-art" x="' + cx.toFixed(1) + '" y="' + (by - 3).toFixed(1) + '" text-anchor="middle" fill="' + CN + '">' + r[1] + (fc ? " (F)" : "") + '</text>');
+        p.push('<text class="vlab lf-scale-with-art" x="' + cx.toFixed(1) + '" y="' + (py + plh + 12) + '" text-anchor="middle">' + r[0] + (fc ? " forecast" : "") + '</text>');
+      });
+      p.push('<text class="vlab lf-scale-with-art" x="' + (px + plw / 2).toFixed(1) + '" y="' + (py + 10) + '" text-anchor="middle" fill="' + MUT + '">Chinese EV brands</text>');
+      foot(x0, y0, ["487 (2018) → 129 (2025) → ~15 viable by 2030 (AlixPartners); only 3 profitable.",
+        "US concentrates early: Uber+Lyft ~99%, Google ~90%. Involution: ~$69B wiped, PPI −35mo."]);
+    })();
+    p.push('</svg>');
+    return p.join("");
+  }
+
   // ---- registrations: poster (Node string floor) + live renderer (lightbox) ----
   function renderMomentumPosterSVG(spec) { return momentumSvgString(spec); }
   function renderSpinePosterSVG(spec) { return spineSvgString(spec); }
   function renderNatsecPosterSVG(spec) { return natsecSvgString(spec); }
   function renderDimensionsPosterSVG(spec) { return dimensionsSvgString(spec); }
   function renderFounderPosterSVG(spec) { return founderSvgString(spec); }
+  function renderVelocityPosterSVG(spec) { return velocitySvgString(spec); }
   function mount(container, spec, drawFn) {
     if (!container) return null;
     if (spec == null && container.getAttribute) { try { spec = JSON.parse(container.getAttribute("data-figure")); } catch (e) { return null; } }
@@ -533,9 +628,11 @@
   DF.registerPoster("natsec", renderNatsecPosterSVG);
   DF.registerPoster("dimensions", renderDimensionsPosterSVG);
   DF.registerPoster("founder", renderFounderPosterSVG);
+  DF.registerPoster("velocity", renderVelocityPosterSVG);
   DF.registerRenderer("momentum", function (c, s) { return mount(c, s, momentumSvgString); });
   DF.registerRenderer("spine", function (c, s) { return mount(c, s, spineSvgString); });
   DF.registerRenderer("natsec", function (c, s) { return mount(c, s, natsecSvgString); });
   DF.registerRenderer("dimensions", function (c, s) { return mount(c, s, dimensionsSvgString); });
   DF.registerRenderer("founder", function (c, s) { return mount(c, s, founderSvgString); });
+  DF.registerRenderer("velocity", function (c, s) { return mount(c, s, velocitySvgString); });
 })(typeof window !== "undefined" ? window : null);

@@ -474,6 +474,27 @@ _sc_ok = (_committed["founder_spec"]["state_capital"] == _sc_exp)
 check("Index I26: Figure V exits strip == ipo_proceeds.csv and state capital == state_capital.csv exactly",
       0 if (_exits_ok and _sc_ok) else 1, 0, 0)
 
+# (I27) Figure Vb (velocity) — each plotted panel series == its committed CSV EXACTLY.
+_vel = _committed["velocity_spec"]
+_vd = _read_csv(os.path.join(_ROOT, "data", "velocity_series", "deploy_ev.csv"))
+_vi = _read_csv(os.path.join(_ROOT, "data", "velocity_series", "iterate.csv"))
+_vt = _read_csv(os.path.join(_ROOT, "data", "velocity_series", "timescale.csv"))
+_vc2 = _read_csv(os.path.join(_ROOT, "data", "velocity_series", "cutthroat.csv"))
+_dep_ok = (_vel["deploy"]["us"] == [[int(r["year"]), float(r["us_pct"])] for r in _vd]
+           and _vel["deploy"]["cn"] == [[int(r["year"]), float(r["cn_pct"])] for r in _vd])
+_ite_ok = (_vel["iterate"] == [{"metric": r["metric"], "label": r["label"], "us": float(r["us"]),
+                                "cn": float(r["cn"]), "unit": r["unit"], "leader": r["leader"]} for r in _vi])
+_tim_ok = (_vel["timescale"] == [{"company": r["company"], "country": r["country"],
+                                  "years": float(r["years"]), "era": r["era"],
+                                  "milestone": r["milestone"]} for r in _vt])
+_cut_ok = (_vel["cutthroat"] == [[int(r["year"]), int(r["cn_ev_brands"]), r["kind"]] for r in _vc2])
+check("Index I27: Figure Vb velocity panels == committed velocity_series CSVs exactly",
+      0 if (_dep_ok and _ite_ok and _tim_ok and _cut_ok) else 1, 0, 0)
+
+# (I28) the velocity (Figure Vb) data-figure spec appears verbatim in the baked front door.
+check("Index I28: velocity (Figure Vb) data-figure spec present verbatim in index.html",
+      0 if _ci._attr_json(_committed["velocity_spec"]) in _index_html else 1, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)

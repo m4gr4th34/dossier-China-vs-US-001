@@ -1,0 +1,3 @@
+metric,label,us,cn,unit,leader
+dev_cycle,new-model dev cycle,40,20,months,CN
+frontier_lag,frontier-capability lag,0,6,months behind,US

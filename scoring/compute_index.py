@@ -54,6 +54,10 @@ VC_SERIES = os.path.join(ROOT, "data", "founder_series", "vc_investment.csv")
 UNICORNS = os.path.join(ROOT, "data", "founder_series", "unicorns.csv")
 IPO_SERIES = os.path.join(ROOT, "data", "founder_series", "ipo_proceeds.csv")
 STATE_CAPITAL = os.path.join(ROOT, "data", "founder_series", "state_capital.csv")
+VEL_DEPLOY = os.path.join(ROOT, "data", "velocity_series", "deploy_ev.csv")
+VEL_ITERATE = os.path.join(ROOT, "data", "velocity_series", "iterate.csv")
+VEL_TIMESCALE = os.path.join(ROOT, "data", "velocity_series", "timescale.csv")
+VEL_CUTTHROAT = os.path.join(ROOT, "data", "velocity_series", "cutthroat.csv")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
 DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
@@ -242,6 +246,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["natsec_spec"] = build_natsec_spec(draft_rows)
     result["dimensions_spec"] = build_dimensions_spec()
     result["founder_spec"] = build_founder_spec(draft_rows)
+    result["velocity_spec"] = build_velocity_spec()
     return result
 
 
@@ -560,7 +565,7 @@ def build_founder_caption(founds, vc, uni):
             "US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings "
             "onshored to the A-share market and Hong Kong. "
             "--- STATE CAPITAL (an estimate annotation, NOT a line): government guidance funds target "
-            "~$1.5T but paid-in is <$0.7T (Chinese-origin data; only 26%% met target), and Big Fund III "
+            "~$1.5T but paid-in is under $0.7T (Chinese-origin data; only 26%% met target), and Big Fund III "
             "added $47.5B (2024). The substitution, plainly: private VC collapsed; state capital partly "
             "replaced it - but the strip measures the former, not the latter. Sourcing: "
             "notes/founder_series_selection.md and notes/regime_band_rationale.md." % (
@@ -581,6 +586,56 @@ def build_state_capital():
     rows = _read_csv(STATE_CAPITAL)
     return {r["metric"]: {"value": float(r["value"]), "unit": r["unit"],
                           "label": r["label"], "class": r["source_class"]} for r in rows}
+
+
+# ============================================================
+# FIGURE Vb — VELOCITY (four ways to be fast). OPEN-CAVEATED constructed
+# comparison; underlying data real but selection/pairing/framing authorial.
+# Contributes NO ledger rows. Full rubric: notes/velocity_selection.md.
+# ============================================================
+def build_velocity_spec():
+    dep = _read_csv(VEL_DEPLOY)
+    ite = _read_csv(VEL_ITERATE)
+    tim = _read_csv(VEL_TIMESCALE)
+    cut = _read_csv(VEL_CUTTHROAT)
+    deploy = {"us": [[int(r["year"]), float(r["us_pct"])] for r in dep],
+              "cn": [[int(r["year"]), float(r["cn_pct"])] for r in dep]}
+    iterate = [{"metric": r["metric"], "label": r["label"], "us": float(r["us"]),
+                "cn": float(r["cn"]), "unit": r["unit"], "leader": r["leader"]} for r in ite]
+    timescale = [{"company": r["company"], "country": r["country"], "years": float(r["years"]),
+                  "era": r["era"], "milestone": r["milestone"]} for r in tim]
+    cutthroat = [[int(r["year"]), int(r["cn_ev_brands"]), r["kind"]] for r in cut]
+    return {
+        "type": "velocity", "version": 1,
+        "headline": "China leads velocity in ATOMS; the US leads in BITS and at the FRONTIER",
+        "deploy": deploy, "iterate": iterate, "timescale": timescale, "cutthroat": cutthroat,
+        "stage": "#ffffff", "caption": build_velocity_caption(),
+    }
+
+
+def build_velocity_caption():
+    return ("Figure Vb - Velocity: four ways to be fast (OPEN-CAVEATED - a constructed "
+            "comparison; the underlying numbers are real and sourced, but the choice of four "
+            "dimensions and the US-vs-China pairing are authorial; re-choose them and the "
+            "picture shifts). The honest spine: CHINA leads velocity in ATOMS, the US in BITS "
+            "and at the FRONTIER - not one direction. "
+            "--- DEPLOYMENT: electric-car share of new-car sales (IEA), China ~6 to 45%% in four "
+            "years vs the US ~2 to 10%% (falling in 2025); China also added ~277 GW of solar in "
+            "2024 (US ~50) and runs ~48,000 km of high-speed rail (US ~0). But BITS invert: "
+            "ChatGPT hit ~100M users in ~2 months and US AI-infrastructure capex (~$350B in "
+            "2025) dwarfs China's AI-cloud market (~$7B). "
+            "--- ITERATION CADENCE: Chinese new-model dev cycles run ~20 months vs ~40 for "
+            "legacy makers (AlixPartners/McKinsey) - but the US SETS the AI frontier and "
+            "Chinese open models trail it ~4-8 months (Epoch/AISI/NIST); ships-more-often is a "
+            "different axis from sets-the-frontier. "
+            "--- TIME-TO-SCALE: exemplar dots, NOT a line - no honest paired median exists. "
+            "China's 2010s cohort scaled fast (Xiaomi ~1.5yr, DiDi ~2yr), but SHEIN took ~11yr "
+            "and the US 2023-25 AI cohort is now fastest (xAI ~$24B in ~14 months). "
+            "--- CUTTHROAT: ~487 Chinese EV makers (2018) to ~129 (2025) to ~15 viable by 2030 "
+            "(AlixPartners), only 3 profitable; the US concentrates early instead (Uber+Lyft "
+            "~99%%, Google ~90%%). The same selection forged BYD/CATL/DJI AND is now called "
+            "'involution' - a ~$69B EV price-war revenue wipe, 35 months of negative PPI, a "
+            "state 'anti-involution' campaign. Full rubric + sources: notes/velocity_selection.md.")
 
 
 def build_founder_spec(draft_rows):
@@ -705,6 +760,9 @@ if __name__ == "__main__":
     if _inject(SOURCE, "<!--founder:start-->", "<!--founder:end-->",
                _living_figure("living-figure chart wide founder-fig", result["founder_spec"])):
         changed.append("founder")
+    if _inject(SOURCE, "<!--velocity:start-->", "<!--velocity:end-->",
+               _living_figure("living-figure chart wide velocity-fig", result["velocity_spec"])):
+        changed.append("velocity")
     if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
         changed.append("dossiers")
     print("compute_index: wrote %s; injected: %s" %
