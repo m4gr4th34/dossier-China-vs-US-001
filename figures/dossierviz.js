@@ -48,15 +48,15 @@
     var n = decades.length, gw = M.plotW / n, bw = gw * 0.30, gap = gw * 0.06;
     var p = ['<svg viewBox="0 0 ' + M.W + ' ' + M.H + '" width="100%" class="lf-svg" role="img" aria-label="Constructed momentum index: per-decade within-decade share, US vs China, with sensitivity bands and 1946-1955 exclusion whiskers.">'];
     p.push('<style>.ax{stroke:#9aa5b1;stroke-width:1}.gl{stroke:#e2e8f0;stroke-width:1}.lbl{font:11px sans-serif;fill:#4a5568}.tk{font:10px sans-serif;fill:#718096}.ti{font:13px sans-serif;fill:#2d3748}</style>');
-    p.push('<text class="ti" x="' + M.padL + '" y="16">Momentum index (OPEN-CAVEATED): within-decade share of ESTABLISHED achievements</text>');
+    p.push('<text class="ti lf-scale-with-art" x="' + M.padL + '" y="16">Momentum index (OPEN-CAVEATED): within-decade share of ESTABLISHED achievements</text>');
     [0, 0.5, 1].forEach(function (gy) {
       var yy = myf(gy);
       p.push('<line class="' + (gy === 0.5 ? "ax" : "gl") + '" x1="' + M.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (M.W - M.padR) + '" y2="' + yy.toFixed(1) + '"/>');
-      p.push('<text class="tk" x="' + (M.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + (gy * 100) + '%</text>');
+      p.push('<text class="tk lf-scale-with-art" x="' + (M.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">' + (gy * 100) + '%</text>');
     });
     decades.forEach(function (d, i) {
       var cxc = M.padL + i * gw + gw / 2;
-      p.push('<text class="tk" x="' + cxc.toFixed(1) + '" y="' + (M.H - M.padB + 16) + '" text-anchor="middle">' + d.replace("-", "–") + '</text>');
+      p.push('<text class="tk lf-scale-with-art" x="' + cxc.toFixed(1) + '" y="' + (M.H - M.padB + 16) + '" text-anchor="middle">' + d.replace("-", "–") + '</text>');
       var offs = { US: -(bw + gap) / 2, China: (bw + gap) / 2 };
       COUNTRIES.forEach(function (c) {
         var s = series[d][c], bx = cxc + offs[c] - bw / 2;
@@ -74,9 +74,9 @@
       });
     });
     var lx = M.padL, ly = M.H - 6;
-    p.push('<rect x="' + lx + '" y="' + (ly - 9) + '" width="10" height="10" fill="' + MCOL.US + '"/><text class="lbl" x="' + (lx + 14) + '" y="' + ly + '">US</text>');
-    p.push('<rect x="' + (lx + 60) + '" y="' + (ly - 9) + '" width="10" height="10" fill="' + MCOL.China + '"/><text class="lbl" x="' + (lx + 74) + '" y="' + ly + '">China</text>');
-    p.push('<text class="lbl" x="' + (lx + 140) + '" y="' + ly + '">band = W0-W3 sensitivity; whisker = 1946-1955 exclusion; 50% line = leadership</text>');
+    p.push('<rect x="' + lx + '" y="' + (ly - 9) + '" width="10" height="10" fill="' + MCOL.US + '"/><text class="lbl lf-scale-with-art" x="' + (lx + 14) + '" y="' + ly + '">US</text>');
+    p.push('<rect x="' + (lx + 60) + '" y="' + (ly - 9) + '" width="10" height="10" fill="' + MCOL.China + '"/><text class="lbl lf-scale-with-art" x="' + (lx + 74) + '" y="' + ly + '">China</text>');
+    p.push('<text class="lbl lf-scale-with-art" x="' + (lx + 140) + '" y="' + ly + '">band = W0-W3 sensitivity; whisker = 1946-1955 exclusion; 50% line = leadership</text>');
     p.push('</svg>');
     return p.join("");
   }
@@ -93,8 +93,8 @@
     industrial: "industrial", social: "social", governmental_economic: "gov/econ"
   };
   var CATS = ["innovation", "science", "infrastructure", "industrial", "social", "governmental_economic"];
-  var S = { W: 1120, H: 320, padL: 44, padR: 14, YLO: 1926, YHI: 2026 };
-  S.cy = S.H / 2; S.plotW = S.W - S.padL - S.padR;
+  var S = { W: 1120, H: 476, padL: 44, padR: 14, YLO: 1926, YHI: 2026 };
+  S.cy = 150; S.spineBot = 290; S.plotW = S.W - S.padL - S.padR;
   function sxf(y) { return S.padL + (y - S.YLO) / (S.YHI - S.YLO) * S.plotW; }
 
   function spineSvgString(spec) {
@@ -105,7 +105,7 @@
     var p = ['<svg viewBox="0 0 ' + S.W + ' ' + S.H + '" width="100%" class="lf-svg" role="img" aria-label="The Century Spine: one block per corpus achievement 1926-2026, US above the centreline and China below, coloured by category and textured by verification label, with a ' + win + '-year rolling density silhouette.">'];
     p.push('<defs><pattern id="rep-hatch" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="4" stroke="#ffffff" stroke-width="1.4" opacity="0.9"/></pattern></defs>');
     p.push('<style>.ax{stroke:#9aa5b1;stroke-width:1}.tk{font:9px sans-serif;fill:#718096}.ti{font:13px sans-serif;fill:#2d3748}.cl{font:10px sans-serif;fill:#4a5568}</style>');
-    p.push('<text class="ti" x="' + S.padL + '" y="15">The Century Spine — one block per achievement, US above / China below (' + win + '-yr density silhouette)</text>');
+    p.push('<text class="ti lf-scale-with-art" x="' + S.padL + '" y="15">The Century Spine — one block per achievement, US above / China below (' + win + '-yr density silhouette)</text>');
     // --- density silhouette (behind blocks): mirrored filled areas, scaled to a shared max ---
     var silH = (S.cy - 26);   // px available above the centreline for the fullest density
     function silPath(pts, up) {
@@ -127,16 +127,16 @@
       net += " L" + sxf(sil.US[q][0]).toFixed(1) + "," + (S.cy - diff * 12).toFixed(1);
     }
     p.push('<path d="' + net + '" fill="none" stroke="#4a5568" stroke-width="1" opacity="0.45"/>');
-    // centreline + decade ticks
+    // centreline + decade ticks (spine region only; the volume strip sits below)
     p.push('<line class="ax" x1="' + S.padL + '" y1="' + S.cy + '" x2="' + (S.W - S.padR) + '" y2="' + S.cy + '"/>');
     for (var yr = 1930; yr <= 2026; yr += 10) {
       var xx = sxf(yr);
-      p.push('<line x1="' + xx.toFixed(1) + '" y1="24" x2="' + xx.toFixed(1) + '" y2="' + (S.H - 40) + '" stroke="#e2e8f0"/>');
-      p.push('<text class="tk" x="' + xx.toFixed(1) + '" y="' + (S.H - 28) + '" text-anchor="middle">' + yr + '</text>');
+      p.push('<line x1="' + xx.toFixed(1) + '" y1="24" x2="' + xx.toFixed(1) + '" y2="' + S.spineBot + '" stroke="#e2e8f0"/>');
+      p.push('<text class="tk lf-scale-with-art" x="' + xx.toFixed(1) + '" y="' + (S.spineBot + 12) + '" text-anchor="middle">' + yr + '</text>');
     }
-    p.push('<text class="tk" x="' + S.padL + '" y="30">US ↑</text>');
-    p.push('<text class="tk" x="' + S.padL + '" y="' + (S.H - 46) + '">China ↓</text>');
-    // --- blocks on top ---
+    p.push('<text class="tk lf-scale-with-art" x="' + S.padL + '" y="30">US ↑</text>');
+    p.push('<text class="tk lf-scale-with-art" x="' + S.padL + '" y="' + (S.cy + 130) + '">China ↓</text>');
+    // --- blocks on top (each block is a deep link AND a year-panel trigger) ---
     var stack = {};
     rows.forEach(function (r) {
       var col = CATEGORY_COLORS[r.cat] || "#888";
@@ -149,15 +149,47 @@
       else rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="none" stroke="' + col + '" stroke-width="1.1"/>';
       var tick = r.pr === "range" ? '<line x1="' + (x + bw).toFixed(1) + '" y1="' + (y + bh / 2).toFixed(1) + '" x2="' + (x + bw + 5).toFixed(1) + '" y2="' + (y + bh / 2).toFixed(1) + '" stroke="' + col + '" stroke-width="0.8" opacity="0.8"/>' : "";
       var title = esc(r.id + " " + r.y + " " + r.cat + "/" + r.et + " [" + r.st + "]");
-      p.push('<a href="dossier.html#y-' + r.y + '"><title>' + title + '</title>' + rect + tick + '</a>');
+      p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '"><title>' + title + '</title>' + rect + tick + '</a>');
     });
-    // legend
-    var lx = S.padL, ly = S.H - 12;
+    // legend (own row, clear of the decade labels above and the strip below)
+    var lx = S.padL, ly = S.spineBot + 30;
     CATS.forEach(function (cat, i) {
       var cxx = lx + i * 118;
-      p.push('<rect x="' + cxx.toFixed(1) + '" y="' + (ly - 8) + '" width="9" height="9" fill="' + CATEGORY_COLORS[cat] + '"/><text class="cl" x="' + (cxx + 12).toFixed(1) + '" y="' + ly + '">' + CATEGORY_SHORT[cat] + '</text>');
+      p.push('<rect x="' + cxx.toFixed(1) + '" y="' + (ly - 8) + '" width="9" height="9" fill="' + CATEGORY_COLORS[cat] + '"/><text class="cl lf-scale-with-art" x="' + (cxx + 12).toFixed(1) + '" y="' + ly + '">' + CATEGORY_SHORT[cat] + '</text>');
     });
-    p.push('<text class="cl" x="' + lx + '" y="' + (ly + 14) + '">solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · tick = trajectory · shaded = ' + win + '-yr rolling density · line = net</text>');
+    p.push('<text class="cl lf-scale-with-art" x="' + lx + '" y="' + (ly + 14) + '">solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · tick = trajectory · shaded = ' + win + '-yr rolling density · line = net · click a year for its cards</text>');
+    // --- volume context strip: measured R&D volume, log scale (the contrast to the flat canon) ---
+    var strip = spec.strip;
+    if (strip && strip.years && strip.years.length) {
+      var yrs = strip.years, us = strip.us, cn = strip.cn, n = yrs.length;
+      var sSep = ly + 33, sTitle = sSep + 15, sTop = sSep + 30, sBot = sSep + 92;   // separator / title / plot band
+      var allv = us.concat(cn), minV = Math.min.apply(null, allv), maxV = Math.max.apply(null, allv);
+      var lo = Math.log10(minV * 0.8), hi = Math.log10(maxV * 1.15);
+      function slx(y) { return S.padL + (y - yrs[0]) / (yrs[n - 1] - yrs[0]) * (S.W - S.padL - S.padR); }
+      function sly(v) { return sBot - (Math.log10(v) - lo) / (hi - lo) * (sBot - sTop); }
+      p.push('<line x1="' + S.padL + '" y1="' + sSep + '" x2="' + (S.W - S.padR) + '" y2="' + sSep + '" stroke="#cbd5e0"/>');
+      p.push('<text class="ti lf-scale-with-art" x="' + S.padL + '" y="' + sTitle + '">Measured R&amp;D volume — GERD (gross domestic R&amp;D spend), PPP $B · <tspan font-weight="700">log scale</tspan> · ' + esc(strip.source) + ' · ' + yrs[0] + '–' + yrs[n - 1] + '</text>');
+      // country tags at the right end of each line
+      var usEndY = sly(us[n - 1]), cnEndY = sly(cn[n - 1]);
+      [100, 1000].forEach(function (g) {
+        if (g > minV * 0.8 && g < maxV * 1.15) {
+          var yy = sly(g);
+          p.push('<line x1="' + S.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (S.W - S.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/>');
+          p.push('<text class="tk lf-scale-with-art" x="' + (S.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>');
+        }
+      });
+      function poly(vals) { return vals.map(function (v, i) { return slx(yrs[i]).toFixed(1) + ',' + sly(v).toFixed(1); }).join(' '); }
+      [['US', us, '#2b6cb0'], ['China', cn, '#c53030']].forEach(function (t) {
+        var vals = t[1], col = t[2];
+        p.push('<polygon points="' + slx(yrs[0]).toFixed(1) + ',' + sBot + ' ' + poly(vals) + ' ' + slx(yrs[n - 1]).toFixed(1) + ',' + sBot + '" fill="' + col + '" opacity="0.08"/>');
+        p.push('<polyline points="' + poly(vals) + '" fill="none" stroke="' + col + '" stroke-width="1.7"/>');
+        vals.forEach(function (v, i) { p.push('<circle cx="' + slx(yrs[i]).toFixed(1) + '" cy="' + sly(v).toFixed(1) + '" r="2" fill="' + col + '"/>'); });
+      });
+      p.push('<text class="cl lf-scale-with-art" x="' + (S.W - S.padR) + '" y="' + (usEndY - 5).toFixed(1) + '" text-anchor="end" fill="#2b6cb0" font-weight="600">US</text>');
+      p.push('<text class="cl lf-scale-with-art" x="' + (S.W - S.padR) + '" y="' + (cnEndY + 12).toFixed(1) + '" text-anchor="end" fill="#c53030" font-weight="600">China</text>');
+      yrs.forEach(function (y) { p.push('<text class="tk lf-scale-with-art" x="' + slx(y).toFixed(1) + '" y="' + (sBot + 12) + '" text-anchor="middle">' + y + '</text>'); });
+      p.push('<text class="cl lf-scale-with-art" x="' + S.padL + '" y="' + (sBot + 26) + '">Chinese patent COUNTS are subsidy-distorted (~1 in 10 CNIPA filings ‘irregular’) — R&amp;D spend shown instead as the series least exposed; the PPP base year shifts the exact US↔China crossover.</text>');
+    }
     p.push('</svg>');
     return p.join("");
   }

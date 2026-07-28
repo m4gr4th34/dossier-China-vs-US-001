@@ -229,6 +229,13 @@
     color:var(--ink2); text-align:center;
     padding:11px 16px 13px; border-top:1px solid var(--line);
   }
+  /* figure-role eyebrow — the two living figures read as ONE numbered system:
+     I. the ledger (spine), II. the index (momentum). Same mono eyebrow scale as
+     the section kickers, tinted to each figure's own accent. */
+  .fig-role{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    margin:38px 0 -14px;font-weight:600}
+  .fig-role .rn{display:inline-block;min-width:1.4em}
+  .fig-role.teal{color:var(--teal)} .fig-role.coral{color:var(--coral)}
   /* lightbox — overlay must clear the grain overlay at z-index:9999 */
   .lbx{
     position:fixed; inset:0; z-index:10000;
@@ -267,6 +274,40 @@
   .wy-slider{flex:1;min-width:0}
   .wy-val{flex:0 0 30px;text-align:right;color:var(--ink2)}
   @media(max-width:560px){.wy-sliders{grid-template-columns:1fr}}
+
+  /* ===== in-figure year panel (spine block click -> that year's cards) =====
+     JS-on affordance only: the baked SVG blocks stay plain <a> deep-links to
+     dossier.html#y-YYYY with JS off, so the floor never depends on this. */
+  .ypanel{position:fixed;inset:0;z-index:10001;display:flex;background:rgba(23,38,44,.72);
+    -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+    align-items:center;justify-content:center;padding:24px}
+  .ypanel[hidden]{display:none}
+  .ypanel-sheet{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+    box-shadow:var(--shadow-lift);width:min(640px,94vw);max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+  .yp-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .yp-title{font-family:var(--serif);font-size:24px;font-weight:600;margin:0;line-height:1}
+  .yp-count{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+  .yp-nav{margin-left:auto;display:flex;gap:6px;align-items:center}
+  .yp-nav button{font-family:var(--mono);font-size:12px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--r-pill);padding:4px 10px;cursor:pointer;color:var(--ink)}
+  .yp-nav button:hover:not(:disabled){border-color:var(--teal);color:var(--teal)}
+  .yp-nav button:disabled{opacity:.4;cursor:default}
+  .yp-close{font-family:var(--mono);font-size:15px;line-height:1;background:none;border:none;cursor:pointer;color:var(--ink2);padding:4px 6px}
+  .yp-close:hover{color:var(--coral)}
+  .yp-body{padding:12px 16px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+  .yp-card{border:1px solid var(--line);border-left-width:4px;border-radius:6px;padding:11px 13px;background:var(--card)}
+  .yp-card-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .yp-ctry{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--ink2)}
+  .yp-cat{font-family:var(--mono);font-size:11px;font-weight:600}
+  .yp-claim{font-family:var(--serif);font-size:15px;line-height:1.45;margin:0 0 8px;color:var(--ink)}
+  .yp-meta{display:flex;flex-wrap:wrap;gap:6px}
+  .yp-tag{font-family:var(--mono);font-size:10.5px;color:var(--ink2);border:1px solid var(--line);border-radius:9px;padding:1px 8px}
+  .yp-foot{padding:12px 16px;border-top:1px solid var(--line)}
+  .yp-foot a{font-family:var(--mono);font-size:12.5px;color:var(--teal)}
+  @media(max-width:560px){
+    .ypanel{align-items:flex-end;padding:0}
+    .ypanel-sheet{width:100%;max-height:86vh;border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom:none}
+  }
 
   /* ===== lineage strip (hidden until lineage.json has chapters) ===== */
   .lineage-strip{
@@ -1275,6 +1316,102 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
     });
   });
   apply(W.category_weightings.W0, false);   // init at baseline (== the baked static bars)
+})();
+</script>
+<!-- In-figure year panel: clicking any spine block (or its year) opens that year's
+     ESTABLISHED cards from the SAME baked year_cards JSON the verifier checks against
+     the ledger. Prev/next year nav, per-year deep link (#y-YYYY), and a full-audit-trail
+     link into dossier.html#y-YYYY. Cards built with createElement/textContent (claim text
+     is data, never HTML). JS-off: the blocks stay plain deep-links -> no panel needed. -->
+<script>
+(function(){
+  var fig=document.querySelector('.spine-fig[data-figure]'); if(!fig) return;
+  var spec; try{ spec=JSON.parse(fig.getAttribute('data-figure')); }catch(e){ return; }
+  var cards=spec.year_cards||{};
+  var years=Object.keys(cards).map(Number).sort(function(a,b){return a-b;});
+  if(!years.length) return;
+  var CATCOLOR={innovation:'#2b6cb0',science:'#6b46c1',infrastructure:'#2f855a',industrial:'#c05621',social:'#b83280',governmental_economic:'#4a5568'};
+  var CATNAME={governmental_economic:'gov/econ'};
+
+  var ov=document.createElement('div'); ov.className='ypanel'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true'); ov.setAttribute('aria-label','Achievements for a year'); ov.hidden=true;
+  var sheet=document.createElement('div'); sheet.className='ypanel-sheet'; ov.appendChild(sheet);
+  document.body.appendChild(ov);
+  var cur=null, guard=false;
+
+  function el(t,cls,txt){ var e=document.createElement(t); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+
+  function render(y){
+    cur=y; sheet.textContent='';
+    var idx=years.indexOf(y);
+    var prev=idx>0?years[idx-1]:null, next=idx<years.length-1?years[idx+1]:null;
+    var list=cards[String(y)]||[];
+    // header
+    var head=el('div','yp-head');
+    head.appendChild(el('h3','yp-title',String(y)));
+    head.appendChild(el('span','yp-count',list.length+(list.length===1?' entry':' entries')));
+    var nav=el('div','yp-nav');
+    var pb=el('button',null,'← '+(prev||'')); pb.disabled=!prev; pb.title=prev?('Prev year with entries: '+prev):''; pb.onclick=function(){ if(prev) open(prev); };
+    var nb=el('button',null,(next||'')+' →'); nb.disabled=!next; nb.title=next?('Next year with entries: '+next):''; nb.onclick=function(){ if(next) open(next); };
+    var cb=el('button','yp-close','✕'); cb.setAttribute('aria-label','Close'); cb.onclick=close;
+    nav.appendChild(pb); nav.appendChild(nb); nav.appendChild(cb);
+    head.appendChild(nav); sheet.appendChild(head);
+    // body
+    var body=el('div','yp-body');
+    list.forEach(function(c){
+      var col=CATCOLOR[c.cat]||'#888';
+      var card=el('div','yp-card'); card.style.borderLeftColor=col;
+      var top=el('div','yp-card-top');
+      top.appendChild(el('span','yp-ctry',c.c));
+      var cat=el('span','yp-cat',CATNAME[c.cat]||c.cat); cat.style.color=col; top.appendChild(cat);
+      var chip=el('span','s-chip s-est','ESTABLISHED'); top.appendChild(chip);
+      card.appendChild(top);
+      card.appendChild(el('p','yp-claim',c.claim||''));
+      var meta=el('div','yp-meta');
+      if(c.et) meta.appendChild(el('span','yp-tag',c.et));
+      if(c.src) meta.appendChild(el('span','yp-tag',c.src));
+      meta.appendChild(el('span','yp-tag',c.id));
+      card.appendChild(meta);
+      body.appendChild(card);
+    });
+    sheet.appendChild(body);
+    // footer
+    var foot=el('div','yp-foot');
+    var a=el('a',null,'Full audit trail for '+y+' →'); a.href='dossier.html#y-'+y;
+    foot.appendChild(a); sheet.appendChild(foot);
+    var focusable=head.querySelector('.yp-close'); if(focusable) focusable.focus();
+  }
+  function open(y){
+    y=Number(y); if(years.indexOf(y)<0) return;
+    render(y); ov.hidden=false; document.documentElement.style.overflow='hidden';
+    guard=true; try{ history.replaceState(null,'','#y-'+y); }catch(e){} guard=false;
+  }
+  function close(){
+    ov.hidden=true; document.documentElement.style.overflow='';
+    if(/^#y-\d+$/.test(location.hash)){ guard=true; try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} guard=false; }
+    cur=null;
+  }
+  // delegate: any spine block (baked poster OR live re-render OR expanded lightbox)
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('a.lf-year'):null; if(!a) return;
+    var y=a.getAttribute('data-year'); if(!y) return;
+    e.preventDefault(); open(y);
+  },false);
+  ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+  document.addEventListener('keydown',function(e){
+    if(ov.hidden) return;
+    if(e.key==='Escape'){ close(); }
+    else if(e.key==='ArrowLeft'){ var i=years.indexOf(cur); if(i>0) open(years[i-1]); }
+    else if(e.key==='ArrowRight'){ var j=years.indexOf(cur); if(j>=0&&j<years.length-1) open(years[j+1]); }
+  });
+  // per-year deep link: open on load / hashchange when #y-YYYY targets a year we have
+  function fromHash(){
+    if(guard) return;
+    var m=/^#y-(\d+)$/.exec(location.hash);
+    if(m && years.indexOf(Number(m[1]))>=0){ open(Number(m[1])); }
+    else if(!ov.hidden){ close(); }
+  }
+  window.addEventListener('hashchange',fromHash);
+  fromHash();
 })();
 </script>
 <script>

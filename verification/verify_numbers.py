@@ -268,6 +268,41 @@ for _c in ("US", "China"):
 check("Index I10: spine density silhouette recomputes exactly from the corpus (rolling window)",
       _sil_bad, 0, 0)
 
+# (I11) volume-context strip series == data/context_series.csv, EXACTLY (new data
+#       layer). The strip beneath the spine plots measured R&D volume; it must render
+#       the committed CSV byte-for-byte, independently re-parsed here.
+_ctx = _read_csv(os.path.join(_ROOT, "data", "context_series.csv"))
+_ctx_years = [int(_r["year"]) for _r in _ctx]
+_ctx_us = [float(_r["us_gerd_ppp_bn"]) for _r in _ctx]
+_ctx_cn = [float(_r["cn_gerd_ppp_bn"]) for _r in _ctx]
+_strip = _committed["spine_spec"].get("strip", {})
+check("Index I11: volume-context strip series == data/context_series.csv exactly",
+      0 if (_strip.get("years") == _ctx_years and _strip.get("us") == _ctx_us
+            and _strip.get("cn") == _ctx_cn) else 1, 0, 0)
+
+# (I12) in-figure year-panel cards == the ESTABLISHED ledger, FIELD-FOR-FIELD.
+#       Clicking a spine year opens cards baked from spine_spec.year_cards; each card
+#       must reconcile with its ledger row exactly (country, category, event_type,
+#       source_class, claim) and sit under its own anchor year — the id set matches
+#       the ESTABLISHED ledger with no dup/miss.
+_ledger_by_id = {_r.get("id"): _r for _r in _ledger_rows}
+_yc = _committed["spine_spec"].get("year_cards", {})
+_panel_ids = [_c["id"] for _lst in _yc.values() for _c in _lst]
+_panel_bad = len(set(_panel_ids) ^ _ledger_est_ids)
+_panel_bad += 0 if len(_panel_ids) == len(_ledger_est_ids) == len(set(_panel_ids)) else 1
+for _y, _lst in _yc.items():
+    for _c in _lst:
+        _lr = _ledger_by_id.get(_c["id"])
+        if (_lr is None or _c.get("c") != _lr.get("country")
+                or _c.get("cat") != _lr.get("category")
+                or _c.get("et") != _lr.get("event_type")
+                or _c.get("src", "") != _lr.get("source_class", "")
+                or _c.get("claim", "") != _lr.get("claim", "")
+                or str(_y) != str(_lr.get("year"))):
+            _panel_bad += 1
+check("Index I12: in-figure year-panel cards == the ESTABLISHED ledger, field-for-field",
+      _panel_bad, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)

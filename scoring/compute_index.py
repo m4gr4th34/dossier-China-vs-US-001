@@ -43,6 +43,7 @@ ROOT = os.path.join(HERE, os.pardir)
 LEDGER = os.path.join(ROOT, "claim_ledger.csv")
 DRAFT = os.path.join(ROOT, "data", "achievements_draft.csv")
 WEIGHTS = os.path.join(HERE, "weights.json")
+CONTEXT = os.path.join(ROOT, "data", "context_series.csv")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
 DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
@@ -222,7 +223,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["spine_caption"] = build_spine_caption(draft_rows, spine_counts)
     result["dossiers_html"] = dossiers_html
     result["momentum_spec"] = build_momentum_spec(result)
-    result["spine_spec"] = build_spine_spec(result, draft_rows)
+    result["spine_spec"] = build_spine_spec(result, draft_rows, est)
     return result
 
 
@@ -264,15 +265,19 @@ def build_spine_caption(draft_rows, spine_counts):
     rep = sum(1 for r in draft_rows if r["status"] == "REPORTED")
     us = sum(1 for r in draft_rows if r["country"] == "US")
     cn = sum(1 for r in draft_rows if r["country"] == "China")
-    return ("The Century Spine - one block per corpus row at its anchor year, US stacking up from the "
-            "centreline and China down (1926-2026). RAW COUNTS under the published selection rule "
-            "(notes/selection_criteria.md) and its density target - a fact ABOUT THE CORPUS, not a "
-            "momentum score: %d rows (US %d, China %d), of which %d ESTABLISHED (solid), %d OPEN-UNVERIFIED "
-            "(outlined) and %d REPORTED (hatched). Colour = category (shared legend below). Amendment-4 "
-            "trajectory rows sit at their span-start year with a small forward tick. Each block links to "
-            "its year dossier (dossier.html#y-YYYY). The shaded envelope is a %d-year centred rolling "
-            "count per country (a PRESENTATION smoothing choice, no weights); the centreline ribbon is the "
-            "US-minus-China net of that count." % (n, us, cn, est, opn, rep, SILHOUETTE_WINDOW))
+    return ("TOP (spine) = the curated canon, FLAT BY CONSTRUCTION: the selection rule "
+            "(notes/selection_criteria.md) targets ~5-15 rows per country per decade, so no decade can "
+            "dwarf another - the flatness is a property of the RULE, not the world. BOTTOM (strip) = what "
+            "the century's MEASURED innovation volume actually did (R&D expenditure). The contrast is the "
+            "finding. --- Spine detail: one block per corpus row at its anchor year, US up / China down "
+            "(1926-2026); %d rows (US %d, China %d), of which %d ESTABLISHED (solid), %d OPEN-UNVERIFIED "
+            "(outlined) and %d REPORTED (hatched); colour = category. Amendment-4 trajectory rows sit at "
+            "their span-start with a forward tick. Click a year for its cards; each block also links to its "
+            "year dossier (dossier.html#y-YYYY). The shaded envelope is a %d-year centred rolling count per "
+            "country (a presentation smoothing choice, no weights); the ribbon is the US-minus-China net. "
+            "--- Strip: GERD (R&D spend), PPP $B, LOG scale (OECD MSTI / NSF NCSES) - chosen over patent "
+            "counts, which Chinese filing subsidies distort (~1 in 10 CNIPA filings 'irregular'); the PPP "
+            "base year shifts the exact US-China crossover." % (n, us, cn, est, opn, rep, SILHOUETTE_WINDOW))
 
 
 # ============================================================
@@ -371,7 +376,38 @@ def build_momentum_spec(result):
     }
 
 
-def build_spine_spec(result, draft_rows):
+def build_strip():
+    """Volume context strip: independently-maintained R&D-expenditure series (least
+    exposed to the Chinese patent-count subsidy dispute). Read verbatim from
+    data/context_series.csv; verify_numbers.py checks the spec against the CSV."""
+    rows = _read_csv(CONTEXT)
+    return {
+        "years": [int(r["year"]) for r in rows],
+        "us": [float(r["us_gerd_ppp_bn"]) for r in rows],
+        "cn": [float(r["cn_gerd_ppp_bn"]) for r in rows],
+        "measure": "R&D expenditure (GERD), PPP $B",
+        "source": "OECD MSTI / NSF NCSES",
+        "log": True,
+        "note": "Patent COUNTS (incl. PCT) are distorted by Chinese filing subsidies "
+                "(CNIPA flagged ~1 in 10 filings 'irregular'); R&D spend is used instead as "
+                "the series least exposed. GERD PPP base-year shifts the exact crossover.",
+    }
+
+
+def build_year_cards(est_rows):
+    """Per-year ESTABLISHED cards for the in-figure panel. verify_numbers.py checks
+    this reconciles with the ledger exactly."""
+    out = {}
+    for r in sorted(est_rows, key=lambda x: (int(x["year"]), x["id"])):
+        out.setdefault(str(int(r["year"])), []).append({
+            "id": r["id"], "c": r["country"], "cat": r["category"],
+            "et": r["event_type"], "src": r.get("source_class", ""),
+            "claim": r.get("claim", r.get("claim_text", "")),
+        })
+    return out
+
+
+def build_spine_spec(result, draft_rows, est_rows):
     rows = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"],
              "et": r["event_type"], "st": r["status"], "pr": r.get("year_precision", "")}
             for r in draft_rows if r["country"] in COUNTRIES]
@@ -379,6 +415,7 @@ def build_spine_spec(result, draft_rows):
     return {
         "type": "spine", "version": 1, "rows": rows,
         "silhouette": sil, "silhouette_max": mx, "window": SILHOUETTE_WINDOW,
+        "strip": build_strip(), "year_cards": build_year_cards(est_rows),
         "stage": "#ffffff", "caption": result["spine_caption"],
     }
 
@@ -439,10 +476,10 @@ if __name__ == "__main__":
         fh.write("\n")
     changed = []
     if _inject(SOURCE, "<!--chart:start-->", "<!--chart:end-->",
-               _living_figure("living-figure chart momentum-fig", result["momentum_spec"], build_weigh_controls())):
+               _living_figure("living-figure chart wide momentum-fig", result["momentum_spec"], build_weigh_controls())):
         changed.append("momentum")
     if _inject(SOURCE, "<!--spine:start-->", "<!--spine:end-->",
-               _living_figure("living-figure chart spine-fig", result["spine_spec"])):
+               _living_figure("living-figure chart wide spine-fig", result["spine_spec"])):
         changed.append("spine")
     if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
         changed.append("dossiers")
