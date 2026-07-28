@@ -2,7 +2,7 @@
   "name": "dossier-china-vs-us-001",
   "version": "1.0.0",
   "private": true,
-  "description": "Open Dossier template — author-local tooling (vendored KaTeX for build-time prerendered math). Readers need no JS; CI never renders math.",
+  "description": "Open Dossier template \u2014 author-local tooling (vendored KaTeX for build-time prerendered math). Readers need no JS; CI never renders math.",
   "license": "MIT",
   "scripts": {
     "render-math": "node render_math.js",
@@ -14,7 +14,8 @@
     "check-projection": "node verify_projection.js",
     "render-backcatalog": "node render_backcatalog.js",
     "check-backcatalog": "node verify_backcatalog.js",
-    "test": "node run_tests.js"
+    "test": "node run_tests.js",
+    "check-labels": "python3 verification/check_figure_labels.py"
   },
   "dependencies": {
     "katex": "0.16.47"

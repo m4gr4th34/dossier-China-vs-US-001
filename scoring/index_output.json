@@ -10450,7 +10450,7 @@
   },
   "founder_spec": {
     "type": "founder",
-    "version": 1,
+    "version": 2,
     "band": [
       {
         "c": "China",
@@ -11679,6 +11679,13 @@
     },
     "silhouette_max": 8,
     "window": 15,
+    "count": 46,
+    "stage": "#ffffff",
+    "caption": "Figure Va - the Founder's Century, on one 1926-2026 axis (descriptive). --- REGIME BAND: whether a private founder could legally operate - the US open throughout (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 (private enterprise abolished), reopening 1978, open 1992-2020, and constrained since the 2020 tech crackdown (a band annotation, not a ledger row - a crackdown is not an achievement). --- FOUNDINGS: the 46 company-founding rows from the verified ledger (event_type=founding, US 26 / China 20; foundings, not patents or IP), US above / China below, over a 15-year rolling founding-density envelope; click any block for its cards. The capital system these founders operated in is Figure Vb. Sourcing: notes/regime_band_rationale.md."
+  },
+  "capital_spec": {
+    "type": "capital",
+    "version": 1,
     "vc": {
       "us": [
         [
@@ -11758,8 +11765,7 @@
       ],
       "unit": "US$B",
       "log": true,
-      "source": "PitchBook-NVCA (US) / KPMG Venture Pulse-PitchBook (China)",
-      "note": "China VC peaks $146B (2021) -> $38B (2024), a ~74% collapse vs the US's ~41%. China column summed from KPMG quarterly bars (authorial aggregation)."
+      "source": "PitchBook-NVCA (US) / KPMG Venture Pulse-PitchBook (China)"
     },
     "exits": {
       "us": [
@@ -11872,6 +11878,16 @@
           2022,
           1860.0,
           940.0
+        ],
+        [
+          2023,
+          1720.0,
+          1000.0
+        ],
+        [
+          2024,
+          1760.0,
+          1055.0
         ]
       ],
       "ticks": [
@@ -11924,9 +11940,8 @@
         "class": "chinese-origin"
       }
     ],
-    "count": 46,
     "stage": "#ffffff",
-    "caption": "Figure V - the Founder's Century, in layers (descriptive). --- REGIME BAND: whether a private founder could legally operate - the US open throughout (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 (private enterprise abolished), reopening 1978, open 1992-2020, and constrained since the 2020 tech crackdown (a band annotation, not a ledger row - a crackdown is not an achievement). --- FOUNDINGS: the 46 company-founding rows from the verified ledger (event_type=founding, US 26 / China 20; foundings, not patents or IP), US above / China below, over a 15-year rolling founding-density envelope; click any block for its cards. --- VC STRIP: annual PRIVATE venture-capital investment (PitchBook, log US$B) - China peaks $146B (2021) and collapses to $38B (2024, ~74%); the US falls ~41%. --- EXITS STRIP: annual IPO proceeds (Renaissance / EY / KPMG, log US$B) - Chinese-company US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings onshored to the A-share market and Hong Kong. --- STATE-GUIDED CAPITAL (a drawn est. range, not a line): the China band's WIDTH is the gap between announced guidance-fund target (upper edge) and estimated paid-in (lower edge) - ~$1.4T / $585B in 2018 rising to ~$1.86T / $940B in 2022, only ~43-51% of target actually paid in (Zero2IPO / 清科, a single Chinese-origin vendor; CSET and China Quarterly corroborate by citation, not independent count). China's Big Fund phases and the US SBIR / CHIPS comparators are discrete ticks - the US has no guidance-fund equivalent, so no US band is invented. Private VC collapsed after 2021 while state-guided capital swelled; the band's width is the measurement uncertainty, drawn not asserted. Sourcing: notes/founder_series_selection.md and notes/regime_band_rationale.md."
+    "caption": "Figure Vb - the Capital System, three strips on one shared modern axis (~2014-2024). --- PRIVATE VC: annual venture-capital investment (PitchBook, log US$B) - China peaks $146B (2021) and collapses to $38B (2024, ~74%); the US falls ~41%. --- STATE-GUIDED CAPITAL (a drawn est. range, not a line): the China band's WIDTH is the gap between announced guidance-fund target (upper edge) and subscribed / committed capital (认缴, lower edge) - ~$1.4T / $585B in 2018 rising to ~$1.76T / $1.06T by 2024; subscribed is pledged, NOT paid-in cash and NOT deployed, so the true deployment gap is wider still. All figures trace to a single Chinese-origin vendor (Zero2IPO / 清科); the target line wobbles on scope (expired funds netted out), while new-fund formation fell ~25% in 2023 and ~37% underlying in 2024. China's Big Fund phases (through 2024) and the US SBIR / CHIPS comparators are discrete ticks - the US has no guidance-fund equivalent, so no US band is invented. --- IPO PROCEEDS: annual proceeds by venue (Renaissance / EY / KPMG, log US$B) - Chinese US-listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), onshoring to the A-share market and Hong Kong. Private VC collapsed after 2021 while state-guided capital swelled; each band's width is measurement uncertainty, drawn not asserted. Sourcing: notes/founder_series_selection.md."
   },
   "velocity_spec": {
     "type": "velocity",
@@ -12072,6 +12087,6 @@
       ]
     ],
     "stage": "#ffffff",
-    "caption": "Figure Vb - Velocity: four ways to be fast (OPEN-CAVEATED - a constructed comparison; the underlying numbers are real and sourced, but the choice of four dimensions and the US-vs-China pairing are authorial; re-choose them and the picture shifts). The honest spine: CHINA leads velocity in ATOMS, the US in BITS and at the FRONTIER - not one direction. --- DEPLOYMENT: electric-car share of new-car sales (IEA), China ~6 to 45%% in four years vs the US ~2 to 10%% (falling in 2025); China also added ~277 GW of solar in 2024 (US ~50) and runs ~48,000 km of high-speed rail (US ~0). But BITS invert: ChatGPT hit ~100M users in ~2 months and US AI-infrastructure capex (~$350B in 2025) dwarfs China's AI-cloud market (~$7B). --- ITERATION CADENCE: Chinese new-model dev cycles run ~20 months vs ~40 for legacy makers (AlixPartners/McKinsey) - but the US SETS the AI frontier and Chinese open models trail it ~4-8 months (Epoch/AISI/NIST); ships-more-often is a different axis from sets-the-frontier. --- TIME-TO-SCALE: exemplar dots, NOT a line - no honest paired median exists. China's 2010s cohort scaled fast (Xiaomi ~1.5yr, DiDi ~2yr), but SHEIN took ~11yr and the US 2023-25 AI cohort is now fastest (xAI ~$24B in ~14 months). --- CUTTHROAT: ~487 Chinese EV makers (2018) to ~129 (2025) to ~15 viable by 2030 (AlixPartners), only 3 profitable; the US concentrates early instead (Uber+Lyft ~99%%, Google ~90%%). The same selection forged BYD/CATL/DJI AND is now called 'involution' - a ~$69B EV price-war revenue wipe, 35 months of negative PPI, a state 'anti-involution' campaign. Full rubric + sources: notes/velocity_selection.md."
+    "caption": "Figure Vc - Velocity: four ways to be fast (OPEN-CAVEATED - a constructed comparison; the underlying numbers are real and sourced, but the choice of four dimensions and the US-vs-China pairing are authorial; re-choose them and the picture shifts). The honest spine: CHINA leads velocity in ATOMS, the US in BITS and at the FRONTIER - not one direction. --- DEPLOYMENT: electric-car share of new-car sales (IEA), China ~6 to 45%% in four years vs the US ~2 to 10%% (falling in 2025); China also added ~277 GW of solar in 2024 (US ~50) and runs ~48,000 km of high-speed rail (US ~0). But BITS invert: ChatGPT hit ~100M users in ~2 months and US AI-infrastructure capex (~$350B in 2025) dwarfs China's AI-cloud market (~$7B). --- ITERATION CADENCE: Chinese new-model dev cycles run ~20 months vs ~40 for legacy makers (AlixPartners/McKinsey) - but the US SETS the AI frontier and Chinese open models trail it ~4-8 months (Epoch/AISI/NIST); ships-more-often is a different axis from sets-the-frontier. --- TIME-TO-SCALE: exemplar dots, NOT a line - no honest paired median exists. China's 2010s cohort scaled fast (Xiaomi ~1.5yr, DiDi ~2yr), but SHEIN took ~11yr and the US 2023-25 AI cohort is now fastest (xAI ~$24B in ~14 months). --- CUTTHROAT: ~487 Chinese EV makers (2018) to ~129 (2025) to ~15 viable by 2030 (AlixPartners), only 3 profitable; the US concentrates early instead (Uber+Lyft ~99%%, Google ~90%%). The same selection forged BYD/CATL/DJI AND is now called 'involution' - a ~$69B EV price-war revenue wipe, 35 months of negative PPI, a state 'anti-involution' campaign. Full rubric + sources: notes/velocity_selection.md."
   }
 }

@@ -247,6 +247,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["natsec_spec"] = build_natsec_spec(draft_rows)
     result["dimensions_spec"] = build_dimensions_spec()
     result["founder_spec"] = build_founder_spec(draft_rows)
+    result["capital_spec"] = build_capital_spec()
     result["velocity_spec"] = build_velocity_spec()
     return result
 
@@ -549,32 +550,38 @@ def build_dimensions_spec():
             "stage": "#ffffff", "caption": build_dimensions_caption(dims)}
 
 
-def build_founder_caption(founds, vc, uni):
+def build_founder_caption(founds):
     us_n = sum(1 for f in founds if f["c"] == "US")
     cn_n = len(founds) - us_n
-    return ("Figure V - the Founder's Century, in layers (descriptive). "
+    return ("Figure Va - the Founder's Century, on one 1926-2026 axis (descriptive). "
             "--- REGIME BAND: whether a private founder could legally operate - the US open throughout "
             "(ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 (private enterprise "
             "abolished), reopening 1978, open 1992-2020, and constrained since the 2020 tech crackdown (a "
             "band annotation, not a ledger row - a crackdown is not an achievement). "
             "--- FOUNDINGS: the %d company-founding rows from the verified ledger (event_type=founding, "
             "US %d / China %d; foundings, not patents or IP), US above / China below, over a 15-year "
-            "rolling founding-density envelope; click any block for its cards. "
-            "--- VC STRIP: annual PRIVATE venture-capital investment (PitchBook, log US$B) - China peaks "
-            "$146B (2021) and collapses to $38B (2024, ~74%%); the US falls ~41%%. "
-            "--- EXITS STRIP: annual IPO proceeds (Renaissance / EY / KPMG, log US$B) - Chinese-company "
-            "US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings "
-            "onshored to the A-share market and Hong Kong. "
-            "--- STATE-GUIDED CAPITAL (a drawn est. range, not a line): the China band's WIDTH is the "
-            "gap between announced guidance-fund target (upper edge) and estimated paid-in (lower edge) "
-            "- ~$1.4T / $585B in 2018 rising to ~$1.86T / $940B in 2022, only ~43-51%% of target "
-            "actually paid in (Zero2IPO / 清科, a single Chinese-origin vendor; CSET and China Quarterly "
-            "corroborate by citation, not independent count). China's Big Fund phases and the US "
-            "SBIR / CHIPS comparators are discrete ticks - the US has no guidance-fund equivalent, so no "
-            "US band is invented. Private VC collapsed after 2021 while state-guided capital swelled; the "
-            "band's width is the measurement uncertainty, drawn not asserted. Sourcing: "
-            "notes/founder_series_selection.md and notes/regime_band_rationale.md." % (
+            "rolling founding-density envelope; click any block for its cards. The capital system these "
+            "founders operated in is Figure Vb. Sourcing: notes/regime_band_rationale.md." % (
             len(founds), us_n, cn_n))
+
+
+def build_capital_caption(uni):
+    return ("Figure Vb - the Capital System, three strips on one shared modern axis (~2014-2024). "
+            "--- PRIVATE VC: annual venture-capital investment (PitchBook, log US$B) - China peaks $146B "
+            "(2021) and collapses to $38B (2024, ~74%); the US falls ~41%. "
+            "--- STATE-GUIDED CAPITAL (a drawn est. range, not a line): the China band's WIDTH is the gap "
+            "between announced guidance-fund target (upper edge) and subscribed / committed capital "
+            "(认缴, lower edge) - ~$1.4T / $585B in 2018 rising to ~$1.76T / $1.06T by 2024; subscribed is "
+            "pledged, NOT paid-in cash and NOT deployed, so the true deployment gap is wider still. All "
+            "figures trace to a single Chinese-origin vendor (Zero2IPO / 清科); the target line wobbles on "
+            "scope (expired funds netted out), while new-fund formation fell ~25% in 2023 and ~37% "
+            "underlying in 2024. China's Big Fund phases (through 2024) and the US SBIR / CHIPS comparators "
+            "are discrete ticks - the US has no guidance-fund equivalent, so no US band is invented. "
+            "--- IPO PROCEEDS: annual proceeds by venue (Renaissance / EY / KPMG, log US$B) - Chinese "
+            "US-listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), onshoring to "
+            "the A-share market and Hong Kong. Private VC collapsed after 2021 while state-guided capital "
+            "swelled; each band's width is measurement uncertainty, drawn not asserted. Sourcing: "
+            "notes/founder_series_selection.md.")
 
 
 def build_exits_strip():
@@ -595,7 +602,7 @@ def build_state_capital():
     band = _read_csv(STATE_CAPITAL_CN)
     ticks = _read_csv(STATE_CAPITAL_TICKS)
     return {
-        "band": [[int(r["year"]), float(r["announced_usd_bn"]), float(r["paidin_usd_bn"])] for r in band],
+        "band": [[int(r["year"]), float(r["announced_usd_bn"]), float(r["subscribed_usd_bn"])] for r in band],
         "ticks": [{"label": r["label"], "year": int(r["year"]), "usd_bn": float(r["usd_bn"]),
                    "side": r["side"]} for r in ticks],
         "source": "Zero2IPO/清科 (Chinese-origin, single vendor); CSET / China Quarterly corroborate by citation",
@@ -628,7 +635,7 @@ def build_velocity_spec():
 
 
 def build_velocity_caption():
-    return ("Figure Vb - Velocity: four ways to be fast (OPEN-CAVEATED - a constructed "
+    return ("Figure Vc - Velocity: four ways to be fast (OPEN-CAVEATED - a constructed "
             "comparison; the underlying numbers are real and sourced, but the choice of four "
             "dimensions and the US-vs-China pairing are authorial; re-choose them and the "
             "picture shifts). The honest spine: CHINA leads velocity in ATOMS, the US in BITS "
@@ -653,6 +660,8 @@ def build_velocity_caption():
 
 
 def build_founder_spec(draft_rows):
+    """Figure Va — The Founder's Century: regime band + founding blocks + density
+    envelope ONLY, on the single 1926-2026 century axis."""
     band = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]), "state": r["state"],
              "anchor": r.get("anchor_row", ""), "label": r.get("label", "")} for r in _read_csv(REGIME_BAND)]
     ticks = [{"c": r["country"], "y": int(r["year"]), "label": r["label"],
@@ -660,6 +669,15 @@ def build_founder_spec(draft_rows):
     founds = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"], "st": r["status"]}
               for r in draft_rows if r.get("event_type") == "founding" and r["country"] in COUNTRIES]
     founds.sort(key=lambda x: (x["y"], x["id"]))
+    sil, mx = _silhouette_founding(draft_rows)
+    return {"type": "founder", "version": 2, "band": band, "ticks": ticks, "founds": founds,
+            "silhouette": sil, "silhouette_max": mx, "window": NATSEC_WINDOW, "count": len(founds),
+            "stage": "#ffffff", "caption": build_founder_caption(founds)}
+
+
+def build_capital_spec():
+    """Figure Vb — The Capital System: private VC + state-guided capital band + IPO
+    proceeds + unicorn note, all on ONE shared modern axis (~2014-2024)."""
     vcrows = _read_csv(VC_SERIES)
 
     def _col(rows, c):
@@ -671,17 +689,12 @@ def build_founder_spec(draft_rows):
         return out
     vc = {"us": _col(vcrows, "us_vc_usd_bn"), "cn": _col(vcrows, "cn_vc_usd_bn"),
           "unit": "US$B", "log": True,
-          "source": "PitchBook-NVCA (US) / KPMG Venture Pulse-PitchBook (China)",
-          "note": "China VC peaks $146B (2021) -> $38B (2024), a ~74% collapse vs the US's ~41%. "
-                  "China column summed from KPMG quarterly bars (authorial aggregation)."}
+          "source": "PitchBook-NVCA (US) / KPMG Venture Pulse-PitchBook (China)"}
     uni = [{"source": r["source"], "as_of": r["as_of"], "us": int(r["us"]), "cn": int(r["cn"]),
             "class": r["source_class"]} for r in _read_csv(UNICORNS)]
-    sil, mx = _silhouette_founding(draft_rows)
-    return {"type": "founder", "version": 1, "band": band, "ticks": ticks, "founds": founds,
-            "silhouette": sil, "silhouette_max": mx, "window": NATSEC_WINDOW,
+    return {"type": "capital", "version": 1,
             "vc": vc, "exits": build_exits_strip(), "state_capital": build_state_capital(),
-            "unicorns": uni, "count": len(founds),
-            "stage": "#ffffff", "caption": build_founder_caption(founds, vc, uni)}
+            "unicorns": uni, "stage": "#ffffff", "caption": build_capital_caption(uni)}
 
 
 def build_natsec_spec(draft_rows):
@@ -774,6 +787,9 @@ if __name__ == "__main__":
     if _inject(SOURCE, "<!--founder:start-->", "<!--founder:end-->",
                _living_figure("living-figure chart wide founder-fig", result["founder_spec"])):
         changed.append("founder")
+    if _inject(SOURCE, "<!--capital:start-->", "<!--capital:end-->",
+               _living_figure("living-figure chart wide capital-fig", result["capital_spec"])):
+        changed.append("capital")
     if _inject(SOURCE, "<!--velocity:start-->", "<!--velocity:end-->",
                _living_figure("living-figure chart wide velocity-fig", result["velocity_spec"])):
         changed.append("velocity")

@@ -364,15 +364,12 @@
   var REGIME_COL = { open: "#2f855a", constrained: "#d69e2e", closed: "#a0aec0" };
 
   function founderSvgString(spec) {
-    var band = spec.band || [], ticks = spec.ticks || [], founds = spec.founds || [], vc = spec.vc || {}, uni = spec.unicorns || [];
+    var band = spec.band || [], ticks = spec.ticks || [], founds = spec.founds || [];
     var bh = 6, gap = 1.3, bw = 7;
     var usBandY = 44, cnBandY = 66, bandH = 13;          // ZONE 1 regime
     var foundKick = 128, cy = 172, decY = 214;           // ZONE 2 foundings
-    var vcKick = 244, sTop = 258, sBot = 300;            // ZONE 3a VC (private)
-    var scKick = 326, scTop = 342, scBot = 384;          // ZONE 3b STATE-GUIDED CAPITAL (band)
-    var exKick = 410, eTop = 424, eBot = 464;            // ZONE 4 EXITS (IPO proceeds)
-    var H = 494;
-    var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="The Founder&#39;s Century in labelled layers: a founder-regime band (open, constrained or closed) per country; the company-founding ledger rows US above / China below; annual private venture-capital investment on a log axis; a matched state-guided-capital strip directly below it drawing the Chinese guidance-fund estimate as a shaded band between announced target (upper edge) and estimated paid-in (lower edge), with China Big Fund phases and US SBIR/CHIPS comparators as discrete ticks; and annual IPO proceeds by venue (US, China onshore, China US-listed) on a log axis showing the post-2021 ADR freeze.">'];
+    var H = 228;
+    var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Figure Va, The Founder&#39;s Century, on one 1926-2026 axis: a founder-regime band (open, constrained or closed) per country, and the company-founding ledger rows US above / China below over a 15-year rolling founding-density envelope. The capital system is Figure Vb.">'];
     p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fti{font:12.5px sans-serif;fill:#2d3748}.fcl{font:9.5px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}.fkick{font:13px sans-serif;font-weight:700;letter-spacing:0.04em}.fin{font:8.5px sans-serif;fill:#2d3748;font-weight:600}.fvl{font:8.5px sans-serif;font-weight:700}</style>');
     // shared decade gridlines (regime + foundings zones)
     for (var yr = 1930; yr <= 2026; yr += 10) {
@@ -434,105 +431,114 @@
       var title = esc(f.id + " " + f.y + " " + f.cat + " founding");
       p.push('<a href="dossier.html#y-' + f.y + '" class="lf-year" data-year="' + f.y + '" data-card="' + esc(f.id) + '"><title>' + title + '</title>' + rect + '</a>');
     });
-    // ===== CAPITAL PAIR — private VC (3a) + state-guided capital (3b) share one x-domain =====
-    var us = vc.us || [], cn = vc.cn || [];
-    var capYrs = us.concat(cn).map(function (d) { return d[0]; });
-    var cy0 = capYrs.length ? Math.min.apply(null, capYrs) : 2014;
-    var cy1 = capYrs.length ? Math.max.apply(null, capYrs) : 2024;
-    function cx(y) { return FO.padL + (y - cy0) / (cy1 - cy0) * (FO.W - FO.padL - FO.padR); }
-    // ----- ZONE 3a: PRIVATE VC (log $B) -----
-    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + vcKick + '" fill="#2f855a">PRIVATE VC (ANNUAL, LOG $B) — ' + esc(vc.source) + '</text>');
-    if (us.length) {
-      var allV = us.concat(cn).map(function (d) { return d[1]; });
-      var mn = Math.min.apply(null, allV), mx = Math.max.apply(null, allV);
-      var lo = Math.log10(mn * 0.8), hi = Math.log10(mx * 1.15);
-      function vy(v) { return sBot - (Math.log10(v) - lo) / (hi - lo) * (sBot - sTop); }
-      [100, 1000].forEach(function (g) {
-        if (g > mn * 0.8 && g < mx * 1.15) { var yy = vy(g); p.push('<line x1="' + FO.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (FO.W - FO.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/><text class="ftk lf-scale-with-art" x="' + (FO.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>'); }
-      });
-      function vpoly(arr) { return arr.map(function (d) { return cx(d[0]).toFixed(1) + ',' + vy(d[1]).toFixed(1); }).join(' '); }
-      var cnPeak = null; for (var ci = 0; ci < cn.length; ci++) if (cn[ci][0] === 2021) cnPeak = cn[ci];
-      if (cnPeak) p.push('<line x1="' + cx(2021).toFixed(1) + '" y1="' + sTop + '" x2="' + cx(2021).toFixed(1) + '" y2="' + sBot + '" stroke="#c53030" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.55"/>');
-      [[us, '#2b6cb0'], [cn, '#c53030']].forEach(function (t) {
-        var arr = t[0], col = t[1];
-        p.push('<polyline points="' + vpoly(arr) + '" fill="none" stroke="' + col + '" stroke-width="1.7"/>');
-        arr.forEach(function (d) { p.push('<circle cx="' + cx(d[0]).toFixed(1) + '" cy="' + vy(d[1]).toFixed(1) + '" r="2" fill="' + col + '"/>'); });
-      });
-      var cnLast = cn[cn.length - 1], usLast = us[us.length - 1];
-      if (cnPeak) { p.push('<text class="fvl lf-scale-with-art" x="' + (cx(2021) - 4).toFixed(1) + '" y="' + (vy(cnPeak[1]) - 5).toFixed(1) + '" text-anchor="end" fill="#c53030">$' + Math.round(cnPeak[1]) + 'B</text>'); p.push('<text class="ftick lf-scale-with-art" x="' + (cx(2021) + 3).toFixed(1) + '" y="' + (sTop + 9) + '" fill="#c53030">crackdown ↓</text>'); }
-      if (cnLast) p.push('<text class="fvl lf-scale-with-art" x="' + (cx(cnLast[0]) + 3).toFixed(1) + '" y="' + (vy(cnLast[1]) + 11).toFixed(1) + '" text-anchor="end" fill="#c53030">China $' + Math.round(cnLast[1]) + 'B</text>');
-      if (usLast) p.push('<text class="fvl lf-scale-with-art" x="' + (cx(usLast[0]) + 3).toFixed(1) + '" y="' + (vy(usLast[1]) - 5).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US $' + Math.round(usLast[1]) + 'B</text>');
-      [cy0, 2018, 2021, cy1].forEach(function (y) { if (y >= cy0 && y <= cy1) p.push('<text class="ftk lf-scale-with-art" x="' + cx(y).toFixed(1) + '" y="' + (sBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
-    }
-    // ----- ZONE 3b: STATE-GUIDED CAPITAL — China est. RANGE band (announced vs paid-in) + discrete ticks -----
-    var scap = spec.state_capital || {}, scBand = scap.band || [], scTk = scap.ticks || [];
-    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + scKick + '" fill="#9c6612">STATE-GUIDED CAPITAL (EST. RANGE, CUMULATIVE LOG $B) — ' + esc(scap.source) + '</text>');
-    if (scBand.length) {
-      var scVals = []; scBand.forEach(function (r) { scVals.push(r[1], r[2]); }); scTk.forEach(function (t) { scVals.push(t.usd_bn); });
-      var smn = Math.min.apply(null, scVals), smx = Math.max.apply(null, scVals);
-      var slo = Math.log10(smn * 0.7), shi = Math.log10(smx * 1.3);
-      function sy(v) { return scBot - (Math.log10(v) - slo) / (shi - slo) * (scBot - scTop); }
-      [10, 100, 1000].forEach(function (g) { if (g > smn * 0.7 && g < smx * 1.3) { var yy = sy(g); p.push('<line x1="' + FO.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (FO.W - FO.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/><text class="ftk lf-scale-with-art" x="' + (FO.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + (g >= 1000 ? (g / 1000) + 'T' : g + 'B') + '</text>'); } });
-      // China est.-range band: announced (upper edge) over paid-in (lower edge); dashed fill = estimate, not a solid line
-      var upper = scBand.map(function (r) { return cx(r[0]).toFixed(1) + ',' + sy(r[1]).toFixed(1); });
-      var lowerRev = scBand.slice().reverse().map(function (r) { return cx(r[0]).toFixed(1) + ',' + sy(r[2]).toFixed(1); });
-      p.push('<polygon points="' + upper.concat(lowerRev).join(' ') + '" fill="#c53030" fill-opacity="0.13" stroke="#c53030" stroke-width="1" stroke-dasharray="4,2"/>');
-      scBand.forEach(function (r) { p.push('<circle cx="' + cx(r[0]).toFixed(1) + '" cy="' + sy(r[1]).toFixed(1) + '" r="1.5" fill="#c53030"/><circle cx="' + cx(r[0]).toFixed(1) + '" cy="' + sy(r[2]).toFixed(1) + '" r="1.5" fill="#c53030" fill-opacity="0.7"/>'); });
-      var bl = scBand[scBand.length - 1];
-      p.push('<text class="fvl lf-scale-with-art" x="' + (cx(bl[0]) - 3).toFixed(1) + '" y="' + (sy(bl[1]) - 2).toFixed(1) + '" text-anchor="end" fill="#c53030">announced ~$' + (bl[1] / 1000).toFixed(1) + 'T</text>');
-      p.push('<text class="fvl lf-scale-with-art" x="' + (cx(bl[0]) - 3).toFixed(1) + '" y="' + (sy(bl[2]) + 9).toFixed(1) + '" text-anchor="end" fill="#c53030">paid-in ~$' + Math.round(bl[2]) + 'B</text>');
-      p.push('<text class="ftick lf-scale-with-art" x="' + cx(scBand[0][0] + 1).toFixed(1) + '" y="' + (sy(220)).toFixed(1) + '" text-anchor="start" fill="#9c6612">state guidance funds, est. range — targets ≠ deployed</text>');
-      // discrete ticks: China Big Fund (amber) + US comparators (blue, no band — the US has none)
-      scTk.forEach(function (t) {
-        var col = t.side === 'US' ? '#2b6cb0' : '#c05621', tx = cx(t.year), ty = sy(t.usd_bn);
-        var atEnd = t.year >= cy1 - 0.5;   // rightmost tick: label to the LEFT so it never clips
-        p.push('<circle cx="' + tx.toFixed(1) + '" cy="' + ty.toFixed(1) + '" r="2.1" fill="' + col + '"/>');
-        p.push('<text class="ftick lf-scale-with-art" x="' + (tx + (atEnd ? -4 : 4)).toFixed(1) + '" y="' + (ty + 3).toFixed(1) + '" text-anchor="' + (atEnd ? 'end' : 'start') + '" fill="' + col + '">' + esc(t.label) + ' $' + (t.usd_bn % 1 === 0 ? t.usd_bn : t.usd_bn.toFixed(1)) + 'B</text>');
-      });
-      [cy0, 2018, 2022, cy1].forEach(function (y) { if (y >= cy0 && y <= cy1) p.push('<text class="ftk lf-scale-with-art" x="' + cx(y).toFixed(1) + '" y="' + (scBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
-    }
-    // ===== ZONE 4 — EXITS STRIP (annual IPO proceeds by venue, log $B) =====
-    var ex = spec.exits || {}, exUS = ex.us || [], exOn = ex.onshore || [], exAdr = ex.us_listed || [];
-    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + exKick + '" fill="#2f855a">ANNUAL IPO PROCEEDS (LOG $B) — ' + esc(ex.source || '') + '</text>');
-    if (exUS.length) {
-      var eAll = exUS.concat(exOn).concat(exAdr);
-      var eyA = eAll.map(function (d) { return d[0]; }), evA = eAll.map(function (d) { return d[1]; }).filter(function (v) { return v > 0; });
-      var ey0 = Math.min.apply(null, eyA), ey1 = Math.max.apply(null, eyA);
-      var emn = Math.min.apply(null, evA), emx = Math.max.apply(null, evA);
-      var elo = Math.log10(emn * 0.7), ehi = Math.log10(emx * 1.2);
-      function ex_x(y) { return FO.padL + (y - ey0) / (ey1 - ey0) * (FO.W - FO.padL - FO.padR); }
-      function ex_y(v) { return eBot - (Math.log10(v) - elo) / (ehi - elo) * (eBot - eTop); }
-      [1, 10, 100].forEach(function (g) { if (g > emn * 0.7 && g < emx * 1.2) { var yy = ex_y(g); p.push('<line x1="' + FO.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (FO.W - FO.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/><text class="ftk lf-scale-with-art" x="' + (FO.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>'); } });
-      function ex_poly(arr) { return arr.filter(function (d) { return d[1] > 0; }).map(function (d) { return ex_x(d[0]).toFixed(1) + ',' + ex_y(d[1]).toFixed(1); }).join(' '); }
-      // DiDi / ADR-freeze marker at mid-2021
-      p.push('<line x1="' + ex_x(2021).toFixed(1) + '" y1="' + eTop + '" x2="' + ex_x(2021).toFixed(1) + '" y2="' + eBot + '" stroke="#c53030" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.45"/>');
-      [[exUS, '#2b6cb0', 'US'], [exOn, '#c05621', 'onshore'], [exAdr, '#c53030', 'US-listed']].forEach(function (t) {
-        var arr = t[0], col = t[1];
-        p.push('<polyline points="' + ex_poly(arr) + '" fill="none" stroke="' + col + '" stroke-width="1.6"' + (t[2] === 'US-listed' ? ' stroke-dasharray="4,2"' : '') + '/>');
-        arr.forEach(function (d) { if (d[1] > 0) p.push('<circle cx="' + ex_x(d[0]).toFixed(1) + '" cy="' + ex_y(d[1]).toFixed(1) + '" r="1.8" fill="' + col + '"/>'); });
-      });
-      // end-labels
-      var onL = exOn[exOn.length - 1], usL2 = exUS[exUS.length - 1], adL = exAdr[exAdr.length - 1];
-      if (onL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(onL[0]) - 2).toFixed(1) + '" y="' + (ex_y(onL[1]) + 10).toFixed(1) + '" text-anchor="end" fill="#c05621">China onshore</text>');
-      if (usL2) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(usL2[0]) - 2).toFixed(1) + '" y="' + (ex_y(usL2[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US</text>');
-      if (adL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(adL[0]) - 2).toFixed(1) + '" y="' + (ex_y(adL[1]) + 9).toFixed(1) + '" text-anchor="end" fill="#c53030">China US-listed $' + adL[1].toFixed(1) + 'B</text>');
-      // onshore peak label — China onshore was the LARGER exit venue for most of the window
-      var onPk = exOn.reduce(function (a, b) { return b[1] > a[1] ? b : a; }, exOn[0]);
-      if (onPk) p.push('<text class="fvl lf-scale-with-art" x="' + ex_x(onPk[0]).toFixed(1) + '" y="' + (ex_y(onPk[1]) - 5).toFixed(1) + '" text-anchor="middle" fill="#c05621">China onshore $' + Math.round(onPk[1]) + 'B — led most yrs</text>');
-      p.push('<text class="ftick lf-scale-with-art" x="' + (ex_x(2021) + 3).toFixed(1) + '" y="' + (eTop + 8) + '" fill="#c53030">DiDi → ADR freeze</text>');
-      [ey0, 2020, 2022, ey1].forEach(function (y) { if (y >= ey0 && y <= ey1) p.push('<text class="ftk lf-scale-with-art" x="' + ex_x(y).toFixed(1) + '" y="' + (eBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
-    }
-    // unicorn footnote (bottom)
-    var u0 = uni[0] || {}, u1 = uni[1] || {};
-    p.push('<text class="fcl lf-scale-with-art" x="' + FO.padL + '" y="' + (eBot + 22) + '">Unicorns ' + (u0.as_of || '') + ': US ' + (u0.us || '?') + ' / China ' + (u0.cn || '?') + ' (' + esc((u0.source || '').split(' (')[0]) + ', indep.); Hurun (Chinese-origin) counts China ' + (u1.cn || '?') + ' — conflicting figures.</text>');
     p.push('</svg>');
     return p.join("");
   }
 
-  // ===== FIGURE Vb — VELOCITY (2x2 small-multiples: four ways to be fast) =====
+  // ===== FIGURE Vb — THE CAPITAL SYSTEM (three strips, ONE shared modern axis, right-margin endpoints) =====
+  function capitalSvgString(spec) {
+    var vc = spec.vc || {}, ex = spec.exits || {}, scap = spec.state_capital || {}, uni = spec.unicorns || [];
+    var W = FO.W, padL = 48, RM = 130, plotR = W - RM;   // reserved right-margin endpoint column
+    var k1 = 28, vT = 42, vB = 96;                        // strip 1 PRIVATE VC
+    var k2 = 122, gT = 138, gB = 206;                    // strip 2 STATE-GUIDED CAPITAL
+    var k3 = 232, xT = 246, xB = 300;                    // strip 3 IPO PROCEEDS
+    var axisY = 312, uniY = 328, H = 338, Y0 = 2014, Y1 = 2024;
+    function cx(y) { return padL + (y - Y0) / (Y1 - Y0) * (plotR - padL); }
+    var p = ['<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Figure Vb, The Capital System: three strips on ONE shared ~2014-2024 axis — annual private venture-capital investment (log $B); state-guided capital drawn as an estimate-range band between announced target (upper) and subscribed / committed capital (lower), with China Big Fund and US SBIR/CHIPS ticks; and annual IPO proceeds by venue showing the post-2021 US-listing freeze. Endpoint values sit in a reserved right-margin column.">'];
+    p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fcl{font:9.5px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}.fkick{font:13px sans-serif;font-weight:700;letter-spacing:0.04em}.fvl{font:8.5px sans-serif;font-weight:700}.fem{font:8px sans-serif;fill:#9c6612}</style>');
+    // shared vertical gridlines through all three strips + one bottom year axis
+    for (var gy = Y0; gy <= Y1; gy += 2) { var gx = cx(gy); p.push('<line x1="' + gx.toFixed(1) + '" y1="' + vT + '" x2="' + gx.toFixed(1) + '" y2="' + xB + '" stroke="#f2f4f7"/>'); p.push('<text class="ftk lf-scale-with-art" x="' + gx.toFixed(1) + '" y="' + axisY + '" text-anchor="middle">' + gy + '</text>'); }
+    p.push('<line x1="' + (plotR + 3) + '" y1="' + vT + '" x2="' + (plotR + 3) + '" y2="' + xB + '" stroke="#e2e8f0" stroke-dasharray="2,3"/>');
+    // right-margin endpoint label (reserved column; nothing renders over plot geometry)
+    function endLabel(yPix, txt, col) {
+      p.push('<line x1="' + plotR.toFixed(1) + '" y1="' + yPix.toFixed(1) + '" x2="' + (plotR + 6).toFixed(1) + '" y2="' + yPix.toFixed(1) + '" stroke="' + col + '" stroke-width="0.7"/>');
+      p.push('<text class="fvl lf-scale-with-art" x="' + (plotR + 9).toFixed(1) + '" y="' + (yPix + 3).toFixed(1) + '" fill="' + col + '">' + txt + '</text>');
+    }
+    function logY(v, lo, hi, top, bot) { return bot - (Math.log10(v) - lo) / (hi - lo) * (bot - top); }
+    // ---------- STRIP 1: PRIVATE VC (log $B) ----------
+    var us = vc.us || [], cn = vc.cn || [];
+    p.push('<text class="fkick lf-scale-with-art" x="' + padL + '" y="' + k1 + '" fill="#2f855a">PRIVATE VC — ANNUAL, LOG $B (' + esc(vc.source) + ')</text>');
+    if (us.length) {
+      var vAll = us.concat(cn).map(function (d) { return d[1]; });
+      var vlo = Math.log10(Math.min.apply(null, vAll) * 0.8), vhi = Math.log10(Math.max.apply(null, vAll) * 1.15);
+      function vy(v) { return logY(v, vlo, vhi, vT, vB); }
+      [100, 1000].forEach(function (g) { var yy = vy(g); if (yy > vT && yy < vB) p.push('<text class="ftk lf-scale-with-art" x="' + (padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + (g >= 1000 ? '1T' : g + 'B') + '</text>'); });
+      var cnPk = null; cn.forEach(function (d) { if (d[0] === 2021) cnPk = d; });
+      if (cnPk) p.push('<line x1="' + cx(2021).toFixed(1) + '" y1="' + vT + '" x2="' + cx(2021).toFixed(1) + '" y2="' + vB + '" stroke="#c53030" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.5"/>');
+      [[us, '#2b6cb0'], [cn, '#c53030']].forEach(function (t) {
+        p.push('<polyline points="' + t[0].map(function (d) { return cx(d[0]).toFixed(1) + ',' + vy(d[1]).toFixed(1); }).join(' ') + '" fill="none" stroke="' + t[1] + '" stroke-width="1.7"/>');
+        t[0].forEach(function (d) { p.push('<circle cx="' + cx(d[0]).toFixed(1) + '" cy="' + vy(d[1]).toFixed(1) + '" r="1.9" fill="' + t[1] + '"/>'); });
+      });
+      if (cnPk) { p.push('<text class="fvl lf-scale-with-art" x="' + (cx(2021) - 4).toFixed(1) + '" y="' + (vy(cnPk[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#c53030">$' + Math.round(cnPk[1]) + 'B</text>'); p.push('<text class="ftick lf-scale-with-art" x="' + (cx(2021) + 3).toFixed(1) + '" y="' + (vT + 8) + '" fill="#c53030">2021 crackdown</text>'); }
+      var uL = us[us.length - 1], cL = cn[cn.length - 1];
+      if (uL) endLabel(vy(uL[1]), 'US $' + Math.round(uL[1]) + 'B', '#2b6cb0');
+      if (cL) endLabel(vy(cL[1]), 'China $' + Math.round(cL[1]) + 'B', '#c53030');
+    }
+    // ---------- STRIP 2: STATE-GUIDED CAPITAL (est.-range band + discrete ticks) ----------
+    var scBand = scap.band || [], scTk = scap.ticks || [];
+    p.push('<text class="fkick lf-scale-with-art" x="' + padL + '" y="' + k2 + '" fill="#9c6612">STATE-GUIDED CAPITAL — EST. RANGE, CUMULATIVE LOG $B (' + esc(scap.source) + ')</text>');
+    if (scBand.length) {
+      var sVals = []; scBand.forEach(function (r) { sVals.push(r[1], r[2]); }); scTk.forEach(function (t) { sVals.push(t.usd_bn); });
+      var slo = Math.log10(Math.min.apply(null, sVals) * 0.7), shi = Math.log10(Math.max.apply(null, sVals) * 1.3);
+      function sy(v) { return logY(v, slo, shi, gT, gB); }
+      [10, 100, 1000].forEach(function (g) { var yy = sy(g); if (yy > gT && yy < gB) p.push('<line x1="' + padL + '" y1="' + yy.toFixed(1) + '" x2="' + plotR + '" y2="' + yy.toFixed(1) + '" stroke="#f2f4f7"/><text class="ftk lf-scale-with-art" x="' + (padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + (g >= 1000 ? '1T' : g + 'B') + '</text>'); });
+      var upper = scBand.map(function (r) { return cx(r[0]).toFixed(1) + ',' + sy(r[1]).toFixed(1); });
+      var lowerRev = scBand.slice().reverse().map(function (r) { return cx(r[0]).toFixed(1) + ',' + sy(r[2]).toFixed(1); });
+      p.push('<polygon points="' + upper.concat(lowerRev).join(' ') + '" fill="#c53030" fill-opacity="0.12" stroke="#c53030" stroke-width="1" stroke-dasharray="4,2"/>');
+      scBand.forEach(function (r) { p.push('<circle cx="' + cx(r[0]).toFixed(1) + '" cy="' + sy(r[1]).toFixed(1) + '" r="1.4" fill="#c53030"/><circle cx="' + cx(r[0]).toFixed(1) + '" cy="' + sy(r[2]).toFixed(1) + '" r="1.4" fill="#c53030" fill-opacity="0.7"/>'); });
+      var bl = scBand[scBand.length - 1];
+      var yAn = sy(bl[1]), ySu = sy(bl[2]);   // announced is upper (smaller y); stagger if close
+      if (Math.abs(yAn - ySu) < 11) { yAn -= 6; ySu += 6; }
+      endLabel(yAn, 'announced ~$' + (bl[1] / 1000).toFixed(1) + 'T', '#c53030');
+      endLabel(ySu, 'subscribed ~$' + (bl[2] / 1000).toFixed(2) + 'T', '#c53030');
+      // ONE in-frame callout (annotation budget); the honesty is in the caption
+      p.push('<text class="fem lf-scale-with-art" x="' + cx(2019).toFixed(1) + '" y="' + (sy(300)).toFixed(1) + '" text-anchor="middle">est. range · single vendor · target ≠ subscribed ≠ deployed</text>');
+      // discrete ticks: China Big Fund (amber) + US comparators (blue) — data labels, staggered
+      scTk.forEach(function (t) {
+        var col = t.side === 'US' ? '#2b6cb0' : '#c05621', tx = cx(t.year), ty = sy(t.usd_bn);
+        var atEnd = t.year >= Y1 - 0.5;
+        p.push('<circle cx="' + tx.toFixed(1) + '" cy="' + ty.toFixed(1) + '" r="2" fill="' + col + '"/>');
+        p.push('<text class="ftick lf-scale-with-art" x="' + (tx + (atEnd ? -4 : 4)).toFixed(1) + '" y="' + (ty + (t.side === 'US' ? 8 : -3)).toFixed(1) + '" text-anchor="' + (atEnd ? 'end' : 'start') + '" fill="' + col + '">' + esc(t.label) + ' $' + (t.usd_bn % 1 === 0 ? t.usd_bn : t.usd_bn.toFixed(1)) + 'B</text>');
+      });
+    }
+    // ---------- STRIP 3: IPO PROCEEDS (by venue, log $B) ----------
+    var exUS = ex.us || [], exOn = ex.onshore || [], exAdr = ex.us_listed || [];
+    p.push('<text class="fkick lf-scale-with-art" x="' + padL + '" y="' + k3 + '" fill="#2f855a">IPO PROCEEDS — ANNUAL BY VENUE, LOG $B (' + esc(ex.source || '') + ')</text>');
+    if (exUS.length) {
+      var eV = exUS.concat(exOn).concat(exAdr).map(function (d) { return d[1]; }).filter(function (v) { return v > 0; });
+      var elo = Math.log10(Math.min.apply(null, eV) * 0.7), ehi = Math.log10(Math.max.apply(null, eV) * 1.25);
+      function ey(v) { return logY(v, elo, ehi, xT, xB); }
+      [1, 10, 100].forEach(function (g) { var yy = ey(g); if (yy > xT && yy < xB) p.push('<text class="ftk lf-scale-with-art" x="' + (padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>'); });
+      p.push('<line x1="' + cx(2021).toFixed(1) + '" y1="' + xT + '" x2="' + cx(2021).toFixed(1) + '" y2="' + xB + '" stroke="#c53030" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.45"/>');
+      p.push('<text class="ftick lf-scale-with-art" x="' + (cx(2021) + 3).toFixed(1) + '" y="' + (xT + 8) + '" fill="#c53030">DiDi → US-listing freeze</text>');
+      [[exUS, '#2b6cb0', 'US'], [exOn, '#c05621', 'onshore'], [exAdr, '#c53030', 'adr']].forEach(function (t) {
+        var arr = t[0].filter(function (d) { return d[1] > 0; });
+        p.push('<polyline points="' + arr.map(function (d) { return cx(d[0]).toFixed(1) + ',' + ey(d[1]).toFixed(1); }).join(' ') + '" fill="none" stroke="' + t[1] + '" stroke-width="1.5"' + (t[2] === 'adr' ? ' stroke-dasharray="4,2"' : '') + '/>');
+        arr.forEach(function (d) { p.push('<circle cx="' + cx(d[0]).toFixed(1) + '" cy="' + ey(d[1]).toFixed(1) + '" r="1.6" fill="' + t[1] + '"/>'); });
+      });
+      var onPk = exOn.reduce(function (a, b) { return b[1] > a[1] ? b : a; }, exOn[0]);
+      if (onPk) p.push('<text class="ftick lf-scale-with-art" x="' + cx(onPk[0]).toFixed(1) + '" y="' + (ey(onPk[1]) - 4).toFixed(1) + '" text-anchor="middle" fill="#c05621">China onshore led most yrs</text>');
+      var eUSl = exUS[exUS.length - 1], eOnl = exOn[exOn.length - 1], eAdl = exAdr[exAdr.length - 1];
+      // US and onshore endpoints can be close in y — stagger by nudging labels apart
+      if (eUSl && eOnl) {
+        var yu = ey(eUSl[1]), yo = ey(eOnl[1]);
+        if (Math.abs(yu - yo) < 9) { if (yu < yo) { yu -= 4; yo += 4; } else { yu += 4; yo -= 4; } }
+        endLabel(yu, 'US $' + Math.round(eUSl[1]) + 'B', '#2b6cb0');
+        endLabel(yo, 'China onshore $' + Math.round(eOnl[1]) + 'B', '#c05621');
+      }
+      if (eAdl) endLabel(ey(eAdl[1]), 'China US-listed $' + eAdl[1].toFixed(1) + 'B', '#c53030');
+    }
+    // unicorn note (bottom)
+    var u0 = uni[0] || {}, u1 = uni[1] || {};
+    p.push('<text class="fcl lf-scale-with-art" x="' + padL + '" y="' + uniY + '">Unicorns ' + (u0.as_of || '') + ': US ' + (u0.us || '?') + ' / China ' + (u0.cn || '?') + ' (' + esc((u0.source || '').split(' (')[0]) + ', indep.); Hurun (Chinese-origin) counts China ' + (u1.cn || '?') + ' — conflicting figures.</text>');
+    p.push('</svg>');
+    return p.join("");
+  }
+
+  // ===== FIGURE Vc — VELOCITY (2x2 small-multiples: four ways to be fast) =====
   function velocitySvgString(spec) {
     var W = 1120, H = 560, US = "#2b6cb0", CN = "#c53030", INK = "#2d3748", MUT = "#718096";
-    var p = ['<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Figure Vb, Velocity: four small-multiple panels comparing US and China on deployment speed, iteration cadence, time-to-scale, and competitive intensity. The overall finding: China leads velocity in atoms (deployment, hardware iteration, cutthroat selection); the US leads in bits and at the technology frontier.">'];
+    var p = ['<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Figure Vc, Velocity: four small-multiple panels comparing US and China on deployment speed, iteration cadence, time-to-scale, and competitive intensity. The overall finding: China leads velocity in atoms (deployment, hardware iteration, cutthroat selection); the US leads in bits and at the technology frontier.">'];
     p.push('<style>.vt{font:13px sans-serif;font-weight:700;fill:#1a202c;letter-spacing:.02em}.vtag{font:10px sans-serif;font-weight:700}.vlab{font:9px sans-serif;fill:#4a5568}.vval{font:9px sans-serif;font-weight:700}.vfoot{font:8.5px sans-serif;fill:#718096}.vax{stroke:#9aa5b1;stroke-width:1}.vgl{stroke:#eef2f6}</style>');
     // headline
     p.push('<text class="vt lf-scale-with-art" x="40" y="20" style="font-size:15px">VELOCITY — FOUR WAYS TO BE FAST</text>');
@@ -629,6 +635,7 @@
   function renderNatsecPosterSVG(spec) { return natsecSvgString(spec); }
   function renderDimensionsPosterSVG(spec) { return dimensionsSvgString(spec); }
   function renderFounderPosterSVG(spec) { return founderSvgString(spec); }
+  function renderCapitalPosterSVG(spec) { return capitalSvgString(spec); }
   function renderVelocityPosterSVG(spec) { return velocitySvgString(spec); }
   function mount(container, spec, drawFn) {
     if (!container) return null;
@@ -649,11 +656,13 @@
   DF.registerPoster("natsec", renderNatsecPosterSVG);
   DF.registerPoster("dimensions", renderDimensionsPosterSVG);
   DF.registerPoster("founder", renderFounderPosterSVG);
+  DF.registerPoster("capital", renderCapitalPosterSVG);
   DF.registerPoster("velocity", renderVelocityPosterSVG);
   DF.registerRenderer("momentum", function (c, s) { return mount(c, s, momentumSvgString); });
   DF.registerRenderer("spine", function (c, s) { return mount(c, s, spineSvgString); });
   DF.registerRenderer("natsec", function (c, s) { return mount(c, s, natsecSvgString); });
   DF.registerRenderer("dimensions", function (c, s) { return mount(c, s, dimensionsSvgString); });
   DF.registerRenderer("founder", function (c, s) { return mount(c, s, founderSvgString); });
+  DF.registerRenderer("capital", function (c, s) { return mount(c, s, capitalSvgString); });
   DF.registerRenderer("velocity", function (c, s) { return mount(c, s, velocitySvgString); });
 })(typeof window !== "undefined" ? window : null);

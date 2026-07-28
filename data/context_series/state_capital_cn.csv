@@ -1,4 +1,6 @@
-year,announced_usd_bn,paidin_usd_bn,source,note
-2018,1400,585,Zero2IPO/清科 Research (Chinese-origin),">1600 funds; cumulative target ~¥9-10T (~$1.4T); raised into funds ¥4.05T (~$585B, ~43%)"
-2020,1550,672,Zero2IPO/清科 (Chinese-origin) corroborated by CSET (Luong/Arnold/Murphy 2021),"Q1-2020: 1741 funds; target ¥11T (~$1.55T); raised ¥4.76T (~$672B, ~43%)"
-2022,1860,940,Zero2IPO/清科 (Chinese-origin) via China Quarterly (Cambridge 2023),"end-2022: 2107 funds; target ¥12.84T (~$1.86T); actual ¥6.51T (~$940B, ~51% aggregate)"
+year,announced_usd_bn,subscribed_usd_bn,source,note
+2018,1400,585,Zero2IPO/清科 Research (Chinese-origin single vendor),">1600 funds; target ~¥9-10T (~$1.4T); subscribed ¥4.05T (~$585B, ~43%)"
+2020,1550,672,Zero2IPO/清科 (Chinese-origin single vendor; re-reported by CSET 2021),"Q1-2020: 1741 funds; target ¥11T (~$1.55T); subscribed ¥4.76T (~$672B)"
+2022,1860,940,Zero2IPO/清科 (Chinese-origin single vendor; re-reported by China Quarterly 2023),"end-2022: 2107 funds; target ¥12.84T (~$1.86T); subscribed ¥6.51T (~$940B)"
+2023,1720,1000,清科研究中心 pub 2024-03-04 (Chinese-origin single vendor),"end-2023: 2086 funds; target ¥12.19T (~$1.72T); subscribed ¥7.13T (~$1.00T); new-fund formation -25% YoY"
+2024,1760,1055,清科研究 pub 2025-04-05 (Chinese-origin single vendor),"end-2024: 2178 funds (incl PPP); target ¥12.84T (~$1.76T); subscribed ¥7.70T (~$1.055T); underlying new formation -37% ex the IC mega-fund; $ flattened by ~6% yuan depreciation"

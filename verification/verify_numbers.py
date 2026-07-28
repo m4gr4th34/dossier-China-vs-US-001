@@ -416,7 +416,7 @@ _ticks_all_anchored = all((r.get("anchor_row") or "").strip() for r in _tick_csv
 check("Index I22: regime band/ticks match the CSVs, anchors resolve, and EVERY tick anchors to a row",
       _anchor_bad + (0 if _band_ok else 1) + (0 if _ticks_all_anchored else 1), 0, 0)
 
-# (I23) Figure V venture-capital + unicorn series == committed CSVs, EXACTLY.
+# (I23) Figure Vb (Capital System) venture-capital + unicorn series == committed CSVs, EXACTLY.
 _vc_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "vc_investment.csv"))
 _uni_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "unicorns.csv"))
 
@@ -427,14 +427,15 @@ def _vccol(_c):
 
 _uni_exp = [{"source": r["source"], "as_of": r["as_of"], "us": int(r["us"]), "cn": int(r["cn"]),
              "class": r["source_class"]} for r in _uni_csv]
-_fvc = _committed["founder_spec"]["vc"]
-check("Index I23: Figure V venture-capital + unicorn series == committed CSVs exactly",
+_fvc = _committed["capital_spec"]["vc"]
+check("Index I23: Figure Vb venture-capital + unicorn series == committed CSVs exactly",
       0 if (_fvc.get("us") == _vccol("us_vc_usd_bn") and _fvc.get("cn") == _vccol("cn_vc_usd_bn")
-            and _committed["founder_spec"]["unicorns"] == _uni_exp) else 1, 0, 0)
+            and _committed["capital_spec"]["unicorns"] == _uni_exp) else 1, 0, 0)
 
-# (I24) the founder (Figure V) data-figure spec appears verbatim in the baked front door.
-check("Index I24: founder (Figure V) data-figure spec present verbatim in index.html",
-      0 if _ci._attr_json(_committed["founder_spec"]) in _index_html else 1, 0, 0)
+# (I24) the founder (Figure Va) AND capital (Figure Vb) data-figure specs appear verbatim in the baked front door.
+check("Index I24: founder (Figure Va) + capital (Figure Vb) data-figure specs present verbatim in index.html",
+      0 if (_ci._attr_json(_committed["founder_spec"]) in _index_html
+            and _ci._attr_json(_committed["capital_spec"]) in _index_html) else 1, 0, 0)
 
 # (I25) Figure V founding density envelope recomputes EXACTLY from the event_type=founding
 #       rows (a founder-window centred rolling count per country, independently recomputed).
@@ -466,12 +467,12 @@ def _ipocol(_c):
     return [[int(r["year"]), float(r[_c])] for r in _ipo_csv]
 
 
-_ex = _committed["founder_spec"]["exits"]
+_ex = _committed["capital_spec"]["exits"]
 _exits_ok = (_ex.get("us") == _ipocol("us_proceeds_usd_bn")
              and _ex.get("onshore") == _ipocol("china_onshore_usd_bn")
              and _ex.get("us_listed") == _ipocol("china_us_listed_usd_bn"))
-_scap = _committed["founder_spec"]["state_capital"]
-_band_exp = [[int(r["year"]), float(r["announced_usd_bn"]), float(r["paidin_usd_bn"])] for r in _scb_csv]
+_scap = _committed["capital_spec"]["state_capital"]
+_band_exp = [[int(r["year"]), float(r["announced_usd_bn"]), float(r["subscribed_usd_bn"])] for r in _scb_csv]
 _ticks_exp = [{"label": r["label"], "year": int(r["year"]), "usd_bn": float(r["usd_bn"]),
                "side": r["side"]} for r in _sct_csv]
 _sc_ok = (_scap.get("band") == _band_exp and _scap.get("ticks") == _ticks_exp)

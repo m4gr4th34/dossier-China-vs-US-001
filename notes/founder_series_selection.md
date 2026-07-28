@@ -38,32 +38,42 @@ ADR-freeze line is cleanly retrieved and is the point; the onshore line carries 
 
 ## State-guided-capital strip — `data/context_series/state_capital_cn.csv` + `state_capital_ticks.csv`
 
-Replaces the earlier one-line text annotation (superseded; the old
-`data/founder_series/state_capital.csv` is removed). The point that annotation made in words —
-*targets are not deployed capital* — is now **drawn as geometry**: a shaded China band whose WIDTH is
-the gap between announced target (upper edge) and estimated paid-in (lower edge). The band form is the
-honest form precisely because the two edges are far apart and the underlying data is single-vendor.
+The state-guided-capital strip lives in **Figure Vb (The Capital System)** — the old combined figure
+was split so each figure carries one time axis. It replaces the earlier one-line text annotation
+(superseded; the old `data/founder_series/state_capital.csv` is removed). The point that annotation
+made in words — *targets are not deployed capital* — is now **drawn as geometry**: a shaded China band
+whose WIDTH is the gap between announced target (upper edge) and **subscribed / committed capital
+(认缴, lower edge)**. The band form is the honest form precisely because the two edges are far apart and
+the underlying data is single-vendor.
 
-**Why a band, not a line.** The headline "China is deploying $1.5–1.9T of guidance-fund capital" is a
-target/mobilization ceiling, not money on the table. Across the anchor years the aggregate **paid-in
-runs ~43–51% of announced target** — so a single confident line would fake a precision the record does
-not have. The band draws the uncertainty instead of asserting a point.
+**Why a band, not a line.** The headline "China is deploying $1.8T of guidance-fund capital" is a
+target/mobilization ceiling, not money on the table. Across the anchor years the aggregate **subscribed
+capital runs ~43–60% of announced target** — so a single confident line would fake a precision the
+record does not have. The band draws the uncertainty instead of asserting a point.
 
-**China band — `state_capital_cn.csv` (cumulative $B; announced vs paid-in):** anchor-year estimates of
-government guidance funds (政府引导基金), the two columns being announced/target and estimated paid-in.
-- 2018 — target ~$1.4T / paid-in ~$585B (¥4.05T raised, ~43%); 2020 — ~$1.55T / ~$672B (¥4.76T, ~43%;
-  CSET corroborates by citation); 2022 — ~$1.86T / ~$940B (¥6.51T, ~51% aggregate).
-- **Single-vendor caveat (the key data-integrity flag):** every fund aggregate traces to **one
-  Chinese-origin commercial tracker, Zero2IPO / 清科**. Western sources (CSET, China Quarterly, PIIE,
-  Rhodium) corroborate *by citing* it, not by independent count — so this is a single-source dependency,
-  not triangulation. Flagged on the strip's kicker.
-- **Definitional caveats:** "target," "raised/paid-in," and "deployed into companies" are used
-  inconsistently across sources; paid-in here means *capital paid into the funds* (still overstates
-  capital reaching companies). A 2021 anchor was omitted from the band edges because its target and
-  paid-in figures wobble on source/definition changes (¥10.18T target, ~¥4T paid-in) rather than real
-  movement — noted here rather than drawn as a misleading dip. An earlier "26% of funds met target"
-  (China Quarterly) is a **share-of-funds** metric, NOT the aggregate ¥-ratio — dropped from the figure
-  to avoid the conflation the old annotation made.
+**China band — `state_capital_cn.csv` (cumulative $B; announced vs subscribed 认缴):** anchor-year
+estimates of government guidance funds (政府引导基金); the two columns are announced/target and
+subscribed/committed (认缴), now extended through **year-end 2024** (the band no longer ends at 2022).
+- 2018 — target ~$1.4T / subscribed ~$585B (¥4.05T); 2020 — ~$1.55T / ~$672B (¥4.76T; CSET re-reports);
+  2022 — ~$1.86T / ~$940B (¥6.51T); 2023 — ~$1.72T / ~$1.00T (¥12.19T / ¥7.13T, 清科 pub 2024-03);
+  2024 — ~$1.76T / ~$1.055T (¥12.84T / ¥7.70T, 清科 pub 2025-04). The $ series flattens 2022→2024
+  partly because the yuan depreciated ~6% — the ¥ figures are the honest unit.
+- **The lower edge is SUBSCRIBED (认缴), NOT paid-in cash (实缴) and NOT deployed (已投).** Guidance funds
+  are notorious for 募而不投 ("committed but not invested"); true paid-in and deployed capital are
+  materially lower and unmeasured — so the real deployment gap is *wider* than the band shows. The
+  earlier draft mislabeled this edge "paid-in"; corrected here and on the figure.
+- **Single-vendor caveat (the key data-integrity flag):** every fund aggregate — including the 2020
+  (CSET) and 2022 (China Quarterly) points — traces to **one Chinese-origin commercial tracker,
+  Zero2IPO / 清科**. Western sources corroborate *by citing* it, not by independent count; the one
+  parallel vendor (ChinaVenture/投中) publishes flow, not the same cumulative stock. Effectively
+  mono-source; flagged on the strip's kicker.
+- **The target line wobbles on scope, the subscribed line is clean.** Target reads ¥12.84T (2022) →
+  ¥12.19T (2023) → ¥12.84T (2024): the 2023 dip is expired/"zombie" funds netted out, not a real
+  contraction; the subscribed (认缴) series is monotonic (¥6.51T → ¥7.13T → ¥7.70T). New-fund FORMATION
+  meanwhile fell ~25% (2023) and ~37% underlying in 2024 (once the ¥344B IC mega-fund is stripped) —
+  the establishment-pace slowdown 清科 itself flags. An earlier "26% of funds met target" (China
+  Quarterly) is a **share-of-funds** metric, NOT the aggregate ¥-ratio — dropped to avoid the
+  conflation the old annotation made.
 
 **Big Fund ticks (CN) — `state_capital_ticks.csv`:** the National IC Industry Investment Fund phases, as
 discrete points (these are ledger-anchorable state vehicles, not guidance-fund aggregate): Phase I 2014
