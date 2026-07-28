@@ -1,7 +1,7 @@
-country,start,end,state,anchor_row
-China,1926,1956,constrained,
-China,1956,1978,closed,CN-1956-2
-China,1978,1992,constrained,CN-1978-1
-China,1992,2020,open,CN-1992-1
-China,2020,2026,constrained,
-US,1926,2026,open,
+country,start,end,state,anchor_row,label
+China,1926,1956,constrained,,
+China,1956,1978,closed,CN-1956-2,
+China,1978,1992,constrained,CN-1978-1,
+China,1992,2020,open,CN-1992-1,
+China,2020,2026,constrained,,2020 tech crackdown (band annotation, not a row)
+US,1926,2026,open,,

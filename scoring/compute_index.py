@@ -554,8 +554,8 @@ def build_founder_caption(founds, vc, uni):
 
 
 def build_founder_spec(draft_rows):
-    band = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]),
-             "state": r["state"], "anchor": r.get("anchor_row", "")} for r in _read_csv(REGIME_BAND)]
+    band = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]), "state": r["state"],
+             "anchor": r.get("anchor_row", ""), "label": r.get("label", "")} for r in _read_csv(REGIME_BAND)]
     ticks = [{"c": r["country"], "y": int(r["year"]), "label": r["label"],
               "anchor": r.get("anchor_row", "")} for r in _read_csv(REGIME_TICKS)]
     founds = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"], "st": r["status"]}

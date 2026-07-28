@@ -827,3 +827,33 @@ Non-obvious calls:
 (natsec spec built by compute_index, poster+renderer in dossierviz.js, verifier checks I13
 blocks==tags / I14 spec-verbatim / I15 dual_use⊆natsec). Corpus 285 → **294** (US 152, China 142).
 Rendered to fixpoint; all gates + npm test green.
+
+---
+
+## Batch 14 — Figure V anchor-consistency (2026-07-27, author-approved)
+
+Two US rows added through the full ritual so that Figure V's US founder-regime ticks anchor
+to ledger rows, matching the China ticks' row-anchored footing. Facts re-verified against
+primary/independent sources before promotion.
+
+| id | year | row | qualifying source(s) | category (country-blind) |
+|---|---|---|---|---|
+| US-1946-1 | 1946 | American Research and Development (ARD) founded — first modern institutional VC firm | Nicholas, *VC: An American History* (Harvard 2019) + Ante, *Creative Capital* (HBS 2008) + encyclopedic | innovation / founding |
+| US-1982-2 | 1982 | SBIR program established (Small Business Innovation Development Act) | CRS R43695 + *Issues in Science & Technology* + SBIR.gov | governmental_economic / milestone |
+
+- **US-1946-1 (ARD):** first American firm to select companies for OUTSIDE investors (Nicholas
+  2019); significance via the DEC investment (1957 $70k / ~70% → ~$355M by 1971). event_type=founding,
+  so it also appears as a Figure V founding block (founding rows 44 → 45) and on the main spine.
+- **US-1982-2 (SBIR):** category adjudicated COUNTRY-BLIND as `governmental_economic` (a national
+  R&D-funding program/legislation), matching China's 863 Program (`CN-1986-1`) — NOT `innovation`.
+  Set-aside ~$45M (1983) → ~$2B (2008); deep-tech origination record.
+
+**Figure V re-anchoring.** `regime_ticks.csv`: US 1946 → `US-1946-1`, US 1971 → `US-1971-3`,
+US 1982 → `US-1982-2` — **every tick now anchors to a row**. The 2020–21 crackdown was **moved out
+of ticks** into the China band segment as a labelled annotation (`regime_band.csv` gains a `label`
+column), because a crackdown is a setback, not an achievement, and cannot anchor to a row. Verifier
+**I22 strengthened**: band/ticks match the CSVs, all anchors resolve, AND every tick anchors to a row.
+
+**Front-door lockstep:** census 290/1/3 → **292/1/3**; corpus 294 → **296** (US 154, China 142).
+All five figures regenerated (the two rows flow into the spine, momentum, the panel, and Figure V);
+rendered to fixpoint; all gates + npm test green. Batch 14 closed.

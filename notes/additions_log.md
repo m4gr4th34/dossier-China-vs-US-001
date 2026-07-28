@@ -369,3 +369,16 @@ The ONI ~200× capacity figure and the cost-effectiveness thesis were walled in
 (US 152, China 142). Census 282/1/2 → **290/1/3**. Added natsec/dual_use tag columns
 (Amendment 5); 27 rows tagged natsec, driving Figure III. Held both sides: US B-2, SR-71,
 Gulf-War PGM, hypersonic weapons; China DF-17, Shandong (folded), Columbia SSBN, AUKUS.
+
+---
+
+## Batch 14 — Figure V anchor-consistency (2026-07-27, author-approved)
+
+| id | year | row | one-line reason |
+|---|---|---|---|
+| US-1946-1 | 1946 | American Research and Development founded | First modern VC firm (Doriot); anchors Figure V's US 1946 tick. |
+| US-1982-2 | 1982 | SBIR program established | Federal small-business R&D set-aside; anchors Figure V's US 1982 tick (country-blind: governmental_economic, like the 863 Program). |
+
+**Net:** +2 ESTABLISHED (both US). Corpus 294 → **296** (US 154, China 142). Census 290/1/3 →
+**292/1/3**. Founding rows 44 → 45 (ARD). Figure V US ticks now all row-anchored; the 2020 crackdown
+stays a band annotation (not a row).

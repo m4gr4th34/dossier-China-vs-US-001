@@ -43,16 +43,25 @@ pressure; `closed` = private enterprise is largely abolished or illegal.
 ## United States (continuously open; ticked, not transitioned)
 
 - **1926–2026 — open, throughout.** Private founding was continuously legal and central; there is
-  **no US regime transition**. Three enabling-event **ticks** (annotations, not transitions) mark
-  the build-out of the founder ecosystem:
-  - **1946 — the first modern venture-capital firm** (American Research and Development
-    Corporation, Georges Doriot). Band annotation; **no ledger row** (the ledger has no ARD-founding
-    row, and Figure V does not add one — the US ticks are annotations, per the task's row-adjudication
-    being scoped to the China crackdown). Sourcing: standard VC histories (Nicholas, *VC: An American
-    History*, Harvard 2019).
-  - **1971 — NASDAQ**, the first electronic stock market — ledger row **`US-1971-3`** (tick anchor).
-  - **1982 — the SBIR program** (Small Business Innovation Development Act). Band annotation; **no
-    ledger row**. Sourcing: standard US innovation-policy histories.
+  **no US regime transition**. Three enabling-event **ticks** mark the build-out of the founder
+  ecosystem — and, as of batch 14, **all three anchor to ledger rows** (matching the China ticks'
+  row-anchored footing):
+  - **1946 — the first modern venture-capital firm**, American Research and Development Corporation
+    (Doriot/Compton/Flanders) — ledger row **`US-1946-1`** (added batch 14; significance evidenced
+    by the DEC investment). Sourcing: Nicholas, *VC: An American History* (Harvard 2019); Ante,
+    *Creative Capital* (HBS 2008).
+  - **1971 — NASDAQ**, the first electronic stock market — ledger row **`US-1971-3`**.
+  - **1982 — the SBIR program** (Small Business Innovation Development Act) — ledger row
+    **`US-1982-2`** (added batch 14; category adjudicated country-blind as `governmental_economic`,
+    matching China's 863 Program). Sourcing: CRS R43695; *Issues in Science and Technology*.
+
+**A note on ticks vs. band annotations (batch 14).** A **tick** marks an enabling *achievement* and
+therefore anchors to a ledger row; every tick now does. The **2020–21 crackdown is NOT a tick** — it
+is a regime *transition into "constrained"* recorded as the labelled boundary of the China band
+segment (`regime_band.csv`, the `2020` row, `label` set, `anchor_row` empty), because a crackdown is
+a setback, not an achievement, and cannot anchor to a row. Keeping it a band annotation rather than a
+tick is what lets the verifier assert that *every tick anchors to a row* while still showing the
+crackdown honestly.
 
 ## Why a band, not a score
 

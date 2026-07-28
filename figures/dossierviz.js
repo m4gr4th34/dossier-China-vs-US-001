@@ -381,6 +381,12 @@
     band.forEach(function (seg) {
       var x1 = fxf(seg.start), x2 = fxf(seg.end), y = (seg.c === "US" ? usBandY : cnBandY);
       p.push('<rect x="' + x1.toFixed(1) + '" y="' + y + '" width="' + (x2 - x1).toFixed(1) + '" height="' + bandH + '" fill="' + (REGIME_COL[seg.state] || "#ccc") + '" opacity="0.55"/>');
+      // a labelled un-anchored transition (e.g. the 2020 crackdown) — a band ANNOTATION, not a tick
+      if (seg.label) {
+        var lyb = (seg.c === "US" ? y - 3 : y + bandH + 11);
+        p.push('<line x1="' + x1.toFixed(1) + '" y1="' + y + '" x2="' + x1.toFixed(1) + '" y2="' + (y + bandH) + '" stroke="#c53030" stroke-width="1.3"/>');
+        p.push('<text class="ftick lf-scale-with-art" x="' + (x1 - 2).toFixed(1) + '" y="' + lyb + '" text-anchor="end" fill="#c53030">' + esc(seg.label.split(" (")[0]) + ' →</text>');
+      }
     });
     p.push('<text class="ftk lf-scale-with-art" x="' + (FO.W - FO.padR) + '" y="' + (cnBandY - 3) + '" text-anchor="end">China regime ↓ — closed 1956–78, open 1992–2020, constrained since</text>');
     // ticks (enabling events / crackdown) — US labels above the band, China labels below it

@@ -153,11 +153,11 @@ check("Ledger S3: draft ESTABLISHED set reconciles with ledger set",
 # the avenue theses in avenues.json, and the baked console verdict. The label
 # CARRIES the numbers, so any change to a count must be made here AND in the
 # manuscript in the same commit (the CLAUDE.md lockstep rule) or CI goes red.
-_EXPECTED_CENSUS = (290, 1, 3)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
+_EXPECTED_CENSUS = (292, 1, 3)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
 _est_n = sum(1 for r in _ledger_rows if r.get("status") == "ESTABLISHED")
 _open_n = sum(1 for r in _draft_rows if r.get("status") == "OPEN-UNVERIFIED")
 _rep_n = sum(1 for r in _draft_rows if r.get("status") == "REPORTED")
-check("Census: 290 ESTABLISHED / 1 OPEN-UNVERIFIED / 3 REPORTED (live corpus counts)",
+check("Census: 292 ESTABLISHED / 1 OPEN-UNVERIFIED / 3 REPORTED (live corpus counts)",
       0 if (_est_n, _open_n, _rep_n) == _EXPECTED_CENSUS else 1, 0, 0)
 
 # ================================================================
@@ -405,14 +405,16 @@ _band_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "regime_band
 _tick_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "regime_ticks.csv"))
 _anchor_bad = sum(1 for r in (_band_csv + _tick_csv)
                   if (r.get("anchor_row") or "").strip() and (r["anchor_row"].strip() not in _all_ids2))
-_band_exp = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]),
-              "state": r["state"], "anchor": r.get("anchor_row", "")} for r in _band_csv]
+_band_exp = [{"c": r["country"], "start": int(r["start"]), "end": int(r["end"]), "state": r["state"],
+              "anchor": r.get("anchor_row", ""), "label": r.get("label", "")} for r in _band_csv]
 _tick_exp = [{"c": r["country"], "y": int(r["year"]), "label": r["label"],
               "anchor": r.get("anchor_row", "")} for r in _tick_csv]
 _band_ok = (_committed["founder_spec"]["band"] == _band_exp
             and _committed["founder_spec"]["ticks"] == _tick_exp)
-check("Index I22: regime band/ticks anchors resolve and match the committed rationale CSVs",
-      _anchor_bad + (0 if _band_ok else 1), 0, 0)
+# batch 14: EVERY tick must now anchor to a row (the crackdown is a band annotation, not a tick).
+_ticks_all_anchored = all((r.get("anchor_row") or "").strip() for r in _tick_csv)
+check("Index I22: regime band/ticks match the CSVs, anchors resolve, and EVERY tick anchors to a row",
+      _anchor_bad + (0 if _band_ok else 1) + (0 if _ticks_all_anchored else 1), 0, 0)
 
 # (I23) Figure V venture-capital + unicorn series == committed CSVs, EXACTLY.
 _vc_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "vc_investment.csv"))
