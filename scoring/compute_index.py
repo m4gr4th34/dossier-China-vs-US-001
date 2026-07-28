@@ -536,18 +536,19 @@ def build_founder_caption(founds, vc, uni):
     cn_n = len(founds) - us_n
     ucr = next((u for u in uni if u["class"] == "independent"), None)
     uhu = next((u for u in uni if u["class"] == "chinese-origin"), None)
-    return ("Figure V - the Founder's Century (descriptive). Backdrop: the founder-regime band "
-            "(open / constrained / closed) per country, 1926-2026 - the US continuously open "
-            "(ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed at the 1956 socialist "
-            "transformation, reopening from 1978 (reform, SEZs), open from the 1992 Southern Tour "
-            "(WTO 2001), constrained again from the 2020 tech crackdown - a band annotation, NOT a "
-            "ledger row, because a crackdown is not an achievement. Blocks: the %d company-founding "
-            "rows (event_type=founding), US above / China below, click any for its cards (US %d, "
-            "China %d). Strip: annual venture-capital investment (PitchBook, log US$B) - the China "
-            "line peaks at $146B (2021) and collapses to $38B (2024), the US line falls far less. "
-            "Unicorns (snapshot): US %s / China %s (%s, independent); Hurun (Chinese-origin) counts "
-            "China %s - conflicting figures, both shown. Sourcing: notes/regime_band_rationale.md. "
-            "The grey years speak for themselves." % (
+    return ("Figure V - the Founder's Century, in three layers (descriptive). "
+            "--- REGIME BAND (top): whether a private founder could legally operate - the US open "
+            "throughout (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 "
+            "(private enterprise abolished), reopening 1978, open 1992-2020, and constrained since the "
+            "2020 tech crackdown (a band annotation, not a ledger row - a crackdown is not an achievement). "
+            "--- BLOCKS (middle): the %d company-founding rows from the verified ledger "
+            "(event_type=founding, US %d / China %d; foundings, not patents or IP), US above / China "
+            "below, click any for its cards. "
+            "--- STRIP (bottom): annual venture-capital investment (PitchBook-NVCA for the US, KPMG "
+            "Venture Pulse-PitchBook for China; log US$B) - the China line peaks at $146B in 2021 and "
+            "collapses to $38B by 2024, a ~74%% fall, while the US fell ~41%%. Unicorns: US %s / China %s "
+            "(%s, independent); Hurun (Chinese-origin) counts China %s. Sourcing: "
+            "notes/regime_band_rationale.md." % (
             len(founds), us_n, cn_n,
             ucr["us"] if ucr else "?", ucr["cn"] if ucr else "?", ucr["source"].split(" (")[0] if ucr else "?",
             uhu["cn"] if uhu else "?"))
