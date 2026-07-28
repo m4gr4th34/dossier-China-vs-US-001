@@ -65,3 +65,44 @@ fact about the world — the exact trap the dossier's whole discipline exists to
   out-of-sample set of achievements not used to notice it.
 
 Until then: this stays here, in a walled candidate-frame note, and is cited by nothing.
+
+---
+
+## Appendix (batch 12) — military-shipbuilding cost-effectiveness: a walled data point, NOT a row
+
+**Same wall as above: NOT ASSERTED ANYWHERE READER-FACING; cited by nothing; not a ledger
+row.** Recorded here only so the observation is not lost, with its provenance stated plainly.
+
+The maritime pass surfaced a comparative claim that is deliberately kept OUT of the ledger:
+the "China builds more warships, and far more cheaply" cost-effectiveness thesis, usually
+attached to a widely-circulated figure that **China's shipbuilding CAPACITY is ~200× that of
+the United States.**
+
+**Provenance of the ~200× figure (why it is not a row):**
+- The number traces to a **US Office of Naval Intelligence (ONI) briefing slide** — China
+  shipyard capacity ~**23.2 million tons** vs US **<100,000 tons** (~232×; "200×" is the
+  rounded popular version). The slide also projected ~475 PLAN battle-force ships by 2035.
+- It reached the public as a **leaked slide** reported by *The War Zone* (Trevithick,
+  11 Jul 2023), then amplified (Fox News, Alliance for American Manufacturing at "232×").
+  The US Navy **authenticated** the slide but said it was "developed... from multiple public
+  sources" and was "**not intended as a deep-dive into the PRC's commercial shipbuilding
+  industry**."
+- **Source class: interested-party (ONI / US Navy intelligence) + leaked + journalistic
+  surfacing.** Not peer-reviewed, not a formally published ONI dataset, methodology opaque.
+- **Substantive caveat:** the 23.2 M-ton figure is *total commercial shipyard tonnage*, which
+  conflates commercial output with *naval* output — it is not a like-for-like warship-cost or
+  warship-capacity ratio. The directional claim ("China out-produces the US in naval hulls,
+  at lower cost") is defensible and consistent with the PLA-Navy hull-count row (CN-2020-5);
+  the specific **200×/232× number is a briefing-slide artifact** and must never be stated as a
+  measured fact.
+
+**If it ever earns reader-facing use:** only as an explicitly-attributed, provenance-flagged
+data point ("a leaked-then-authenticated ONI slide put China's total shipyard capacity at
+~230× the US's, a figure that conflates commercial with naval output"), never as a bare
+ratio, and never as a premise for any higher-status claim. Until then it stays here, walled.
+
+This coheres with the physical-stack/frontier-stack candidate frame above: China's naval
+mass is a downstream expression of its commercial-shipbuilding (physical-stack) dominance
+(CN-2010-5), while US naval strength is concentrated in high-end tonnage and per-ship
+capability (carriers, nuclear submarines) — the same atoms-vs-frontier split, in the
+maritime domain. Still a candidate lens, still asserted nowhere.

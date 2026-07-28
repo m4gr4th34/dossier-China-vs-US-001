@@ -333,3 +333,18 @@ Thirteen new rows added through the full promotion ritual (see
 China 127 → **135**). Census 268/1/1 → **280/1/2**. Held items (Blade 2.0, CATL Na-ion
 mass-deployment, Linglong-One SMR, Kimi K3, Stargate, Gemini 3, dark-factory) were NOT
 filed — logged with revisit dates in `verification_log.md`.
+
+---
+
+## Batch 12 — maritime/defense pass (2026-07-27, author-sanctioned)
+
+| id | year | row | one-line reason for adding |
+|---|---|---|---|
+| CN-2010-5 | 2010 | China commercial-shipbuilding dominance | Bedrock strategic-industry fact; UNCTAD/OECD international-body (2010 crossover → >50% world tonnage by 2023). One Amendment-4 trajectory row (event→state), not two. |
+| CN-2020-5 | 2020 | PLA Navy world's largest by hull count | Major documented fact of China's rise; CSIS + IISS independent of US DoD; carries the mandatory US-leads-by-tonnage caveat. |
+
+**Net:** +2 ESTABLISHED (both China). Corpus 283 → **285** (US 148, China 137). Census
+280/1/2 → **282/1/2**. US maritime counterparts already in the ledger (US-1942-3 WWII
+shipbuilding, US-1954-1 Nautilus) — not duplicated; USS Ford / Columbia-class / AUKUS held.
+The ONI ~200× capacity figure and the cost-effectiveness thesis were walled in
+`synthesis_frame_CANDIDATE.md`, not filed as rows.

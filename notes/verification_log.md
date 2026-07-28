@@ -678,3 +678,65 @@ the source prose (abstract + §02 + §03 ledger + §05 live-status + the momentu
 exclusion clause), and the verify_numbers.py census check; momentum/spine/panel/silhouette
 recomputed (the new REPORTED row CN-2025-3 is excluded from the 2016–2025 bar and named
 in the caption); all editions re-rendered to fixpoint; all gates + npm test green.
+
+---
+
+## Batch 12 — maritime/defense pass (2026-07-27, author-sanctioned adjudication)
+
+Same discipline as batch 11: full ritual, independent evidentiary sourcing, no leniency
+for being author-proposed, outcomes reported not presumed. Load-bearing figures re-verified
+against primary/independent sources (CSIS ChinaPower, Construction Physics/Clarksons,
+UNCTAD) before promotion.
+
+**2 rows promoted to ESTABLISHED** (both China):
+
+| id | year | row | qualifying source(s) |
+|---|---|---|---|
+| CN-2010-5 | 2010 (range→2024) | China's commercial-shipbuilding dominance (2010 DWT crossover → >50% of world tonnage by 2023) | UNCTAD RMT 2024/2025 + OECD WP6 (international-body); Construction Physics/Clarksons for the crossover |
+| CN-2020-5 | 2020 (circa) | PLA Navy world's largest by hull count, with mandatory US-leads-by-tonnage caveat | CSIS ChinaPower + IISS Military Balance (both independent of US DoD) |
+
+**Design decisions:**
+- **Shipbuilding — ONE row, not two.** The 2010 crossover (event) and the >50%/2024 share
+  (state) were folded into a single Amendment-4 trajectory row filed at START-year 2010, span
+  2010–2024 explicit — matching the poverty-row (CN-1978-3) event→state precedent and avoiding
+  momentum double-counting of the same dominance in adjacent decades. (The alternative
+  two-row filing was considered and rejected as padding.)
+- **Conflicting-metric discipline (both recorded):** China leads by raw gross tonnage (UNCTAD
+  53.8%, 2024) and by CGT new orders (OECD 59.7%, 2023) but sits at 49.7% on complexity-weighted
+  CGT completions (2023); South Korea briefly reclaimed the CGT-completions lead in 2015–16.
+- **PLA Navy — mandatory both-metrics caveat.** Ship COUNT is the metric on which China leads
+  (~350 vs ~290, early 2020s); by TONNAGE the US Navy remains far larger (~3M-ton gap, 11
+  supercarriers) — recorded in the row so the ledger adjudicates neither the winner. The
+  QUALITATIVE hull-count lead is independently corroborated (CSIS + IISS, non-DoD); the precise
+  count pairing traces to DoD/CRS/ONI (noted). Crossover year is methodology-dependent (CSIS
+  ~2015; DoD-acknowledged ~2020) → filed circa 2020. Military-origin flagged per selection §1
+  (admitted as a naval-capacity fact downstream of shipbuilding scale, framed by what was built).
+
+**NOT rows (task item 2 — walled in `synthesis_frame_CANDIDATE.md`):** the "more, cheaper"
+military-shipbuilding cost-effectiveness thesis and the ~200×/232× ONI shipyard-capacity
+figure. Provenance: a leaked-then-authenticated ONI briefing slide (The War Zone, 11 Jul
+2023) — interested-party/leaked, conflates commercial shipyard tonnage with naval output.
+Recorded walled, asserted nowhere reader-facing.
+
+**US-side symmetry (standing rule):**
+- **US WWII shipbuilding dominance** (~90% of world output at peak; 2,710 Liberty ships) — the
+  true historical counterpart to China's shipbuilding rise — is ALREADY covered by **US-1942-3**
+  (the war-mobilization row explicitly names ~2,700 Liberty ships; Harrison 1998,
+  independent-academic). Not duplicated. The ~90%-of-world-shipbuilding figure (NPS official;
+  Construction Physics independent) is available to enrich US-1942-3 in a future pass.
+- **US Navy tonnage/carrier dominance** (11 supercarriers, ~3M-ton lead) is NOT a discrete
+  dateable achievement (a standing condition, no ribbon-cut) — recorded as the mandatory
+  caveat inside CN-2020-5 rather than as a manufactured "date crossed" row, so both metrics
+  appear and neither country is silently adjudicated.
+- **USS Nautilus** (first nuclear submarine, 1954) already covered by **US-1954-1**.
+- **Held — no row:** USS Gerald R. Ford (CVN-78, 2017) — a clean discrete carrier commissioning,
+  but incremental (and EMALS reliability was troubled); adding it primarily for balance would be
+  thesis-serving, and US naval dominance is already recorded (US-1942-3, US-1954-1, CN-2020-5
+  caveat). Columbia-class SSBN (under construction, IAEA/CRS: delivery ~2029) and AUKUS submarine
+  transfers (announced, from ~2032; only training-school/maintenance firsts have occurred) —
+  not-yet-occurred, held.
+
+**Net:** +2 ESTABLISHED China rows. Census 280/1/2 → **282/1/2**. Corpus 283 → **285**
+(US 148, China 137). Front-door lockstep updated (avenues.json ×2, source prose ×4 + the
+batch-12 narrative clause, verify_numbers census); momentum/spine/panel/silhouette recomputed;
+rendered to fixpoint; all gates + npm test green.
