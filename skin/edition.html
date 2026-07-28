@@ -296,6 +296,8 @@
   .yp-close:hover{color:var(--coral)}
   .yp-body{padding:12px 16px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
   .yp-card{border:1px solid var(--line);border-left-width:4px;border-radius:6px;padding:11px 13px;background:var(--card)}
+  .yp-card--hi{box-shadow:0 0 0 2px var(--teal);background:var(--card-hi,rgba(45,140,140,.06))}
+  .yp-clicked{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--teal);margin-left:auto}
   .yp-card-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
   .yp-ctry{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--ink2)}
   .yp-cat{font-family:var(--mono);font-size:11px;font-weight:600}
@@ -792,7 +794,7 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
 
   function el(t,cls,txt){ var e=document.createElement(t); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
 
-  function render(y){
+  function render(y,hi){
     cur=y; sheet.textContent='';
     var idx=years.indexOf(y);
     var prev=idx>0?years[idx-1]:null, next=idx<years.length-1?years[idx+1]:null;
@@ -809,6 +811,7 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
     head.appendChild(nav); sheet.appendChild(head);
     // body
     var body=el('div','yp-body');
+    var hiCard=null;
     list.forEach(function(c){
       var col=CATCOLOR[c.cat]||'#888';
       var card=el('div','yp-card'); card.style.borderLeftColor=col;
@@ -816,6 +819,7 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
       top.appendChild(el('span','yp-ctry',c.c));
       var cat=el('span','yp-cat',CATNAME[c.cat]||c.cat); cat.style.color=col; top.appendChild(cat);
       var chip=el('span','s-chip s-est','ESTABLISHED'); top.appendChild(chip);
+      if(hi&&c.id===hi){ card.className='yp-card yp-card--hi'; top.appendChild(el('span','yp-clicked','◀ you clicked this')); hiCard=card; }
       card.appendChild(top);
       card.appendChild(el('p','yp-claim',c.claim||''));
       var meta=el('div','yp-meta');
@@ -830,11 +834,12 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
     var foot=el('div','yp-foot');
     var a=el('a',null,'Full audit trail for '+y+' →'); a.href='dossier.html#y-'+y;
     foot.appendChild(a); sheet.appendChild(foot);
+    if(hiCard){ try{ hiCard.scrollIntoView({block:'center'}); }catch(e){ hiCard.scrollIntoView(); } }
     var focusable=head.querySelector('.yp-close'); if(focusable) focusable.focus();
   }
-  function open(y){
+  function open(y,hi){
     y=Number(y); if(years.indexOf(y)<0) return;
-    render(y); ov.hidden=false; document.documentElement.style.overflow='hidden';
+    render(y,hi); ov.hidden=false; document.documentElement.style.overflow='hidden';
     guard=true; try{ history.replaceState(null,'','#y-'+y); }catch(e){} guard=false;
   }
   function close(){
@@ -846,7 +851,7 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
   document.addEventListener('click',function(e){
     var a=e.target.closest?e.target.closest('a.lf-year'):null; if(!a) return;
     var y=a.getAttribute('data-year'); if(!y) return;
-    e.preventDefault(); open(y);
+    e.preventDefault(); open(y,a.getAttribute('data-card'));
   },false);
   ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
   document.addEventListener('keydown',function(e){

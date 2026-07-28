@@ -149,7 +149,7 @@
       else rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="none" stroke="' + col + '" stroke-width="1.1"/>';
       var tick = r.pr === "range" ? '<line x1="' + (x + bw).toFixed(1) + '" y1="' + (y + bh / 2).toFixed(1) + '" x2="' + (x + bw + 5).toFixed(1) + '" y2="' + (y + bh / 2).toFixed(1) + '" stroke="' + col + '" stroke-width="0.8" opacity="0.8"/>' : "";
       var title = esc(r.id + " " + r.y + " " + r.cat + "/" + r.et + " [" + r.st + "]");
-      p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '"><title>' + title + '</title>' + rect + tick + '</a>');
+      p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '" data-card="' + esc(r.id) + '"><title>' + title + '</title>' + rect + tick + '</a>');
     });
     // legend (own row, clear of the decade labels above and the strip below)
     var lx = S.padL, ly = S.spineBot + 30;
@@ -259,7 +259,7 @@
       // dual-use marker: an amber ring drawn around the block (distinct, driven by the du flag)
       var ring = r.du ? '<rect x="' + (x - 1.3).toFixed(1) + '" y="' + (y - 1.3).toFixed(1) + '" width="' + (bw + 2.6).toFixed(1) + '" height="' + (bh + 2.6).toFixed(1) + '" fill="none" stroke="' + DUAL_RING + '" stroke-width="1.1" rx="1.4"/>' : "";
       var title = esc(r.id + " " + r.y + " " + r.cat + "/" + r.et + " [" + r.st + (r.du ? " · dual-use" : "") + "]");
-      p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '"><title>' + title + '</title>' + rect + ring + '</a>');
+      p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '" data-card="' + esc(r.id) + '"><title>' + title + '</title>' + rect + ring + '</a>');
     });
     // legend
     var lx = NA.padL, ly = NA.bot + 30;
@@ -366,11 +366,12 @@
   function founderSvgString(spec) {
     var band = spec.band || [], ticks = spec.ticks || [], founds = spec.founds || [], vc = spec.vc || {}, uni = spec.unicorns || [];
     var bh = 6, gap = 1.3, bw = 7;
-    var usBandY = 44, cnBandY = 64, bandH = 12;          // ZONE 1 regime
-    var foundKick = 108, cy = 146, decY = 184;           // ZONE 2 foundings
-    var vcKick = 198, sTop = 210, sBot = 248;            // ZONE 3 VC (private)
-    var scY = 268;                                        // state-capital annotation
-    var exKick = 290, eTop = 302, eBot = 340, H = 370;   // ZONE 4 EXITS (IPO proceeds)
+    var usBandY = 44, cnBandY = 66, bandH = 13;          // ZONE 1 regime
+    var foundKick = 128, cy = 172, decY = 214;           // ZONE 2 foundings
+    var vcKick = 244, sTop = 258, sBot = 300;            // ZONE 3 VC (private)
+    var scY = 326;                                        // state-capital annotation band
+    var exKick = 360, eTop = 374, eBot = 416;            // ZONE 4 EXITS (IPO proceeds)
+    var H = 448;
     var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="The Founder&#39;s Century in labelled layers: a founder-regime band (open, constrained or closed) per country; the company-founding ledger rows US above / China below; annual private venture-capital investment on a log axis, with a state-guidance-fund estimate annotation; and annual IPO proceeds by venue (US, China onshore, China US-listed) on a log axis showing the post-2021 ADR freeze.">'];
     p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fti{font:12.5px sans-serif;fill:#2d3748}.fcl{font:9.5px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}.fkick{font:13px sans-serif;font-weight:700;letter-spacing:0.04em}.fin{font:8.5px sans-serif;fill:#2d3748;font-weight:600}.fvl{font:8.5px sans-serif;font-weight:700}</style>');
     // shared decade gridlines (regime + foundings zones)
@@ -431,7 +432,7 @@
       if (f.c === "US") y = cy - (k + 1) * bh - k * gap - 1; else y = cy + k * (bh + gap) + 1;
       var rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="' + col + '"/>';
       var title = esc(f.id + " " + f.y + " " + f.cat + " founding");
-      p.push('<a href="dossier.html#y-' + f.y + '" class="lf-year" data-year="' + f.y + '"><title>' + title + '</title>' + rect + '</a>');
+      p.push('<a href="dossier.html#y-' + f.y + '" class="lf-year" data-year="' + f.y + '" data-card="' + esc(f.id) + '"><title>' + title + '</title>' + rect + '</a>');
     });
     // ===== ZONE 3 — VC STRIP (private, own 2014-2024 axis, log) =====
     var us = vc.us || [], cn = vc.cn || [];
@@ -494,6 +495,9 @@
       if (onL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(onL[0]) - 2).toFixed(1) + '" y="' + (ex_y(onL[1]) + 10).toFixed(1) + '" text-anchor="end" fill="#c05621">China onshore</text>');
       if (usL2) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(usL2[0]) - 2).toFixed(1) + '" y="' + (ex_y(usL2[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US</text>');
       if (adL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(adL[0]) - 2).toFixed(1) + '" y="' + (ex_y(adL[1]) + 9).toFixed(1) + '" text-anchor="end" fill="#c53030">China US-listed $' + adL[1].toFixed(1) + 'B</text>');
+      // onshore peak label — China onshore was the LARGER exit venue for most of the window
+      var onPk = exOn.reduce(function (a, b) { return b[1] > a[1] ? b : a; }, exOn[0]);
+      if (onPk) p.push('<text class="fvl lf-scale-with-art" x="' + ex_x(onPk[0]).toFixed(1) + '" y="' + (ex_y(onPk[1]) - 5).toFixed(1) + '" text-anchor="middle" fill="#c05621">China onshore $' + Math.round(onPk[1]) + 'B — led most yrs</text>');
       p.push('<text class="ftick lf-scale-with-art" x="' + (ex_x(2021) + 3).toFixed(1) + '" y="' + (eTop + 8) + '" fill="#c53030">DiDi → ADR freeze</text>');
       [ey0, 2020, 2022, ey1].forEach(function (y) { if (y >= ey0 && y <= ey1) p.push('<text class="ftk lf-scale-with-art" x="' + ex_x(y).toFixed(1) + '" y="' + (eBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
     }
