@@ -939,3 +939,41 @@ No new ledger rows this batch (synthesis is interpretation; forecasts are avenue
 achievement rows) — census stays **294 / 1 / 3**. Verifier's forecast-signpost checks now bind on
 three real FORECAST objects; every signpost is future-dated and every forecast names its
 falsification. Batch 16 closed.
+
+---
+
+## Batch 17 — author's-experience revision (2026-07-28)
+
+**1. Judgment-box amendment (Figure Vb-adjacent).** Added an era-conditioning amendment in the
+author's own voice, dated and owned: the US recommendation holds on century-scale regime + capital
+depth, BUT for hard-tech founders in the ~2005–2020 window the US venue systematically underfunded
+long-ROI atoms (author's direct experience — biotech diagnostics, QKD, digital mental health — while
+China funded the QKD stack to orbit, cited to Micius `CN-2016-1`; note: no QuantumCTEK ledger row
+exists, so only Micius is cited). Includes the selection-mechanism critique (warm-intro network
+gatekeeping over deep-tech potential) as a labeled authorial judgment, and states the CHIPS-era pivot
+as reactive and unproven. Falsifiable clause added (2030 deep-tech funding-per-founder convergence +
+loosened warm-intro filter → retire the amendment).
+
+**2. Synthesis claim vi (chokepoint treatment).** Added to §04: leverage is mutual and domain-split —
+China's chokepoints are atoms (`CN-2024-2` rare-earth, `CN-2017-2` batteries, `CN-2010-4`
+manufacturing), the US's are bits/tools (export controls, EUV, compute, listing venues); the spending
+to escape (Big Fund III `CN-2024-3`, EUV chase `CN-2025-3`; TSMC Arizona `US-2024-3`) is the proof the
+leverage bites. Trend labeled OPEN-CAVEATED direction, not fact: atoms-leverage erodes slower than
+bits. §04 intro updated five→six claims; avenue thesis updated in lockstep.
+
+**3. Talent strip (Figure IV sixth dimension).** [see the batch-17 close below once committed.]
+
+**4. F4 — DRAFT, NOT PUBLISHED; awaiting the author's direction + probability.**
+Offered for author review ONLY. This is NOT a card, is NOT in avenues.json, and appears on no
+reader-facing surface until the author sets its direction and probability.
+- **Draft claim.** By end-2030, if US–China tech decoupling deepens from its 2026 baseline (continued
+  or tightened export-control scope; falling cross-border VC / M&A volume), ONE side's startup
+  ecosystem shows *measurable damage first*. The card must name (a) which side and (b) the single
+  indicator that resolves it.
+- **Candidate resolving indicators (author to choose ONE):** early-stage deep-tech funding-per-founder;
+  share of frontier-model / frontier-hardware releases; net high-tech founder migration flow;
+  time-to-scale median divergence.
+- **Author must rule before it becomes a card:** (1) direction — US-first, China-first, or deliberately
+  neutral (the experiment framing, like F2); (2) probability (existing anchors: F1 75, F2 50, F3 70);
+  (3) the single dated, future signpost per the FORECAST machinery; (4) the falsification condition.
+- Until answered, this stays here as a draft, cited by nothing, entering no card.

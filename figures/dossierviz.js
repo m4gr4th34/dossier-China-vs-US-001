@@ -329,8 +329,8 @@
       var allv = us.concat(cn), mn = Math.min.apply(null, allv), mx = Math.max.apply(null, allv);
       var lo = Math.log10(mn * 0.8), hi = Math.log10(mx * 1.15);
       function sc(v) { return d.log ? (Math.log10(v) - lo) / (hi - lo) * amp : v / mx * amp; }
-      var pct = /%/.test(d.unit || "");
-      function fmt(v) { return pct ? Math.round(v) + "%" : "$" + Math.round(v) + "B"; }
+      var pct = /%/.test(d.unit || ""), perM = /grad|\bM\b|million/i.test(d.unit || "");
+      function fmt(v) { return pct ? Math.round(v) + "%" : perM ? v.toFixed(1) + "M" : "$" + Math.round(v) + "B"; }
       // baseline
       p.push('<line x1="' + DM.padL + '" y1="' + cY + '" x2="' + (DM.W - DM.padR) + '" y2="' + cY + '" stroke="#cbd5e0"/>');
       function poly(vals, up) { return vals.map(function (v, k) { return dxf(yrs[k]).toFixed(1) + ',' + (up ? cY - sc(v) : cY + sc(v)).toFixed(1); }).join(' '); }
