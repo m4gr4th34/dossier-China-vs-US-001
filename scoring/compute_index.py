@@ -52,13 +52,20 @@ REGIME_BAND = os.path.join(ROOT, "data", "founder_series", "regime_band.csv")
 REGIME_TICKS = os.path.join(ROOT, "data", "founder_series", "regime_ticks.csv")
 VC_SERIES = os.path.join(ROOT, "data", "founder_series", "vc_investment.csv")
 UNICORNS = os.path.join(ROOT, "data", "founder_series", "unicorns.csv")
+IPO_SERIES = os.path.join(ROOT, "data", "founder_series", "ipo_proceeds.csv")
+STATE_CAPITAL = os.path.join(ROOT, "data", "founder_series", "state_capital.csv")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
 DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
 
 COUNTRIES = ("US", "China")
 YEAR_LO, YEAR_HI = 1926, 2026
+# The final bucket is EXTENDED to 2026, the corpus endpoint (the dossier's stated
+# span is 1926-2026); left at its natural 2025 the endpoint year would have no
+# decade home (no year-dossier anchor, no momentum bar) — as the 2026 Kimi K3 row
+# exposed. Only the last bucket is widened; all others stay exactly ten years.
 DECADES = [(y, y + 9) for y in range(1926, 2016 + 1, 10)]
+DECADES[-1] = (DECADES[-1][0], 2026)
 CATEGORIES = ["innovation", "science", "infrastructure", "industrial", "social", "governmental_economic"]
 # Canonical category palette — the single source for category colour, reused by the
 # spine legend (and available to any future category-coloured view).
@@ -373,6 +380,11 @@ def _silhouette_natsec(draft_rows):
     return _rolling_silhouette(draft_rows, NATSEC_WINDOW, lambda r: r.get("natsec") == "true")
 
 
+def _silhouette_founding(draft_rows):
+    # founding rows (45) are sparse like the natsec set, so reuse the wider 15-yr window
+    return _rolling_silhouette(draft_rows, NATSEC_WINDOW, lambda r: r.get("event_type") == "founding")
+
+
 # ============================================================
 # FIGURE SPECS (data-figure) + instrument controls
 # ============================================================
@@ -534,24 +546,41 @@ def build_dimensions_spec():
 def build_founder_caption(founds, vc, uni):
     us_n = sum(1 for f in founds if f["c"] == "US")
     cn_n = len(founds) - us_n
-    ucr = next((u for u in uni if u["class"] == "independent"), None)
-    uhu = next((u for u in uni if u["class"] == "chinese-origin"), None)
-    return ("Figure V - the Founder's Century, in three layers (descriptive). "
-            "--- REGIME BAND (top): whether a private founder could legally operate - the US open "
-            "throughout (ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 "
-            "(private enterprise abolished), reopening 1978, open 1992-2020, and constrained since the "
-            "2020 tech crackdown (a band annotation, not a ledger row - a crackdown is not an achievement). "
-            "--- BLOCKS (middle): the %d company-founding rows from the verified ledger "
-            "(event_type=founding, US %d / China %d; foundings, not patents or IP), US above / China "
-            "below, click any for its cards. "
-            "--- STRIP (bottom): annual venture-capital investment (PitchBook-NVCA for the US, KPMG "
-            "Venture Pulse-PitchBook for China; log US$B) - the China line peaks at $146B in 2021 and "
-            "collapses to $38B by 2024, a ~74%% fall, while the US fell ~41%%. Unicorns: US %s / China %s "
-            "(%s, independent); Hurun (Chinese-origin) counts China %s. Sourcing: "
-            "notes/regime_band_rationale.md." % (
-            len(founds), us_n, cn_n,
-            ucr["us"] if ucr else "?", ucr["cn"] if ucr else "?", ucr["source"].split(" (")[0] if ucr else "?",
-            uhu["cn"] if uhu else "?"))
+    return ("Figure V - the Founder's Century, in layers (descriptive). "
+            "--- REGIME BAND: whether a private founder could legally operate - the US open throughout "
+            "(ticked 1946 first VC firm, 1971 NASDAQ, 1982 SBIR); China closed 1956-78 (private enterprise "
+            "abolished), reopening 1978, open 1992-2020, and constrained since the 2020 tech crackdown (a "
+            "band annotation, not a ledger row - a crackdown is not an achievement). "
+            "--- FOUNDINGS: the %d company-founding rows from the verified ledger (event_type=founding, "
+            "US %d / China %d; foundings, not patents or IP), US above / China below, over a 15-year "
+            "rolling founding-density envelope; click any block for its cards. "
+            "--- VC STRIP: annual PRIVATE venture-capital investment (PitchBook, log US$B) - China peaks "
+            "$146B (2021) and collapses to $38B (2024, ~74%%); the US falls ~41%%. "
+            "--- EXITS STRIP: annual IPO proceeds (Renaissance / EY / KPMG, log US$B) - Chinese-company "
+            "US listings FROZE after DiDi (mid-2021), from ~$12.8B (2021) to ~$0.6B (2024), as listings "
+            "onshored to the A-share market and Hong Kong. "
+            "--- STATE CAPITAL (an estimate annotation, NOT a line): government guidance funds target "
+            "~$1.5T but paid-in is <$0.7T (Chinese-origin data; only 26%% met target), and Big Fund III "
+            "added $47.5B (2024). The substitution, plainly: private VC collapsed; state capital partly "
+            "replaced it - but the strip measures the former, not the latter. Sourcing: "
+            "notes/founder_series_selection.md and notes/regime_band_rationale.md." % (
+            len(founds), us_n, cn_n))
+
+
+def build_exits_strip():
+    rows = _read_csv(IPO_SERIES)
+
+    def _c(col):
+        return [[int(r["year"]), float(r[col])] for r in rows]
+    return {"us": _c("us_proceeds_usd_bn"), "onshore": _c("china_onshore_usd_bn"),
+            "us_listed": _c("china_us_listed_usd_bn"), "unit": "US$B", "log": True,
+            "source": "Renaissance Capital (US, ex-SPAC) / EY, KPMG, HKEX, Refinitiv (China by venue)"}
+
+
+def build_state_capital():
+    rows = _read_csv(STATE_CAPITAL)
+    return {r["metric"]: {"value": float(r["value"]), "unit": r["unit"],
+                          "label": r["label"], "class": r["source_class"]} for r in rows}
 
 
 def build_founder_spec(draft_rows):
@@ -578,8 +607,11 @@ def build_founder_spec(draft_rows):
                   "China column summed from KPMG quarterly bars (authorial aggregation)."}
     uni = [{"source": r["source"], "as_of": r["as_of"], "us": int(r["us"]), "cn": int(r["cn"]),
             "class": r["source_class"]} for r in _read_csv(UNICORNS)]
+    sil, mx = _silhouette_founding(draft_rows)
     return {"type": "founder", "version": 1, "band": band, "ticks": ticks, "founds": founds,
-            "vc": vc, "unicorns": uni, "count": len(founds),
+            "silhouette": sil, "silhouette_max": mx, "window": NATSEC_WINDOW,
+            "vc": vc, "exits": build_exits_strip(), "state_capital": build_state_capital(),
+            "unicorns": uni, "count": len(founds),
             "stage": "#ffffff", "caption": build_founder_caption(founds, vc, uni)}
 
 

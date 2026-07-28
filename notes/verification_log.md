@@ -857,3 +857,34 @@ column), because a crackdown is a setback, not an achievement, and cannot anchor
 **Front-door lockstep:** census 290/1/3 → **292/1/3**; corpus 294 → **296** (US 154, China 142).
 All five figures regenerated (the two rows flow into the spine, momentum, the panel, and Figure V);
 rendered to fixpoint; all gates + npm test green. Batch 14 closed.
+
+---
+
+## Batch 15 — state-capital + frontier-AI (2026-07-28, author-approved)
+
+| id | year | claim | qualifying sources | category / event_type |
+|---|---|---|---|---|
+| CN-2024-3 | 2024 | "Big Fund III" (Phase III, National IC Industry Investment Fund) incorporated 24 May 2024, ~¥344bn/$47.5bn registered capital — largest state chip fund | SAMR company registration (official-national) + Bloomberg (27 May 2024) + Reuters + Global Trade Alert | governmental_economic / founding |
+| CN-2026-1 | 2026 | Moonshot AI Kimi K3 (unveiled 16 Jul, open weights 27 Jul 2026): #1 LMArena Frontend Code Arena, best open-weight on Artificial Analysis — explicitly trailing US closed frontier | Artificial Analysis (independent) + LMArena (independent) + VentureBeat / Tom's Hardware | innovation / commercial-deployment |
+
+- **CN-2024-3 (Big Fund III):** independently corroborated registration (SAMR incorporation + two
+  independent wires). Category adjudicated COUNTRY-BLIND as `governmental_economic` (a national
+  industrial-investment vehicle), matching the central-bank founding precedent (`CN-1928-3`).
+  event_type=founding → it also appears as a Figure V founding block (founding rows 45 → 46) and is
+  the state-capital anchor cited in the judgment box's fourth leg.
+- **CN-2026-1 (Kimi K3):** meets the DeepSeek bar (dated release + independent benchmark). Filed
+  NARROWLY — the claim asserts open-weight leadership and **explicitly records that it trails the
+  leading US closed models** (Fable 5, GPT-5.6); adoption / market impact is NOT asserted. US 2026
+  frontier models are eligible for a future symmetric pass.
+- **2025 national VC guidance fund (HELD):** ¥1T is a mobilization TARGET with no disclosed paid-in
+  capital, corroborated mainly by Chinese/HK-origin sources — below the standard's bar. Recorded as
+  Figure V state-capital annotation context only, not a ledger row.
+
+**New Figure V layers + verifier.** Added the founding-density envelope (**I25**, recomputes from
+`event_type=founding` rows), the EXITS strip (annual IPO proceeds by venue) and the state-capital
+estimate annotation (**I26**, both == their committed CSVs exactly). Also fixed a latent
+decade-bucketing gap the 2026 row exposed: `DECADES` now extends its final bucket to 2026 (the corpus
+endpoint), so the endpoint year has a year-dossier anchor and a momentum bar.
+
+**Front-door lockstep:** census 292/1/3 → **294/1/3**; corpus 296 → **298** (US 154, China 144). All
+five figures regenerated to fixpoint; verifier 33/33; all gates + npm test green. Batch 15 closed.

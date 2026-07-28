@@ -153,11 +153,11 @@ check("Ledger S3: draft ESTABLISHED set reconciles with ledger set",
 # the avenue theses in avenues.json, and the baked console verdict. The label
 # CARRIES the numbers, so any change to a count must be made here AND in the
 # manuscript in the same commit (the CLAUDE.md lockstep rule) or CI goes red.
-_EXPECTED_CENSUS = (292, 1, 3)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
+_EXPECTED_CENSUS = (294, 1, 3)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
 _est_n = sum(1 for r in _ledger_rows if r.get("status") == "ESTABLISHED")
 _open_n = sum(1 for r in _draft_rows if r.get("status") == "OPEN-UNVERIFIED")
 _rep_n = sum(1 for r in _draft_rows if r.get("status") == "REPORTED")
-check("Census: 292 ESTABLISHED / 1 OPEN-UNVERIFIED / 3 REPORTED (live corpus counts)",
+check("Census: 294 ESTABLISHED / 1 OPEN-UNVERIFIED / 3 REPORTED (live corpus counts)",
       0 if (_est_n, _open_n, _rep_n) == _EXPECTED_CENSUS else 1, 0, 0)
 
 # ================================================================
@@ -435,6 +435,44 @@ check("Index I23: Figure V venture-capital + unicorn series == committed CSVs ex
 # (I24) the founder (Figure V) data-figure spec appears verbatim in the baked front door.
 check("Index I24: founder (Figure V) data-figure spec present verbatim in index.html",
       0 if _ci._attr_json(_committed["founder_spec"]) in _index_html else 1, 0, 0)
+
+# (I25) Figure V founding density envelope recomputes EXACTLY from the event_type=founding
+#       rows (a founder-window centred rolling count per country, independently recomputed).
+_fwin = _committed["founder_spec"]["window"]
+_fhalf = _fwin // 2
+_f_yr = {"US": {}, "China": {}}
+for _r in _draft_rows2:
+    if _r.get("event_type") == "founding" and _r.get("country") in ("US", "China"):
+        _y = int(_r["year"])
+        _f_yr[_r["country"]][_y] = _f_yr[_r["country"]].get(_y, 0) + 1
+_f_sil_bad = 0
+for _c in ("US", "China"):
+    for _pt in _committed["founder_spec"]["silhouette"][_c]:
+        _exp = sum(_f_yr[_c].get(_k, 0) for _k in range(_pt[0] - _fhalf, _pt[0] + _fhalf + 1))
+        if _pt[1] != _exp:
+            _f_sil_bad += 1
+check("Index I25: Figure V founding envelope recomputes exactly from event_type=founding rows",
+      _f_sil_bad, 0, 0)
+
+# (I26) Figure V exits (IPO-proceeds) strip == committed ipo_proceeds.csv EXACTLY, and the
+#       state-capital estimate annotation == committed state_capital.csv EXACTLY.
+_ipo_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "ipo_proceeds.csv"))
+_sc_csv = _read_csv(os.path.join(_ROOT, "data", "founder_series", "state_capital.csv"))
+
+
+def _ipocol(_c):
+    return [[int(r["year"]), float(r[_c])] for r in _ipo_csv]
+
+
+_ex = _committed["founder_spec"]["exits"]
+_exits_ok = (_ex.get("us") == _ipocol("us_proceeds_usd_bn")
+             and _ex.get("onshore") == _ipocol("china_onshore_usd_bn")
+             and _ex.get("us_listed") == _ipocol("china_us_listed_usd_bn"))
+_sc_exp = {r["metric"]: {"value": float(r["value"]), "unit": r["unit"],
+                         "label": r["label"], "class": r["source_class"]} for r in _sc_csv}
+_sc_ok = (_committed["founder_spec"]["state_capital"] == _sc_exp)
+check("Index I26: Figure V exits strip == ipo_proceeds.csv and state capital == state_capital.csv exactly",
+      0 if (_exits_ok and _sc_ok) else 1, 0, 0)
 
 # ----------------------------------------------------------------
 print()

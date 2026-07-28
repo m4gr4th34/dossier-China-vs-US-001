@@ -382,3 +382,19 @@ Gulf-War PGM, hypersonic weapons; China DF-17, Shandong (folded), Columbia SSBN,
 **Net:** +2 ESTABLISHED (both US). Corpus 294 → **296** (US 154, China 142). Census 290/1/3 →
 **292/1/3**. Founding rows 44 → 45 (ARD). Figure V US ticks now all row-anchored; the 2020 crackdown
 stays a band annotation (not a row).
+
+---
+
+## Batch 15 — Figure V state-capital + frontier-AI layers (2026-07-28, author-approved)
+
+| id | year | row | one-line reason |
+|---|---|---|---|
+| CN-2024-3 | 2024 | "Big Fund III" incorporated | Largest state chip fund (¥344bn/~$47.5bn reg. capital); state-capital vehicle for Figure V, founded as private VC craters. |
+| CN-2026-1 | 2026 | Moonshot AI Kimi K3 released | Strongest open-weight model on independent benchmarks; filed narrowly, explicitly trailing the US closed frontier. |
+
+**Net:** +2 ESTABLISHED (both China). Corpus 296 → **298** (US 154, China 144). Census 292/1/3 →
+**294/1/3**. Founding rows 45 → 46 (Big Fund III, `governmental_economic`/founding). Figure V gains
+two data layers — the EXITS strip (annual IPO proceeds by venue; `ipo_proceeds.csv`) and a
+state-capital ESTIMATE annotation (`state_capital.csv`) — plus the founding-density envelope. **Held:**
+the ¥1T 2025 national VC guidance fund (a mobilization target, no disclosed paid-in capital,
+Chinese-origin sourcing) — recorded as Figure V annotation context only, not a ledger row.

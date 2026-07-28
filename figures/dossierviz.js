@@ -368,8 +368,10 @@
     var bh = 6, gap = 1.3, bw = 7;
     var usBandY = 44, cnBandY = 64, bandH = 12;          // ZONE 1 regime
     var foundKick = 108, cy = 146, decY = 184;           // ZONE 2 foundings
-    var vcKick = 200, sTop = 214, sBot = 264, H = 292;   // ZONE 3 VC
-    var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="The Founder&#39;s Century in three labelled layers: a founder-regime band (open, constrained or closed) per country; the company-founding ledger rows US above / China below; and annual venture-capital investment on a log axis.">'];
+    var vcKick = 198, sTop = 210, sBot = 248;            // ZONE 3 VC (private)
+    var scY = 268;                                        // state-capital annotation
+    var exKick = 290, eTop = 302, eBot = 340, H = 370;   // ZONE 4 EXITS (IPO proceeds)
+    var p = ['<svg viewBox="0 0 ' + FO.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="The Founder&#39;s Century in labelled layers: a founder-regime band (open, constrained or closed) per country; the company-founding ledger rows US above / China below; annual private venture-capital investment on a log axis, with a state-guidance-fund estimate annotation; and annual IPO proceeds by venue (US, China onshore, China US-listed) on a log axis showing the post-2021 ADR freeze.">'];
     p.push('<style>.fax{stroke:#9aa5b1;stroke-width:1}.ftk{font:9px sans-serif;fill:#718096}.fti{font:12.5px sans-serif;fill:#2d3748}.fcl{font:9.5px sans-serif;fill:#4a5568}.ftick{font:8px sans-serif;fill:#4a5568}.fkick{font:13px sans-serif;font-weight:700;letter-spacing:0.04em}.fin{font:8.5px sans-serif;fill:#2d3748;font-weight:600}.fvl{font:8.5px sans-serif;font-weight:700}</style>');
     // shared decade gridlines (regime + foundings zones)
     for (var yr = 1930; yr <= 2026; yr += 10) {
@@ -404,6 +406,20 @@
     });
     // ===== ZONE 2 — FOUNDINGS =====
     p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + foundKick + '" fill="#c05621">COMPANY FOUNDINGS — ' + founds.length + ' VERIFIED LEDGER ROWS (FOUNDINGS, NOT IP / PATENTS)</text>');
+    var fwin = spec.window || 15;
+    p.push('<text class="ftk lf-scale-with-art" x="' + (FO.W - FO.padR) + '" y="' + foundKick + '" text-anchor="end">shaded = ' + fwin + '-yr rolling founding density</text>');
+    // founding density envelope (behind the blocks): mirrored ' + fwin + '-yr rolling count
+    var fsil = spec.silhouette, fmax = spec.silhouette_max || 1, fsilH = 32;
+    if (fsil && fsil.US && fsil.China) {
+      function fsilPath(pts, up) {
+        var d = "M" + fxf(pts[0][0]).toFixed(1) + "," + cy.toFixed(1);
+        pts.forEach(function (pt) { var yy = up ? (cy - pt[1] / fmax * fsilH) : (cy + pt[1] / fmax * fsilH); d += " L" + fxf(pt[0]).toFixed(1) + "," + yy.toFixed(1); });
+        d += " L" + fxf(pts[pts.length - 1][0]).toFixed(1) + "," + cy.toFixed(1) + " Z";
+        return d;
+      }
+      p.push('<path d="' + fsilPath(fsil.US, true) + '" fill="#2b6cb0" opacity="0.12"/>');
+      p.push('<path d="' + fsilPath(fsil.China, false) + '" fill="#c53030" opacity="0.12"/>');
+    }
     p.push('<line class="fax" x1="' + FO.padL + '" y1="' + cy + '" x2="' + (FO.W - FO.padR) + '" y2="' + cy + '"/>');
     p.push('<text class="ftk lf-scale-with-art" x="6" y="' + (cy - 4) + '">US ↑</text>');
     p.push('<text class="ftk lf-scale-with-art" x="6" y="' + (cy + 10) + '">China ↓</text>');
@@ -417,9 +433,9 @@
       var title = esc(f.id + " " + f.y + " " + f.cat + " founding");
       p.push('<a href="dossier.html#y-' + f.y + '" class="lf-year" data-year="' + f.y + '"><title>' + title + '</title>' + rect + '</a>');
     });
-    // ===== ZONE 3 — VC STRIP (own 2014-2024 axis, log) =====
+    // ===== ZONE 3 — VC STRIP (private, own 2014-2024 axis, log) =====
     var us = vc.us || [], cn = vc.cn || [];
-    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + vcKick + '" fill="#2f855a">ANNUAL VC INVESTMENT (LOG $B) — ' + esc(vc.source) + '</text>');
+    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + vcKick + '" fill="#2f855a">ANNUAL PRIVATE VC INVESTMENT (LOG $B) — ' + esc(vc.source) + '</text>');
     if (us.length) {
       var allY = us.concat(cn).map(function (d) { return d[0]; });
       var y0 = Math.min.apply(null, allY), y1 = Math.max.apply(null, allY);
@@ -444,9 +460,46 @@
       if (cnLast) p.push('<text class="fvl lf-scale-with-art" x="' + (vx(cnLast[0]) + 3).toFixed(1) + '" y="' + (vy(cnLast[1]) + 11).toFixed(1) + '" text-anchor="end" fill="#c53030">China $' + Math.round(cnLast[1]) + 'B</text>');
       if (usLast) p.push('<text class="fvl lf-scale-with-art" x="' + (vx(usLast[0]) + 3).toFixed(1) + '" y="' + (vy(usLast[1]) - 5).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US $' + Math.round(usLast[1]) + 'B</text>');
       [y0, 2018, 2021, y1].forEach(function (y) { if (y >= y0 && y <= y1) p.push('<text class="ftk lf-scale-with-art" x="' + vx(y).toFixed(1) + '" y="' + (sBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
-      var u0 = uni[0] || {}, u1 = uni[1] || {};
-      p.push('<text class="fcl lf-scale-with-art" x="' + FO.padL + '" y="' + (sBot + 24) + '">Unicorns ' + (u0.as_of || '') + ': US ' + (u0.us || '?') + ' / China ' + (u0.cn || '?') + ' (' + esc((u0.source || '').split(' (')[0]) + ', indep.); Hurun (Chinese-origin) counts China ' + (u1.cn || '?') + ' — conflicting figures.</text>');
     }
+    // ----- state-capital annotation (labeled ESTIMATE, not a data line) -----
+    var sc = spec.state_capital || {};
+    function scfmt(k) { var m = sc[k]; if (!m) return '?'; var v = m.value, u = (m.unit || '').indexOf('T') >= 0 ? 'T' : 'B'; return '$' + (v % 1 === 0 ? v : v.toFixed(u === 'T' ? 1 : 1)) + u; }
+    if (sc.guidance_target) {
+      p.push('<rect x="' + FO.padL + '" y="' + (scY - 9) + '" width="' + (FO.W - FO.padL - FO.padR) + '" height="20" fill="#fffaf0" stroke="#dd9b3f" stroke-width="0.6" stroke-dasharray="3,2" rx="2"/>');
+      p.push('<text class="fvl lf-scale-with-art" x="' + (FO.padL + 5) + '" y="' + (scY + 1) + '" fill="#9c6612">◇ STATE GUIDANCE FUNDS, est. (Chinese-origin; target ≫ paid-in):</text>');
+      p.push('<text class="fvl lf-scale-with-art" x="' + (FO.padL + 5) + '" y="' + (scY + 9) + '" fill="#9c6612">~' + scfmt('guidance_target') + ' target / &lt;' + scfmt('guidance_paidin') + ' paid-in (26% of funds met target) · Big Fund III ' + scfmt('big_fund_iii') + ' (2024) · 2025 nat’l VC fund ~' + scfmt('national_vc_fund_target') + ' target (announced) — private VC collapsed; state capital partly replaced it; this figure measures the former.</text>');
+    }
+    // ===== ZONE 4 — EXITS STRIP (annual IPO proceeds by venue, log $B) =====
+    var ex = spec.exits || {}, exUS = ex.us || [], exOn = ex.onshore || [], exAdr = ex.us_listed || [];
+    p.push('<text class="fkick lf-scale-with-art" x="' + FO.padL + '" y="' + exKick + '" fill="#2f855a">ANNUAL IPO PROCEEDS (LOG $B) — ' + esc(ex.source || '') + '</text>');
+    if (exUS.length) {
+      var eAll = exUS.concat(exOn).concat(exAdr);
+      var eyA = eAll.map(function (d) { return d[0]; }), evA = eAll.map(function (d) { return d[1]; }).filter(function (v) { return v > 0; });
+      var ey0 = Math.min.apply(null, eyA), ey1 = Math.max.apply(null, eyA);
+      var emn = Math.min.apply(null, evA), emx = Math.max.apply(null, evA);
+      var elo = Math.log10(emn * 0.7), ehi = Math.log10(emx * 1.2);
+      function ex_x(y) { return FO.padL + (y - ey0) / (ey1 - ey0) * (FO.W - FO.padL - FO.padR); }
+      function ex_y(v) { return eBot - (Math.log10(v) - elo) / (ehi - elo) * (eBot - eTop); }
+      [1, 10, 100].forEach(function (g) { if (g > emn * 0.7 && g < emx * 1.2) { var yy = ex_y(g); p.push('<line x1="' + FO.padL + '" y1="' + yy.toFixed(1) + '" x2="' + (FO.W - FO.padR) + '" y2="' + yy.toFixed(1) + '" stroke="#eef2f6"/><text class="ftk lf-scale-with-art" x="' + (FO.padL - 4) + '" y="' + (yy + 3).toFixed(1) + '" text-anchor="end">$' + g + 'B</text>'); } });
+      function ex_poly(arr) { return arr.filter(function (d) { return d[1] > 0; }).map(function (d) { return ex_x(d[0]).toFixed(1) + ',' + ex_y(d[1]).toFixed(1); }).join(' '); }
+      // DiDi / ADR-freeze marker at mid-2021
+      p.push('<line x1="' + ex_x(2021).toFixed(1) + '" y1="' + eTop + '" x2="' + ex_x(2021).toFixed(1) + '" y2="' + eBot + '" stroke="#c53030" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.45"/>');
+      [[exUS, '#2b6cb0', 'US'], [exOn, '#c05621', 'onshore'], [exAdr, '#c53030', 'US-listed']].forEach(function (t) {
+        var arr = t[0], col = t[1];
+        p.push('<polyline points="' + ex_poly(arr) + '" fill="none" stroke="' + col + '" stroke-width="1.6"' + (t[2] === 'US-listed' ? ' stroke-dasharray="4,2"' : '') + '/>');
+        arr.forEach(function (d) { if (d[1] > 0) p.push('<circle cx="' + ex_x(d[0]).toFixed(1) + '" cy="' + ex_y(d[1]).toFixed(1) + '" r="1.8" fill="' + col + '"/>'); });
+      });
+      // end-labels
+      var onL = exOn[exOn.length - 1], usL2 = exUS[exUS.length - 1], adL = exAdr[exAdr.length - 1];
+      if (onL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(onL[0]) - 2).toFixed(1) + '" y="' + (ex_y(onL[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#c05621">China onshore</text>');
+      if (usL2) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(usL2[0]) - 2).toFixed(1) + '" y="' + (ex_y(usL2[1]) - 4).toFixed(1) + '" text-anchor="end" fill="#2b6cb0">US</text>');
+      if (adL) p.push('<text class="fvl lf-scale-with-art" x="' + (ex_x(adL[0]) - 2).toFixed(1) + '" y="' + (ex_y(adL[1]) + 9).toFixed(1) + '" text-anchor="end" fill="#c53030">China US-listed $' + adL[1].toFixed(1) + 'B</text>');
+      p.push('<text class="ftick lf-scale-with-art" x="' + (ex_x(2021) + 3).toFixed(1) + '" y="' + (eTop + 8) + '" fill="#c53030">DiDi → ADR freeze</text>');
+      [ey0, 2020, 2022, ey1].forEach(function (y) { if (y >= ey0 && y <= ey1) p.push('<text class="ftk lf-scale-with-art" x="' + ex_x(y).toFixed(1) + '" y="' + (eBot + 11) + '" text-anchor="middle">' + y + '</text>'); });
+    }
+    // unicorn footnote (bottom)
+    var u0 = uni[0] || {}, u1 = uni[1] || {};
+    p.push('<text class="fcl lf-scale-with-art" x="' + FO.padL + '" y="' + (eBot + 22) + '">Unicorns ' + (u0.as_of || '') + ': US ' + (u0.us || '?') + ' / China ' + (u0.cn || '?') + ' (' + esc((u0.source || '').split(' (')[0]) + ', indep.); Hurun (Chinese-origin) counts China ' + (u1.cn || '?') + ' — conflicting figures.</text>');
     p.push('</svg>');
     return p.join("");
   }
