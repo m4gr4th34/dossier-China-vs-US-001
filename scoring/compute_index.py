@@ -605,7 +605,7 @@ def build_state_capital():
         "band": [[int(r["year"]), float(r["announced_usd_bn"]), float(r["subscribed_usd_bn"])] for r in band],
         "ticks": [{"label": r["label"], "year": int(r["year"]), "usd_bn": float(r["usd_bn"]),
                    "side": r["side"]} for r in ticks],
-        "source": "Zero2IPO/清科 (Chinese-origin, single vendor); CSET / China Quarterly corroborate by citation",
+        "source": "Zero2IPO/清科 — single vendor, no independent count",
     }
 
 
