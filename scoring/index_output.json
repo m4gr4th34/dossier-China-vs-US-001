@@ -10172,5 +10172,188 @@
     },
     "stage": "#ffffff",
     "caption": "Figure III - the national-security ledger. FIRST, plainly: this is NOT a military-balance or capability assessment and settles nothing about who is stronger or ahead. --- TOP = notable defense-capability ARRIVALS under the published, country-blind tagging rule (notes/selection_criteria.md Amendment 5): 27 natsec-tagged achievements (14 pure defense, 13 dual-use - defense-origin but civilian-transformative like GPS, ARPANET and the first satellites, drawn with an amber ring; US 15 / China 12), behind them a mirrored 15-year rolling-count density envelope (wider than the main spine's 7-year window because this set is ~10x sparser). REPORTED rows are hatched and their interested party is named in the year dossier - defense is exactly where interested-party sourcing (BOTH PLA media and US defense assessments) concentrates; the 2021 hypersonic-test row is REPORTED for that reason. --- BOTTOM = what measured MILITARY EXPENDITURE did: SIPRI, constant 2023 US$, LOG scale, 1990-2024. China's line is a SIPRI ESTIMATE (higher than its official budget; SIPRI calls the R&D component 'educated guesswork') - the US spent roughly 3x China across the recent decade. Click a year for its cards."
+  },
+  "dimensions_spec": {
+    "type": "dimensions",
+    "version": 1,
+    "dims": [
+      {
+        "years": [
+          1950,
+          1960,
+          1970,
+          1980,
+          1990,
+          2000,
+          2010,
+          2020,
+          2022
+        ],
+        "us": [
+          27.4,
+          24.5,
+          22.4,
+          21.1,
+          21.5,
+          21.6,
+          17.0,
+          15.2,
+          15.0
+        ],
+        "cn": [
+          5.2,
+          5.3,
+          5.2,
+          5.9,
+          7.9,
+          9.9,
+          14.3,
+          20.4,
+          20.7
+        ],
+        "label": "GDP (share of world, PPP)",
+        "unit": "% of world",
+        "log": false,
+        "source": "Maddison Project 2023 (indep-academic)",
+        "caveat": "PPP: China pre-2005 = estimate",
+        "note": "China's pre-2005 PPP is an estimate; IMF gives a lower early-China share (5.9% vs 2.1% in 1980)."
+      },
+      {
+        "years": [
+          1990,
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020,
+          2024
+        ],
+        "us": [
+          758.2,
+          591.6,
+          566.4,
+          831.9,
+          1031.3,
+          814.8,
+          916.4,
+          968.4
+        ],
+        "cn": [
+          22.0,
+          26.1,
+          42.5,
+          75.8,
+          133.6,
+          199.2,
+          259.9,
+          317.6
+        ],
+        "label": "Military spending (const 2023 US$B)",
+        "unit": "US$B",
+        "log": true,
+        "source": "SIPRI (international-body)",
+        "caveat": "China = SIPRI estimate",
+        "note": "China is a SIPRI ESTIMATE, higher than its official budget."
+      },
+      {
+        "years": [
+          2005,
+          2010,
+          2015,
+          2020
+        ],
+        "us": [
+          21.6,
+          16.7,
+          17.1,
+          16.3
+        ],
+        "cn": [
+          9.4,
+          18.0,
+          25.8,
+          27.9
+        ],
+        "label": "Manufacturing (value-added share of world)",
+        "unit": "% of world",
+        "log": false,
+        "source": "World Bank WDI (international-body)",
+        "caveat": "gross ≠ domestic value-added",
+        "note": "Current-US$ share; China's DOMESTIC value-added is lower than gross (imported components in exports)."
+      },
+      {
+        "years": [
+          2000,
+          2005,
+          2010,
+          2015,
+          2020,
+          2023
+        ],
+        "us": [
+          269.0,
+          328.0,
+          410.0,
+          495.0,
+          720.0,
+          823.0
+        ],
+        "cn": [
+          33.0,
+          86.0,
+          213.0,
+          409.0,
+          563.0,
+          781.0
+        ],
+        "label": "R&D (GERD, PPP $B)",
+        "unit": "$B",
+        "log": true,
+        "source": "OECD MSTI / NSF NCSES (international-body)",
+        "caveat": "R&D spend, not patents",
+        "note": "Chosen over patent counts (subsidy-distorted)."
+      },
+      {
+        "years": [
+          1970,
+          1980,
+          1990,
+          2000,
+          2010,
+          2020,
+          2023,
+          2024
+        ],
+        "us": [
+          14.3,
+          11.4,
+          11.4,
+          12.1,
+          8.3,
+          8.0,
+          8.4,
+          8.4
+        ],
+        "cn": [
+          0.8,
+          0.9,
+          1.8,
+          3.8,
+          10.3,
+          14.6,
+          14.1,
+          14.5
+        ],
+        "label": "Merchandise exports (share of world)",
+        "unit": "% of world",
+        "log": false,
+        "source": "World Bank / WTO (international-body)",
+        "caveat": "gross exports (processing / re-exports)",
+        "note": "Gross exports overstate China's domestic value-added (processing trade; HK re-exports)."
+      }
+    ],
+    "stage": "#ffffff",
+    "caption": "Figure IV - dimensions of power: 5 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO."
   }
 }

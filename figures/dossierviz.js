@@ -302,10 +302,62 @@
     return p.join("");
   }
 
+  // =====================================================================
+  // DIMENSIONS (Figure IV) — small-multiples: one thin mirrored US(up)/China(down)
+  // strip per measured series, sharing the 1926-2026 axis, each on its OWN scale
+  // (linear % of world, or log US$B). DELIBERATELY no aggregate line.
+  // =====================================================================
+  var DM = { W: 1120, padL: 162, padR: 54, top: 24, stripH: 68, botAx: 26, YLO: 1926, YHI: 2026 };
+  function dxf(y) { return DM.padL + (y - DM.YLO) / (DM.YHI - DM.YLO) * (DM.W - DM.padL - DM.padR); }
+
+  function dimensionsSvgString(spec) {
+    var dims = spec.dims || [], N = dims.length;
+    var H = DM.top + N * DM.stripH + DM.botAx;
+    var p = ['<svg viewBox="0 0 ' + DM.W + ' ' + H + '" width="100%" class="lf-svg" role="img" aria-label="Dimensions of power: ' + N + ' independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line.">'];
+    p.push('<style>.dtk{font:9px sans-serif;fill:#718096}.dti{font:13px sans-serif;fill:#2d3748}.dlb{font:10.5px sans-serif;fill:#2d3748;font-weight:600}.dsm{font:8.5px sans-serif;fill:#718096}.dcv{font:8.5px sans-serif;fill:#b7791f}.dvl{font:9px sans-serif;font-weight:600}</style>');
+    p.push('<text class="dti lf-scale-with-art" x="' + DM.padL + '" y="15">Dimensions of power — ' + N + ' measured series, US above / China below · own scale per strip · NO aggregate line</text>');
+    // shared decade gridlines + bottom labels
+    var gridBot = DM.top + N * DM.stripH;
+    for (var yr = 1930; yr <= 2026; yr += 10) {
+      var xx = dxf(yr);
+      p.push('<line x1="' + xx.toFixed(1) + '" y1="' + DM.top + '" x2="' + xx.toFixed(1) + '" y2="' + gridBot + '" stroke="#eef2f6"/>');
+      p.push('<text class="dtk lf-scale-with-art" x="' + xx.toFixed(1) + '" y="' + (gridBot + 12) + '" text-anchor="middle">' + yr + '</text>');
+    }
+    dims.forEach(function (d, i) {
+      var cY = DM.top + i * DM.stripH + DM.stripH / 2, amp = DM.stripH / 2 - 14;
+      var yrs = d.years, us = d.us, cn = d.cn, n = yrs.length;
+      var allv = us.concat(cn), mn = Math.min.apply(null, allv), mx = Math.max.apply(null, allv);
+      var lo = Math.log10(mn * 0.8), hi = Math.log10(mx * 1.15);
+      function sc(v) { return d.log ? (Math.log10(v) - lo) / (hi - lo) * amp : v / mx * amp; }
+      var pct = /%/.test(d.unit || "");
+      function fmt(v) { return pct ? Math.round(v) + "%" : "$" + Math.round(v) + "B"; }
+      // baseline
+      p.push('<line x1="' + DM.padL + '" y1="' + cY + '" x2="' + (DM.W - DM.padR) + '" y2="' + cY + '" stroke="#cbd5e0"/>');
+      function poly(vals, up) { return vals.map(function (v, k) { return dxf(yrs[k]).toFixed(1) + ',' + (up ? cY - sc(v) : cY + sc(v)).toFixed(1); }).join(' '); }
+      [['US', us, '#2b6cb0', true], ['China', cn, '#c53030', false]].forEach(function (t) {
+        var vals = t[1], col = t[2], up = t[3];
+        p.push('<polygon points="' + dxf(yrs[0]).toFixed(1) + ',' + cY + ' ' + poly(vals, up) + ' ' + dxf(yrs[n - 1]).toFixed(1) + ',' + cY + '" fill="' + col + '" opacity="0.10"/>');
+        p.push('<polyline points="' + poly(vals, up) + '" fill="none" stroke="' + col + '" stroke-width="1.6"/>');
+        vals.forEach(function (v, k) { p.push('<circle cx="' + dxf(yrs[k]).toFixed(1) + '" cy="' + (up ? cY - sc(v) : cY + sc(v)).toFixed(1) + '" r="1.8" fill="' + col + '"/>'); });
+      });
+      // end-value labels (give the scale) at the last point
+      p.push('<text class="dvl lf-scale-with-art" x="' + (dxf(yrs[n - 1]) + 4).toFixed(1) + '" y="' + (cY - sc(us[n - 1]) + 1).toFixed(1) + '" fill="#2b6cb0">' + fmt(us[n - 1]) + '</text>');
+      p.push('<text class="dvl lf-scale-with-art" x="' + (dxf(yrs[n - 1]) + 4).toFixed(1) + '" y="' + (cY + sc(cn[n - 1]) + 3).toFixed(1) + '" fill="#c53030">' + fmt(cn[n - 1]) + '</text>');
+      // left gutter: label, unit/scale, caveat, source
+      p.push('<text class="dlb lf-scale-with-art" x="6" y="' + (cY - 14) + '">' + esc(d.label) + '</text>');
+      p.push('<text class="dsm lf-scale-with-art" x="6" y="' + (cY - 3) + '">' + esc(d.unit) + (d.log ? ' · log' : ' · linear') + ' · ' + yrs[0] + '–' + yrs[n - 1] + '</text>');
+      p.push('<text class="dcv lf-scale-with-art" x="6" y="' + (cY + 9) + '">⚠ ' + esc(d.caveat || '') + '</text>');
+      p.push('<text class="dsm lf-scale-with-art" x="6" y="' + (cY + 20) + '">' + esc(d.source) + '</text>');
+    });
+    p.push('</svg>');
+    return p.join("");
+  }
+
   // ---- registrations: poster (Node string floor) + live renderer (lightbox) ----
   function renderMomentumPosterSVG(spec) { return momentumSvgString(spec); }
   function renderSpinePosterSVG(spec) { return spineSvgString(spec); }
   function renderNatsecPosterSVG(spec) { return natsecSvgString(spec); }
+  function renderDimensionsPosterSVG(spec) { return dimensionsSvgString(spec); }
   function mount(container, spec, drawFn) {
     if (!container) return null;
     if (spec == null && container.getAttribute) { try { spec = JSON.parse(container.getAttribute("data-figure")); } catch (e) { return null; } }
@@ -318,10 +370,13 @@
   DF.renderMomentumPosterSVG = renderMomentumPosterSVG;
   DF.renderSpinePosterSVG = renderSpinePosterSVG;
   DF.renderNatsecPosterSVG = renderNatsecPosterSVG;
+  DF.renderDimensionsPosterSVG = renderDimensionsPosterSVG;
   DF.registerPoster("momentum", renderMomentumPosterSVG);
   DF.registerPoster("spine", renderSpinePosterSVG);
   DF.registerPoster("natsec", renderNatsecPosterSVG);
+  DF.registerPoster("dimensions", renderDimensionsPosterSVG);
   DF.registerRenderer("momentum", function (c, s) { return mount(c, s, momentumSvgString); });
   DF.registerRenderer("spine", function (c, s) { return mount(c, s, spineSvgString); });
   DF.registerRenderer("natsec", function (c, s) { return mount(c, s, natsecSvgString); });
+  DF.registerRenderer("dimensions", function (c, s) { return mount(c, s, dimensionsSvgString); });
 })(typeof window !== "undefined" ? window : null);

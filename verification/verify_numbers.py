@@ -352,6 +352,45 @@ check("Index I17: military-expenditure strip series == data/context_series/milex
       0 if (_mstrip.get("years") == _mx_years and _mstrip.get("us") == _mx_us
             and _mstrip.get("cn") == _mx_cn) else 1, 0, 0)
 
+# (I18) Figure IV percent-share dimension strips == their data/power_series CSVs, EXACTLY.
+_dims = {_d["label"].split(" (")[0]: _d for _d in _committed["dimensions_spec"]["dims"]}
+
+
+def _pct_csv(_path):
+    _r = _read_csv(_path)
+    return ([int(_x["year"]) for _x in _r], [float(_x["us_pct"]) for _x in _r],
+            [float(_x["cn_pct"]) for _x in _r])
+
+
+_dim_bad = 0
+for _lbl, _path in [("GDP", os.path.join(_ROOT, "data", "power_series", "gdp_share.csv")),
+                    ("Manufacturing", os.path.join(_ROOT, "data", "power_series", "manufacturing_share.csv")),
+                    ("Merchandise exports", os.path.join(_ROOT, "data", "power_series", "trade_share.csv"))]:
+    _y, _u, _c = _pct_csv(_path)
+    _d = _dims.get(_lbl, {})
+    if not (_d.get("years") == _y and _d.get("us") == _u and _d.get("cn") == _c):
+        _dim_bad += 1
+check("Index I18: Figure IV percent-share strips == data/power_series CSVs exactly", _dim_bad, 0, 0)
+
+# (I19) Figure IV military & R&D strips REUSE the committed SIPRI/GERD series (single source
+#       of truth - no duplicate CSV): they must equal the milex strip and the spine's GERD strip.
+_mil = _dims.get("Military spending", {})
+_rnd = _dims.get("R&D", {})
+_gerd = _committed["spine_spec"]["strip"]
+_reuse_bad = 0
+if not (_mil.get("years") == _mstrip.get("years") and _mil.get("us") == _mstrip.get("us")
+        and _mil.get("cn") == _mstrip.get("cn")):
+    _reuse_bad += 1
+if not (_rnd.get("years") == _gerd.get("years") and _rnd.get("us") == _gerd.get("us")
+        and _rnd.get("cn") == _gerd.get("cn")):
+    _reuse_bad += 1
+check("Index I19: Figure IV military/R&D strips reuse the committed SIPRI/GERD series (single source)",
+      _reuse_bad, 0, 0)
+
+# (I20) the dimensions data-figure spec appears verbatim in the baked front door.
+check("Index I20: dimensions (Figure IV) data-figure spec present verbatim in index.html",
+      0 if _ci._attr_json(_committed["dimensions_spec"]) in _index_html else 1, 0, 0)
+
 # ----------------------------------------------------------------
 print()
 n_fail = sum(1 for r in results if r[0] == FAIL)

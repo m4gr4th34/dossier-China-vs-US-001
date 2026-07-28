@@ -45,6 +45,9 @@ DRAFT = os.path.join(ROOT, "data", "achievements_draft.csv")
 WEIGHTS = os.path.join(HERE, "weights.json")
 CONTEXT = os.path.join(ROOT, "data", "context_series.csv")
 MILEX_CONTEXT = os.path.join(ROOT, "data", "context_series", "milex_sipri.csv")
+GDP_SHARE = os.path.join(ROOT, "data", "power_series", "gdp_share.csv")
+MFG_SHARE = os.path.join(ROOT, "data", "power_series", "manufacturing_share.csv")
+TRADE_SHARE = os.path.join(ROOT, "data", "power_series", "trade_share.csv")
 OUT = os.path.join(HERE, "index_output.json")
 SOURCE = os.path.join(ROOT, "editions", "index.source.html")
 DOSSIER_SOURCE = os.path.join(ROOT, "editions", "dossier.source.html")
@@ -226,6 +229,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["momentum_spec"] = build_momentum_spec(result)
     result["spine_spec"] = build_spine_spec(result, draft_rows, est)
     result["natsec_spec"] = build_natsec_spec(draft_rows)
+    result["dimensions_spec"] = build_dimensions_spec()
     return result
 
 
@@ -473,6 +477,55 @@ def build_milex_strip():
     }
 
 
+def _pct_series(path, label, source, caveat, note):
+    rows = _read_csv(path)
+    return {"years": [int(r["year"]) for r in rows], "us": [float(r["us_pct"]) for r in rows],
+            "cn": [float(r["cn_pct"]) for r in rows], "label": label, "unit": "% of world",
+            "log": False, "source": source, "caveat": caveat, "note": note}
+
+
+def build_dimensions_caption(dims):
+    names = ", ".join(d["label"].split(" (")[0].lower() for d in dims)
+    return ("Figure IV - dimensions of power: %d independent MEASURED series (%s), each a thin "
+            "US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale "
+            "(share of world, or US$B on a log axis - stated per strip; end values labelled). "
+            "--- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US "
+            "leads on GDP, the R&D frontier and finance; China on manufacturing value-added and "
+            "merchandise-trade volume; military spending is a ~3x US lead), and collapsing them "
+            "into one number would hide that disagreement behind a weighting choice - the same "
+            "trap the momentum index is quarantined for. The weighting is left to you. "
+            "--- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-"
+            "gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI "
+            "estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO." % (
+            len(dims), names))
+
+
+def build_dimensions_spec():
+    milex = build_milex_strip()
+    gerd = build_strip()
+    dims = [
+        _pct_series(GDP_SHARE, "GDP (share of world, PPP)", "Maddison Project 2023 (indep-academic)",
+                    "PPP: China pre-2005 = estimate",
+                    "China's pre-2005 PPP is an estimate; IMF gives a lower early-China share (5.9% vs 2.1% in 1980)."),
+        {"years": milex["years"], "us": milex["us"], "cn": milex["cn"],
+         "label": "Military spending (const 2023 US$B)", "unit": "US$B", "log": True,
+         "source": "SIPRI (international-body)", "caveat": "China = SIPRI estimate",
+         "note": "China is a SIPRI ESTIMATE, higher than its official budget."},
+        _pct_series(MFG_SHARE, "Manufacturing (value-added share of world)", "World Bank WDI (international-body)",
+                    "gross ≠ domestic value-added",
+                    "Current-US$ share; China's DOMESTIC value-added is lower than gross (imported components in exports)."),
+        {"years": gerd["years"], "us": gerd["us"], "cn": gerd["cn"],
+         "label": "R&D (GERD, PPP $B)", "unit": "$B", "log": True,
+         "source": "OECD MSTI / NSF NCSES (international-body)", "caveat": "R&D spend, not patents",
+         "note": "Chosen over patent counts (subsidy-distorted)."},
+        _pct_series(TRADE_SHARE, "Merchandise exports (share of world)", "World Bank / WTO (international-body)",
+                    "gross exports (processing / re-exports)",
+                    "Gross exports overstate China's domestic value-added (processing trade; HK re-exports)."),
+    ]
+    return {"type": "dimensions", "version": 1, "dims": dims,
+            "stage": "#ffffff", "caption": build_dimensions_caption(dims)}
+
+
 def build_natsec_spec(draft_rows):
     ns = [r for r in draft_rows if r.get("natsec") == "true" and r["country"] in COUNTRIES]
     rows = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"],
@@ -557,6 +610,9 @@ if __name__ == "__main__":
     if _inject(SOURCE, "<!--natsec:start-->", "<!--natsec:end-->",
                _living_figure("living-figure chart wide natsec-fig", result["natsec_spec"])):
         changed.append("natsec")
+    if _inject(SOURCE, "<!--dimensions:start-->", "<!--dimensions:end-->",
+               _living_figure("living-figure chart wide dimensions-fig", result["dimensions_spec"])):
+        changed.append("dimensions")
     if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
         changed.append("dossiers")
     print("compute_index: wrote %s; injected: %s" %

@@ -44,8 +44,11 @@ Results from `verification/verify_numbers.py` — the same checks the in-page co
 - [PASS] Index I15: every dual_use row is also natsec (dual_use is a subset of natsec)
 - [PASS] Index I16: national-security density envelope recomputes exactly from natsec-tagged rows
 - [PASS] Index I17: military-expenditure strip series == data/context_series/milex_sipri.csv exactly
+- [PASS] Index I18: Figure IV percent-share strips == data/power_series CSVs exactly
+- [PASS] Index I19: Figure IV military/R&D strips reuse the committed SIPRI/GERD series (single source)
+- [PASS] Index I20: dimensions (Figure IV) data-figure spec present verbatim in index.html
 
-**TOTAL: 24 checks · 24 pass · 0 fail** — All checks pass — the survey is internally consistent.
+**TOTAL: 27 checks · 27 pass · 0 fail** — All checks pass — the survey is internally consistent.
 
 **THE LEDGER · NARRATIVE**
 
@@ -106,6 +109,14 @@ One more view, for a question readers keep asking: which of these achievements a
 III. The national-security ledger — one tag, made explicit
 
 *(figure: The national-security ledger: one block per natsec-tagged achievement 1926-2026, US above the centreline and China below, coloured by category, textured by verification label, dual-use rows ringed in amber, with a 15-year rolling density envelope and a SIPRI military-expenditure strip beneath. A count under the published tagging rule, not a military-balance assessment. — Figure III - the national-security ledger. FIRST, plainly: this is NOT a military-balance or capability assessment and settles nothing about who is stronger or ahead. --- TOP = notable defense-capability ARRIVALS under the published, country-blind tagging rule (notes/selection_criteria.md Amendment 5): 27 natsec-tagged achievements (14 pure defense, 13 dual-use - defense-origin but civilian-transformative like GPS, ARPANET and the first satellites, drawn with an amber ring; US 15 / China 12), behind them a mirrored 15-year rolling-count density envelope (wider than the main spine's 7-year window because this set is ~10x sparser). REPORTED rows are hatched and their interested party is named in the year dossier - defense is exactly where interested-party sourcing (BOTH PLA media and US defense assessments) concentrates; the 2021 hypersonic-test row is REPORTED for that reason. --- BOTTOM = what measured MILITARY EXPENDITURE did: SIPRI, constant 2023 US$, LOG scale, 1990-2024. China's line is a SIPRI ESTIMATE (higher than its official budget; SIPRI calls the R&D component 'educated guesswork') - the US spent roughly 3x China across the recent decade. Click a year for its cards.)*
+
+### Dimensions of power — the measured series
+
+The ledger and its figures so far are a *curated* record. This last figure steps outside the corpus entirely to the raw, independently-measured series economists actually track — GDP, military spending, manufacturing, R&D, trade — each a thin US-above / China-below strip on the shared century axis, each on **its own scale** (a share of world, or dollars on a log axis, stated per strip). The point is what the strips *disagree* about: the US leads on GDP and the R&D frontier, China on manufacturing value-added and merchandise-trade volume, and military spending is a roughly threefold US lead. So the figure **deliberately draws no single "power index" line** — collapsing five disagreeing dimensions into one number would just hide the disagreement behind a weighting choice, the very move the momentum index is quarantined for. Each strip carries its own Chinese-data caveat (PPP conversion, gross-versus-domestic value-added, processing trade, the SIPRI estimate). Series and selection are documented in `notes/power_series_selection.md`.
+
+IV. Dimensions of power — what the measured series say
+
+*(figure: Dimensions of power: 5 independent measured series, each a thin US-above / China-below strip on the shared 1926-2026 axis, each on its own scale. No aggregate line. — Figure IV - dimensions of power: 5 independent MEASURED series (gdp, military spending, manufacturing, r&d, merchandise exports), each a thin US-above / China-below strip on the shared 1926-2026 axis, each on ITS OWN scale (share of world, or US$B on a log axis - stated per strip; end values labelled). --- DELIBERATELY NO AGGREGATE 'power index' line: the dimensions disagree (the US leads on GDP, the R&D frontier and finance; China on manufacturing value-added and merchandise-trade volume; military spending is a ~3x US lead), and collapsing them into one number would hide that disagreement behind a weighting choice - the same trap the momentum index is quarantined for. The weighting is left to you. --- Chinese-data caveats per series: PPP-conversion (GDP), current-US$/domestic-vs-gross value-added (manufacturing), processing-trade & re-exports (trade), SIPRI estimate (military). Sources: Maddison, SIPRI, World Bank, OECD/NSF, WTO.)*
 
 ### Early-century China floor — OPEN
 
