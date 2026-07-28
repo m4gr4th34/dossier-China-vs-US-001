@@ -194,9 +194,67 @@
     return p.join("");
   }
 
+  // =====================================================================
+  // NATSEC (Figure III) — a mini-spine filtered to natsec-tagged rows.
+  // Same visual system as the spine (US up / China down, category colour,
+  // status texture) MINUS the silhouette and volume strip; dual-use rows carry
+  // a distinct amber ring. Blocks are lf-year anchors, so the year panel is
+  // reused verbatim (document-level delegation from the spine figure).
+  // =====================================================================
+  var NA = { W: 1120, H: 250, padL: 44, padR: 14, YLO: 1926, YHI: 2026 };
+  NA.cy = 112; NA.bot = 196; NA.plotW = NA.W - NA.padL - NA.padR;
+  function nxf(y) { return NA.padL + (y - NA.YLO) / (NA.YHI - NA.YLO) * NA.plotW; }
+  var DUAL_RING = "#d69e2e";
+
+  function natsecSvgString(spec) {
+    var rows = spec.rows.slice().sort(function (a, b) {
+      return (a.y - b.y) || ((a.c === "US" ? 0 : 1) - (b.c === "US" ? 0 : 1)) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    });
+    var bh = 6, gap = 1.4, bw = 7.5;
+    var p = ['<svg viewBox="0 0 ' + NA.W + ' ' + NA.H + '" width="100%" class="lf-svg" role="img" aria-label="The national-security ledger: one block per natsec-tagged achievement 1926-2026, US above the centreline and China below, coloured by category, textured by verification label, with dual-use rows ringed in amber. A count under the published tagging rule, not a military-balance assessment.">'];
+    p.push('<defs><pattern id="ns-hatch" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="4" stroke="#ffffff" stroke-width="1.4" opacity="0.9"/></pattern></defs>');
+    p.push('<style>.nax{stroke:#9aa5b1;stroke-width:1}.ntk{font:9px sans-serif;fill:#718096}.nti{font:13px sans-serif;fill:#2d3748}.ncl{font:10px sans-serif;fill:#4a5568}</style>');
+    p.push('<text class="nti lf-scale-with-art" x="' + NA.padL + '" y="15">The National-Security Ledger — ' + rows.length + ' natsec-tagged achievements (Amendment 5), US above / China below</text>');
+    // centreline + decade ticks
+    p.push('<line class="nax" x1="' + NA.padL + '" y1="' + NA.cy + '" x2="' + (NA.W - NA.padR) + '" y2="' + NA.cy + '"/>');
+    for (var yr = 1930; yr <= 2026; yr += 10) {
+      var xx = nxf(yr);
+      p.push('<line x1="' + xx.toFixed(1) + '" y1="26" x2="' + xx.toFixed(1) + '" y2="' + NA.bot + '" stroke="#eef2f6"/>');
+      p.push('<text class="ntk lf-scale-with-art" x="' + xx.toFixed(1) + '" y="' + (NA.bot + 12) + '" text-anchor="middle">' + yr + '</text>');
+    }
+    p.push('<text class="ntk lf-scale-with-art" x="' + NA.padL + '" y="30">US ↑</text>');
+    p.push('<text class="ntk lf-scale-with-art" x="' + NA.padL + '" y="' + (NA.cy + 66) + '">China ↓</text>');
+    // blocks
+    var stack = {};
+    rows.forEach(function (r) {
+      var col = CATEGORY_COLORS[r.cat] || "#888";
+      var key = r.y + "|" + r.c, k = stack[key] || 0; stack[key] = k + 1;
+      var x = nxf(r.y) - bw / 2, y;
+      if (r.c === "US") y = NA.cy - (k + 1) * bh - k * gap - 1; else y = NA.cy + k * (bh + gap) + 1;
+      var rect;
+      if (r.st === "ESTABLISHED") rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="' + col + '"/>';
+      else if (r.st === "REPORTED") rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="' + col + '"/><rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="url(#ns-hatch)"/>';
+      else rect = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh + '" fill="none" stroke="' + col + '" stroke-width="1.1"/>';
+      // dual-use marker: an amber ring drawn around the block (distinct, driven by the du flag)
+      var ring = r.du ? '<rect x="' + (x - 1.3).toFixed(1) + '" y="' + (y - 1.3).toFixed(1) + '" width="' + (bw + 2.6).toFixed(1) + '" height="' + (bh + 2.6).toFixed(1) + '" fill="none" stroke="' + DUAL_RING + '" stroke-width="1.1" rx="1.4"/>' : "";
+      var title = esc(r.id + " " + r.y + " " + r.cat + "/" + r.et + " [" + r.st + (r.du ? " · dual-use" : "") + "]");
+      p.push('<a href="dossier.html#y-' + r.y + '" class="lf-year" data-year="' + r.y + '"><title>' + title + '</title>' + rect + ring + '</a>');
+    });
+    // legend
+    var lx = NA.padL, ly = NA.bot + 28;
+    CATS.forEach(function (cat, i) {
+      var cxx = lx + i * 118;
+      p.push('<rect x="' + cxx.toFixed(1) + '" y="' + (ly - 8) + '" width="9" height="9" fill="' + CATEGORY_COLORS[cat] + '"/><text class="ncl lf-scale-with-art" x="' + (cxx + 12).toFixed(1) + '" y="' + ly + '">' + CATEGORY_SHORT[cat] + '</text>');
+    });
+    p.push('<rect x="' + lx + '" y="' + (ly + 6) + '" width="9" height="9" fill="none" stroke="' + DUAL_RING + '" stroke-width="1.1" rx="1.4"/><text class="ncl lf-scale-with-art" x="' + (lx + 14) + '" y="' + (ly + 14) + '">amber ring = dual-use (defense-origin, civilian-transformative) · solid = ESTABLISHED · outlined = OPEN · hatched = REPORTED · a COUNT under the tagging rule, NOT a capability assessment</text>');
+    p.push('</svg>');
+    return p.join("");
+  }
+
   // ---- registrations: poster (Node string floor) + live renderer (lightbox) ----
   function renderMomentumPosterSVG(spec) { return momentumSvgString(spec); }
   function renderSpinePosterSVG(spec) { return spineSvgString(spec); }
+  function renderNatsecPosterSVG(spec) { return natsecSvgString(spec); }
   function mount(container, spec, drawFn) {
     if (!container) return null;
     if (spec == null && container.getAttribute) { try { spec = JSON.parse(container.getAttribute("data-figure")); } catch (e) { return null; } }
@@ -208,8 +266,11 @@
   }
   DF.renderMomentumPosterSVG = renderMomentumPosterSVG;
   DF.renderSpinePosterSVG = renderSpinePosterSVG;
+  DF.renderNatsecPosterSVG = renderNatsecPosterSVG;
   DF.registerPoster("momentum", renderMomentumPosterSVG);
   DF.registerPoster("spine", renderSpinePosterSVG);
+  DF.registerPoster("natsec", renderNatsecPosterSVG);
   DF.registerRenderer("momentum", function (c, s) { return mount(c, s, momentumSvgString); });
   DF.registerRenderer("spine", function (c, s) { return mount(c, s, spineSvgString); });
+  DF.registerRenderer("natsec", function (c, s) { return mount(c, s, natsecSvgString); });
 })(typeof window !== "undefined" ? window : null);

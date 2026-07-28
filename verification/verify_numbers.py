@@ -153,11 +153,11 @@ check("Ledger S3: draft ESTABLISHED set reconciles with ledger set",
 # the avenue theses in avenues.json, and the baked console verdict. The label
 # CARRIES the numbers, so any change to a count must be made here AND in the
 # manuscript in the same commit (the CLAUDE.md lockstep rule) or CI goes red.
-_EXPECTED_CENSUS = (282, 1, 2)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
+_EXPECTED_CENSUS = (290, 1, 3)   # (ESTABLISHED, OPEN-UNVERIFIED, REPORTED)
 _est_n = sum(1 for r in _ledger_rows if r.get("status") == "ESTABLISHED")
 _open_n = sum(1 for r in _draft_rows if r.get("status") == "OPEN-UNVERIFIED")
 _rep_n = sum(1 for r in _draft_rows if r.get("status") == "REPORTED")
-check("Census: 282 ESTABLISHED / 1 OPEN-UNVERIFIED / 2 REPORTED (live corpus counts)",
+check("Census: 290 ESTABLISHED / 1 OPEN-UNVERIFIED / 3 REPORTED (live corpus counts)",
       0 if (_est_n, _open_n, _rep_n) == _EXPECTED_CENSUS else 1, 0, 0)
 
 # ================================================================
@@ -302,6 +302,26 @@ for _y, _lst in _yc.items():
             _panel_bad += 1
 check("Index I12: in-figure year-panel cards == the ESTABLISHED ledger, field-for-field",
       _panel_bad, 0, 0)
+
+# (I13) Figure III (national-security ledger) blocks == the natsec-tagged corpus rows
+#       EXACTLY, including the dual_use flag per block (rendering is driven by the tag).
+_ns_spec = _committed.get("natsec_spec", {})
+_ns_fig = {r["id"]: bool(r.get("du")) for r in _ns_spec.get("rows", [])}
+_ns_tag = {r["id"]: (r.get("dual_use") == "true")
+           for r in _draft_rows2 if r.get("natsec") == "true" and r.get("country") in ("US", "China")}
+check("Index I13: national-security figure blocks == natsec-tagged rows exactly (ids + dual-use)",
+      0 if _ns_fig == _ns_tag else 1, 0, 0)
+
+# (I14) the natsec data-figure spec appears verbatim in the baked front door (dual-use
+#       rendering + caption are baked from the verified tags, so the figure can't drift).
+check("Index I14: national-security data-figure spec present verbatim in index.html",
+      0 if _ci._attr_json(_committed["natsec_spec"]) in _index_html else 1, 0, 0)
+
+# (I15) dual_use is a strict subset of natsec (dual_use ⇒ natsec) across the corpus.
+_du_bad = [r.get("id") for r in _draft_rows2
+           if r.get("dual_use") == "true" and r.get("natsec") != "true"]
+check("Index I15: every dual_use row is also natsec (dual_use is a subset of natsec)",
+      len(_du_bad), 0, 0)
 
 # ----------------------------------------------------------------
 print()

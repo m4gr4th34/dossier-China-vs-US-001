@@ -425,3 +425,62 @@ unchanged. All per-row edits are justified in `notes/verification_log.md` and
 *Selection layer v0.4-consistency. Country-blind: applied by claim shape, not by
 country — a US trajectory row (WWII production, shale) gets the identical treatment
 as the China trajectory row (poverty).*
+
+---
+
+## Amendment 5 — national-security tagging (v0.5)
+
+**Why:** a reader asked for a national-security *view* of the corpus — which achievements
+are defense capabilities or defense-origin programs. That is a real, answerable question,
+but only if the tagging rule is published, country-blind, and kept OFF the category axis
+(a defense achievement keeps its category — a carrier is still `innovation`, an ICBM still
+`innovation`, an alliance still `governmental_economic`). This amendment adds a **tag axis**,
+not a re-category, mirroring how `source_class` tags provenance without changing the claim.
+
+**Two boolean columns** (added to `data/achievements_draft.csv`, values `true`/`false`):
+
+- **`natsec`** — TRUE iff the row's **anchor event** is, in its primary nature, a **defense
+  capability or a defense-origin program**: a weapon; a military platform or system (warship,
+  warplane, submarine, missile); a defense institution or alliance; or an infrastructure
+  built and operated for military purposes. FALSE otherwise.
+- **`dual_use`** — TRUE (a strict subset of `natsec`; `dual_use ⇒ natsec`) iff that defense
+  capability is **also the direct origin of a broadly civilian-transformative technology**
+  (e.g. GPS → civilian navigation; ARPANET → the internet; ICBM boosters → space launch).
+
+**The governing principle (country-blind, by NATURE not by owner).** Tag by *what the
+achievement is*, never by who runs it or how it is funded. This matters most in two places:
+- **Institutional accident is ignored.** China's crewed-spaceflight program is PLA-run and
+  the US's is a civilian agency (NASA) — but human spaceflight/exploration has the same
+  *nature* on both sides, so both are tagged identically (here: NOT natsec). Symmetry is
+  enforced by the nature test, exactly as Amendment 1 masks `country` for `category`.
+- **Mere defense *funding* of a civilian invention does NOT make it natsec.** The anchor's
+  primary nature must be a defense capability. ENIAC was Army-funded for ballistics but its
+  anchor is *the invention of general-purpose computing* (a computer, not a weapon) → NOT
+  natsec. The transistor, the integrated circuit, and the like are the same: civilian-nature
+  anchors with defense funding → NOT natsec.
+
+**The space sub-rule (the hardest boundary; stated explicitly).**
+- **Tag natsec + dual_use:** satellite/launch/navigation/secure-communications capabilities
+  with direct military lineage or use — a nation's first satellite (launched on a
+  missile-derived booster), satellite navigation (GPS, BeiDou), a secure-comms satellite, a
+  first operational ICBM (its booster is dual-use for launch).
+- **Do NOT tag natsec:** crewed spaceflight, Moon/Mars/planetary exploration, sample-return,
+  space telescopes, and space stations. These are exploration/science by nature (Apollo,
+  Shenzhou, Chang'e, Tianwen, Voyager, Hubble, JWST, ISS, Tiangong — all NOT natsec,
+  country-blind). Reusable-launch *commercial* firsts are tagged by their anchor: a private
+  orbital-launch or booster-reuse milestone is a commercial launch innovation → NOT natsec.
+
+**Judgment calls are logged.** Every tag that required a non-obvious ruling is recorded in
+`notes/verification_log.md` (batch 13), so the tagging is auditable and challengeable — the
+tag axis is itself a published authorial construction, not a measurement.
+
+**What the tags feed.** The tags drive Figure III, "the national-security ledger" — a spine
+filtered to `natsec` rows, with `dual_use` rows rendered distinctly. That figure is
+explicitly NOT a military-balance or capability assessment (its caption says so); it is a
+count of defense-tagged achievements under THIS published rule, with REPORTED-label textures
+prominent because defense claims are where interested-party sourcing (both PLA media and US
+defense assessments) concentrates. `verify_numbers.py` checks that the figure's blocks equal
+the natsec-tagged rows exactly and that dual-use rendering matches the tags.
+
+*Selection layer v0.5. Adds two tag columns; changes no `category`, `year`, `country`,
+`status`, or `claim`. Country-blind by construction.*

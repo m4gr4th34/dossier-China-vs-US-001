@@ -348,3 +348,24 @@ filed — logged with revisit dates in `verification_log.md`.
 shipbuilding, US-1954-1 Nautilus) — not duplicated; USS Ford / Columbia-class / AUKUS held.
 The ONI ~200× capacity figure and the cost-effectiveness thesis were walled in
 `synthesis_frame_CANDIDATE.md`, not filed as rows.
+
+---
+
+## Batch 13 — the Ford row + national-security view (2026-07-27)
+
+| id | year | row | one-line reason |
+|---|---|---|---|
+| US-2017-2 | 2017 | USS Gerald R. Ford | First new US carrier class in ~40y, first EMALS (author-approved on merits; reliability caveat). |
+| US-1989-1 | 1989 | F-117 Nighthawk | First operational stealth combat aircraft — the stealth revolution. |
+| US-2001-3 | 2001 | MQ-1 Predator armed drone | Birth of armed-drone warfare; dual-use. |
+| US-1959-2 | 1959 | SM-65 Atlas ICBM | First US operational ICBM; dual-use (space launch); fills the triad gap. |
+| CN-2017-3 | 2017 | J-20 stealth fighter | First stealth fighter outside the US to reach service. |
+| CN-2012-2 | 2012 | Liaoning | China's first aircraft carrier — start of Chinese carrier aviation. |
+| CN-2025-4 | 2025 | Fujian | First Chinese catapult carrier (commissioned 5 Nov 2025). |
+| CN-2012-3 | 2012 | DF-21D/DF-26 ASBM | Anti-ship ballistic missiles fielded (IISS); effectiveness REPORTED-caveated. |
+| CN-2021-2 | 2021 | 2021 hypersonic test (**REPORTED**) | FT independent report + China's spacecraft denial, both recorded. |
+
+**Net:** +9 rows (8 ESTABLISHED — 4 US, 4 China — and 1 REPORTED). Corpus 285 → **294**
+(US 152, China 142). Census 282/1/2 → **290/1/3**. Added natsec/dual_use tag columns
+(Amendment 5); 27 rows tagged natsec, driving Figure III. Held both sides: US B-2, SR-71,
+Gulf-War PGM, hypersonic weapons; China DF-17, Shandong (folded), Columbia SSBN, AUKUS.

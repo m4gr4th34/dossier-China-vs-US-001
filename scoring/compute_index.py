@@ -224,6 +224,7 @@ def compute(ledger_rows, draft_rows, weights):
     result["dossiers_html"] = dossiers_html
     result["momentum_spec"] = build_momentum_spec(result)
     result["spine_spec"] = build_spine_spec(result, draft_rows, est)
+    result["natsec_spec"] = build_natsec_spec(draft_rows)
     return result
 
 
@@ -420,6 +421,37 @@ def build_spine_spec(result, draft_rows, est_rows):
     }
 
 
+def build_natsec_caption(n, npure, ndual, us, cn):
+    return ("Figure III - the national-security ledger: %d achievements tagged NATSEC under the "
+            "published, country-blind tagging rule (notes/selection_criteria.md Amendment 5) - "
+            "%d pure defense capabilities and %d dual-use (defense-origin but civilian-transformative, "
+            "e.g. GPS, ARPANET, first satellites; drawn with an amber ring). US %d / China %d. "
+            "--- This is a COUNT of defense-tagged rows under THIS rule - explicitly NOT a military-"
+            "balance or capability assessment, and NOT a claim about who is ahead or stronger. "
+            "--- Label textures matter MOST here: defense claims are where interested-party sourcing "
+            "concentrates (BOTH PLA media and US defense assessments are interested parties), so "
+            "REPORTED rows are hatched and their interested party is named in the year dossier - the "
+            "2021 hypersonic-test row is REPORTED for exactly that reason. Click a year for its cards." % (
+            n, npure, ndual, us, cn))
+
+
+def build_natsec_spec(draft_rows):
+    ns = [r for r in draft_rows if r.get("natsec") == "true" and r["country"] in COUNTRIES]
+    rows = [{"id": r["id"], "y": int(r["year"]), "c": r["country"], "cat": r["category"],
+             "et": r["event_type"], "st": r["status"], "pr": r.get("year_precision", ""),
+             "du": r.get("dual_use") == "true"}
+            for r in ns]
+    ndual = sum(1 for x in rows if x["du"])
+    npure = len(rows) - ndual
+    us = sum(1 for x in rows if x["c"] == "US")
+    cn = sum(1 for x in rows if x["c"] == "China")
+    return {
+        "type": "natsec", "version": 1, "rows": rows,
+        "count": len(rows), "dual_count": ndual, "pure_count": npure,
+        "stage": "#ffffff", "caption": build_natsec_caption(len(rows), npure, ndual, us, cn),
+    }
+
+
 def build_weigh_controls():
     sliders = "".join(
         '<label class="wy-row"><span class="wy-cat" style="color:%s">%s</span>'
@@ -481,6 +513,9 @@ if __name__ == "__main__":
     if _inject(SOURCE, "<!--spine:start-->", "<!--spine:end-->",
                _living_figure("living-figure chart wide spine-fig", result["spine_spec"])):
         changed.append("spine")
+    if _inject(SOURCE, "<!--natsec:start-->", "<!--natsec:end-->",
+               _living_figure("living-figure chart wide natsec-fig", result["natsec_spec"])):
+        changed.append("natsec")
     if _inject(DOSSIER_SOURCE, "<!--dossiers:start-->", "<!--dossiers:end-->", result["dossiers_html"]):
         changed.append("dossiers")
     print("compute_index: wrote %s; injected: %s" %

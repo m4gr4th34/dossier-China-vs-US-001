@@ -740,3 +740,90 @@ Recorded walled, asserted nowhere reader-facing.
 (US 148, China 137). Front-door lockstep updated (avenues.json ×2, source prose ×4 + the
 batch-12 narrative clause, verify_numbers census); momentum/spine/panel/silhouette recomputed;
 rendered to fixpoint; all gates + npm test green.
+
+---
+
+## Batch 13 — the Ford row + the national-security view (2026-07-27)
+
+Same discipline: full ritual, independent evidentiary sourcing, announced-vs-achieved at
+full force, outcomes reported not presumed. US-official claims about Chinese capabilities
+were treated as interested-party exactly as PLA media was, and vice-versa.
+
+**9 rows added — 8 ESTABLISHED (4 US, 4 China) + 1 REPORTED (China):**
+
+| id | year | row | qualifying source(s) | natsec |
+|---|---|---|---|---|
+| US-2017-2 | 2017 | USS Gerald R. Ford (CVN-78) — first new carrier class since Nimitz, first EMALS | US Navy (official) + CRS RS20643 | natsec |
+| US-1989-1 | 1989 | F-117 Nighthawk — first operational stealth combat aircraft (first combat Panama) | Air & Space Forces Mag + encyclopedic | natsec |
+| US-2001-3 | 2001 | MQ-1 Predator armed drone — first Hellfire firing 16 Feb 2001 | Smithsonian A&S + NASM + Slate | natsec + dual_use |
+| US-1959-2 | 1959 | SM-65 Atlas — first US operational ICBM | Nat'l Museum USAF (official) + encyclopedic | natsec + dual_use |
+| CN-2017-3 | 2017 | J-20 stealth fighter service entry | IISS + Jane's + Aviation Week (independent of PLA and DoD) | natsec |
+| CN-2012-2 | 2012 | Liaoning — China's first aircraft carrier | CSIS ChinaPower + IISS + press | natsec |
+| CN-2025-4 | 2025 | Fujian — first Chinese catapult carrier (commissioned 5 Nov 2025) | Naval News + USNI + CSIS | natsec |
+| CN-2012-3 | 2012 | DF-21D/DF-26 anti-ship ballistic missiles (fielded) | IISS PLARF order of battle + CSIS Missile Threat | natsec |
+| CN-2021-2 | 2021 | 2021 fractional-orbital hypersonic test (**REPORTED**) | Financial Times (independent) + China denial | natsec + dual_use |
+
+**Reliability/effectiveness caveats stated plainly (both sides):**
+- **US-2017-2 Ford:** EMALS ~181 launches vs ~4,166-launch design MTBF (2021 DoD report);
+  weapons-elevator delays (GAO) — new systems troubled, not clean.
+- **CN-2025-4 Fujian:** commissioned ≠ full operational capability (analysts: years away).
+- **CN-2012-3 DF-ASBM:** SPLIT — fielding ESTABLISHED (IISS); the "carrier-killer" kill chain
+  against a maneuvering ship is REPORTED (US-DoD/PLA sourced, not independently demonstrated).
+- **CN-2017-3 J-20:** "first non-US operational stealth fighter" superlative OPEN-CAVEATED (Su-57).
+
+**REPORTED (interested-party discipline, both accounts recorded):**
+- **CN-2021-2** — the 2021 FOBS/hypersonic test. Lead source is independent journalism (FT,
+  16 Oct 2021), NOT a government release; China's on-record denial (a routine reusable-**spacecraft**
+  test, per FM spokesman Zhao Lijian) is recorded with equal prominence; US partial confirmation is
+  a secondary interested party. Contested dual-use (weapon-FOBS vs civilian spacecraft), not adjudicated.
+
+**Held — no row (announced / not-yet-operational / duplicative), both sides:**
+- **US hypersonic weapons** (Army Dark Eagle / Navy CPS): fielding begun late 2025, deployed to Guam
+  for a June 2026 exercise, but NO operational declaration as of 2026-07-27; production-limited
+  (~1–2 missiles/mo). Held — the symmetry counterweight to China's hypersonic claims (both messy).
+- **China DF-17 hypersonic:** parade reveal 2019 is not a demonstration; operational status is
+  US-DoD-sourced (interested party). Held; the 2021 FT-reported test carries the hypersonic theme instead.
+- **B-2 Spirit, SR-71 Blackbird:** ESTABLISHED-eligible but held — the stealth-first is represented by
+  F-117; adding more strategic-aircraft rows would be a weapons catalogue, not negligent-to-omit gaps.
+- **Gulf War PGM demonstration (1991):** held — battlefield-adjacent framing and contested
+  interested-source percentages; the precision-strike theme is not filed as a "war" row.
+- **Shandong** (first domestically-BUILT Chinese carrier, 2019): folded into CN-2012-2's note (avoids a
+  third carrier row); **Columbia-class SSBN** (under construction, ~2029), **AUKUS** submarine transfers
+  (announced, from ~2032; only training/maintenance firsts have occurred): not-yet-occurred, held.
+
+### National-security tagging (Amendment 5) — judgment calls logged (country-blind, by NATURE)
+
+Two boolean columns added to the draft (`natsec`, `dual_use`); **27 rows tagged natsec** (15 US,
+12 China) — **14 pure-defense**, **13 dual-use**. The rule: natsec iff the anchor is a weapon /
+military platform-system / defense institution-alliance / defense-operated infrastructure;
+dual_use (⊂ natsec) iff that defense capability directly spawned mass-civilian technology.
+Non-obvious calls:
+
+- **TAGGED dual_use** (defense-origin, civilian-transformative): US-1958-4 DARPA (agency that spawned
+  the internet), US-1942-1 Fermi chain reaction (Manhattan program → civilian nuclear power),
+  US-1958-2 Explorer 1 & CN-1970-1 Dong Fang Hong (first satellites on missile-derived boosters),
+  US-1978-1 & US-1995-3 GPS and CN-2020-3 BeiDou (military navigation → civilian nav), US-1969-2 &
+  US-1983-1 ARPANET/TCP-IP (defense network → internet), CN-1975-1 first returnable/recon satellite,
+  US-2001-3 Predator (drone tech → civilian), US-1959-2 Atlas (ICBM booster → space launch),
+  CN-2021-2 FOBS (contested weapon-vs-spacecraft).
+- **NOT tagged natsec despite defense funding/lineage** (nature is civilian): US-1945-1 ENIAC
+  (Army-funded ballistics, but the anchor is the invention of general-purpose COMPUTING),
+  US-1956-1 Interstate Highways and CN-1964-2 Third Front (both defense-MOTIVATED but civilian
+  infrastructure/industry — funding/motivation ≠ a defense capability; tagged the same country-blind),
+  US-1957-1 Shippingport & CN-1991-1 Qinshan (civilian nuclear power, though reactor tech has military
+  lineage), US-1926-1 Goddard rocket & US-1947-2 Bell X-1 (aeronautical/rocketry science firsts),
+  CN-1955-1 Qian Xuesen (human-capital milestone), US-1962-1 Telstar (commercial comsat),
+  US-1971-5 email & US-1986-1 NSFNET & CN-1994-2 China's internet link (applications / civilian-agency
+  infrastructure / adoption, distinct from the ARPANET substrate), CN-2016-1 Micius (quantum-physics
+  science first), CN-2016-3 Long March 5 (civilian heavy-lift, like Falcon Heavy), US-2020-1 Starlink
+  (commercial constellation).
+- **Space sub-rule, applied country-blind:** ALL crewed spaceflight, Moon/Mars/planetary exploration,
+  sample-return, space telescopes and space stations are NOT natsec on BOTH sides — China's PLA-run
+  Shenzhou/Tiangong are tagged identically to US NASA's Mercury/Apollo/ISS (nature, not owner). Only
+  satellite/launch/navigation/first-satellite capabilities with direct military lineage are tagged.
+
+**Front-door lockstep:** census 282/1/2 → **290/1/3** across avenues.json (×2), the source prose
+(abstract + §02 + §03 ledger + §05 live-status), and the verify_numbers census. Figure III added
+(natsec spec built by compute_index, poster+renderer in dossierviz.js, verifier checks I13
+blocks==tags / I14 spec-verbatim / I15 dual_use⊆natsec). Corpus 285 → **294** (US 152, China 142).
+Rendered to fixpoint; all gates + npm test green.
